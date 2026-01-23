@@ -30,7 +30,7 @@ export default function Navbar() {
     await supabase.auth.signOut();
     setIsOpen(false);
     // Redirigir a la raíz del sitio
-    navigate("/");
+    navigate("/login");
   };
 
   // Helper to determine the correct target link

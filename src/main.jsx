@@ -2,11 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import AppRouter from "./router/AppRouter.jsx";
-import "./index.css"; // SOLO CSS, nada de @import aquí
+import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename="/FestivalGolpeTierra2026">
       <AppRouter />
     </BrowserRouter>
   </React.StrictMode>
