@@ -1,0 +1,166 @@
+import logoFestival from "../../assets/images/logos/logo_festival.png";
+import RunningStamp from "../../components/RunningStamp";
+
+export default function Bases() {
+  return (
+    <section id="bases" className="py-16 lg:py-24 bg-white font-body relative overflow-hidden">
+
+      {/* Carrusel Dinámico de Marcas de Agua */}
+      <RunningStamp />
+
+      <div className="max-w-6xl mx-auto px-6 lg:px-8 relative z-10">
+
+        <header className="mb-16 lg:mb-20 flex flex-col md:flex-row md:items-center gap-8">
+          <div className="flex items-center gap-6">
+            <img src={logoFestival} alt="Logo Festival" className="h-20 sm:h-24 w-auto object-contain" />
+            <div className="h-16 w-px bg-gray-200"></div>
+          </div>
+          <div className="flex-grow">
+            <span className="text-[11px] font-bold text-orange-600 tracking-[0.3em] uppercase mb-3 block opacity-80">
+              REGLAMENTO OFICIAL
+            </span>
+            <h2 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-none tracking-tight">
+              Bases de Competencia
+            </h2>
+          </div>
+          <p className="text-base lg:text-lg text-gray-500 leading-relaxed max-w-sm border-l-2 border-orange-500/20 pl-6">
+            Transparencia, tradición y excelencia. Conoce los lineamientos que rigen nuestro gran encuentro cultural.
+          </p>
+        </header>
+
+        {/* CONTENIDO - Grid Editorial Limpio */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-14 gap-y-14 lg:gap-y-16">
+          {/* ... resto del contenido igual ... */}
+
+          {/* INSCRIPCIONES */}
+          <article>
+            <span className="text-[10px] font-bold text-orange-600 uppercase tracking-[0.2em] mb-4 block">
+              Inscripciones
+            </span>
+            <h3 className="font-heading text-xl font-bold text-gray-900 tracking-tight mb-5">
+              Costos y Fechas
+            </h3>
+            <div className="space-y-3 text-gray-600 leading-relaxed mb-6">
+              <p className="flex justify-between border-b border-gray-100 pb-3">
+                <span>Individual / Seriado</span>
+                <span className="font-semibold text-gray-900">S/ 25.00</span>
+              </p>
+              <p className="flex justify-between border-b border-gray-100 pb-3">
+                <span>Pareja</span>
+                <span className="font-semibold text-gray-900">S/ 35.00</span>
+              </p>
+            </div>
+            <div className="text-sm text-gray-500 space-y-1">
+              <p><span className="text-gray-900 font-medium">Fechas:</span> 09 al 20 de Febrero</p>
+              <p><span className="text-gray-900 font-medium">Contacto:</span> 967 694 616</p>
+              <p><span className="text-gray-900 font-medium">Horario:</span> 9:00 AM – 10:00 PM</p>
+            </div>
+          </article>
+
+          {/* REQUISITOS */}
+          <article>
+            <span className="text-[10px] font-bold text-blue-600 uppercase tracking-[0.2em] mb-4 block">
+              Requisitos
+            </span>
+            <h3 className="font-heading text-xl font-bold text-gray-900 tracking-tight mb-5">
+              Documentación Necesaria
+            </h3>
+            <ul className="space-y-3 text-gray-600 leading-relaxed">
+              <li>Registro vía WhatsApp</li>
+              <li>DNI original (bailarines)</li>
+              <li>Voucher de pago (Yape)</li>
+              <li>Nombre de la academia</li>
+            </ul>
+            <p className="mt-6 text-sm text-gray-500">
+              Para el ingreso solo es necesario presentar el <span className="text-gray-900 font-medium">DNI físico</span>.
+            </p>
+          </article>
+
+          {/* JURADO */}
+          <article>
+            <span className="text-xs font-medium text-purple-600 uppercase tracking-wider mb-3 block">
+              Jurado
+            </span>
+            <h3 className="font-heading text-xl font-bold text-gray-900 tracking-tight mb-4">
+              Jurado Calificador
+            </h3>
+            <p className="text-gray-600 leading-relaxed mb-4">
+              Conformado por personalidades idóneas y conocedoras de nuestro baile nacional, garantizando una evaluación justa y técnica.
+            </p>
+            <div className="text-sm text-gray-500 space-y-1">
+              <p><span className="text-gray-900 font-medium">Selección:</span> Sorteo previo</p>
+              <p><span className="text-gray-900 font-medium">Fallo:</span> Inapelable</p>
+            </div>
+          </article>
+
+          {/* CALIFICACIÓN */}
+          <article>
+            <span className="text-xs font-medium text-green-600 uppercase tracking-wider mb-3 block">
+              Calificación
+            </span>
+            <h3 className="font-heading text-xl font-bold text-gray-900 tracking-tight mb-4">
+              Sistema de Puntaje
+            </h3>
+            <p className="text-gray-600 leading-relaxed mb-4">
+              Puntaje mediante paleta en mano de <span className="text-gray-900 font-medium">3 a 5 puntos</span>.
+            </p>
+            <div className="text-sm text-gray-500 space-y-1">
+              <p><span className="text-gray-900 font-medium">Semifinal:</span> Máximo 6 parejas</p>
+              <p><span className="text-gray-900 font-medium">Final:</span> 3 mejores parejas</p>
+            </div>
+          </article>
+
+          {/* EMPATES */}
+          <article>
+            <span className="text-xs font-medium text-amber-600 uppercase tracking-wider mb-3 block">
+              Empates
+            </span>
+            <h3 className="font-heading text-xl font-bold text-gray-900 tracking-tight mb-4">
+              Criterios de Desempate
+            </h3>
+            <ol className="space-y-2 text-gray-600 leading-relaxed list-decimal list-inside">
+              <li>Mesa de cómputo notifica</li>
+              <li>Comisión decide criterios</li>
+              <li>Puntaje anterior como desempate</li>
+            </ol>
+          </article>
+
+          {/* IMPORTANTE */}
+          <article>
+            <span className="text-[10px] font-bold text-red-600 uppercase tracking-[0.2em] mb-4 block">
+              Importante
+            </span>
+            <h3 className="font-heading text-xl font-bold text-gray-900 tracking-tight mb-5">
+              Consideraciones
+            </h3>
+            <ul className="space-y-3 text-gray-500 leading-relaxed text-sm font-medium">
+              <li>• No habrá inscripciones el día del evento</li>
+              <li>• Adulteración de documentos causa eliminación</li>
+              <li>• Los nombres de inscripción no son modificables</li>
+            </ul>
+          </article>
+
+        </div>
+
+        {/* CTA */}
+        <div className="mt-20 lg:mt-28 pt-12 border-t border-gray-200">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+            <p className="text-gray-500 italic max-w-xl">
+              "Las parejas campeonas asumen el compromiso de asistir a su entrega de campeonato en el Festival Golpe Tierra 2027."
+            </p>
+            <a
+              href="#inscripcion"
+              className="inline-flex items-center justify-center px-10 py-3.5 text-[11px] font-bold tracking-[0.15em] uppercase text-white bg-gray-900 rounded-sm hover:bg-orange-600 transition-all duration-300 shadow-sm"
+            >
+              Inscríbete ahora
+              <svg className="ml-2 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section >
+  );
+}
