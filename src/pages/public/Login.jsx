@@ -40,8 +40,8 @@ export default function Login() {
             <RunningStamp />
 
             {/* Elementos decorativos de fondo */}
-            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-orange-100/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-            <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-red-100/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-orange-100/20 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2"></div>
+            <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-red-100/10 rounded-full blur-2xl translate-y-1/2 -translate-x-1/2"></div>
 
             <div className="w-full max-w-md relative z-10">
 

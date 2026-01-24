@@ -1,4 +1,3 @@
-import html2pdf from "html2pdf.js";
 import logoAsociacion from "../assets/images/logos/logo_asociacion.png";
 
 /**
@@ -136,6 +135,7 @@ export const generateInscripcionPDF = async (inscripcion) => {
             jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
         };
 
+        const html2pdf = (await import("html2pdf.js")).default;
         await html2pdf().set(opt).from(htmlContent).save();
         console.log("PDF generado con éxito (Tipografía actualizada, Estructura original).");
 

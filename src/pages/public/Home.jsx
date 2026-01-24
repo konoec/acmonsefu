@@ -30,10 +30,10 @@ export default function Home() {
   }, []);
 
   return (
-    <section id="inicio" className="relative w-full min-h-screen flex items-center bg-gradient-to-br from-[#FDFBF7] via-[#FFF9F0] to-[#FFF5E8] overflow-hidden">
-      {/* Elementos decorativos de fondo - más sutiles */}
-      <div className="absolute top-20 right-0 w-[500px] h-[500px] bg-gradient-to-br from-orange-200/15 to-red-200/10 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-tr from-orange-100/20 to-yellow-100/15 rounded-full blur-3xl"></div>
+    <section id="inicio" className="relative w-full min-h-screen flex items-center bg-[#FDFBF7] overflow-hidden">
+      {/* Elementos decorativos de fondo - simplificados para ahorro de CPU */}
+      <div className="absolute top-20 right-0 w-[400px] h-[400px] bg-orange-100/10 rounded-full blur-2xl"></div>
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-yellow-100/10 rounded-full blur-2xl"></div>
 
       <div className="relative max-w-[1400px] mx-auto px-6 lg:px-12 py-20 lg:py-24 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center z-10 w-full">
 
@@ -154,6 +154,7 @@ export default function Home() {
                   <img
                     src={img}
                     alt={`Golpe Tierra ${index}`}
+                    loading="lazy"
                     className="w-full h-full object-cover select-none"
                   />
                 </div>

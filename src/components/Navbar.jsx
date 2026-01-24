@@ -55,7 +55,7 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100 font-body">
+    <nav className="fixed top-0 left-0 w-full z-50 bg-white shadow-sm border-b border-gray-100 font-body transition-all">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12 py-3 lg:py-4">
         <div className="grid grid-cols-2 lg:grid-cols-3 items-center gap-4">
 

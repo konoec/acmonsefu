@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { supabase } from "../../supabaseClient";
 import InscripcionModal from "./InscripcionModal";
+import EditInscripcionModal from "./EditInscripcionModal";
 import Filters from "./Filters";
 import Pagination from "./Pagination";
-import * as XLSX from 'xlsx';
 
 const DEFAULT_PER_PAGE = 10;
 
@@ -27,6 +27,8 @@ export default function Inscripciones() {
     // Modal state
     const [selectedInscripcion, setSelectedInscripcion] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [editingInscripcion, setEditingInscripcion] = useState(null);
 
     const fetchModalities = async () => {
         const { data } = await supabase.from('modalidad').select('id, nombre').eq('estado', 'A');
@@ -121,6 +123,9 @@ export default function Inscripciones() {
 
             if (error) throw error;
 
+            // Cargar XLSX dinámicamente
+            const XLSX = await import('xlsx');
+
             // Procesar datos para que sean filas planas de Excel
             const flatData = data.flatMap(ins =>
                 ins.detalle_inscripcion.map(det => ({
@@ -184,22 +189,27 @@ export default function Inscripciones() {
         setIsModalOpen(true);
     };
 
+    const handleEdit = (ins) => {
+        setEditingInscripcion(ins);
+        setIsEditModalOpen(true);
+    };
+
     return (
         <div className="max-w-[1400px] mx-auto space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
 
             {/* Header de la Sección */}
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-gray-100 pb-8">
-                <div className="text-left">
-                    <span className="text-xs font-bold text-orange-600 uppercase tracking-[0.2em] mb-2 block font-body">SISTEMA DE GESTIÓN</span>
-                    <h2 className="font-heading text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight leading-none">
+            <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 border-b border-gray-100 pb-8 px-2 md:px-0">
+                <div className="text-left space-y-2">
+                    <span className="text-[10px] font-bold text-orange-600 uppercase tracking-[0.3em] block font-body opacity-80">SISTEMA DE GESTIÓN</span>
+                    <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 tracking-tight leading-tight">
                         Registro de Inscripciones
                     </h2>
                 </div>
-                <div className="flex items-center gap-4">
+                <div className="flex flex-wrap items-center gap-3 md:gap-4">
                     <button
                         onClick={handleExportExcel}
                         disabled={exportLoading || loading || totalItems === 0}
-                        className="px-6 py-2.5 bg-green-600 text-white text-[11px] font-bold uppercase tracking-widest hover:bg-green-700 transition-all rounded-sm font-body shadow-sm flex items-center gap-2 disabled:opacity-30 disabled:cursor-not-allowed disabled:bg-green-500"
+                        className="flex-1 md:flex-none px-5 md:px-6 py-3 bg-green-600 text-white text-[10px] md:text-[11px] font-black uppercase tracking-widest hover:bg-green-700 transition-all rounded-sm font-body shadow-sm flex items-center justify-center gap-2 disabled:opacity-30 disabled:cursor-not-allowed disabled:bg-green-500"
                     >
                         {exportLoading ? (
                             <div className="w-3 h-3 border-2 border-white/30 border-t-white animate-spin rounded-full"></div>
@@ -208,18 +218,25 @@ export default function Inscripciones() {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                             </svg>
                         )}
-                        Exportar Excel
+                        <span className="hidden xs:inline">Exportar Excel</span>
+                        <span className="xs:hidden">Excel</span>
                     </button>
                     <button
                         onClick={fetchInscripciones}
-                        className="px-6 py-2.5 bg-gray-900 text-white text-[11px] font-bold uppercase tracking-widest hover:bg-orange-600 transition-all rounded-sm font-body shadow-sm"
+                        className="flex-1 md:flex-none px-5 md:px-6 py-3 bg-gray-900 text-white text-[10px] md:text-[11px] font-black uppercase tracking-widest hover:bg-orange-600 transition-all rounded-sm font-body shadow-sm flex items-center justify-center gap-2"
                     >
-                        Actualizar Lista
+                        <svg className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                        </svg>
+                        <span className="hidden xs:inline">Actualizar Lista</span>
+                        <span className="xs:hidden">Actualizar</span>
                     </button>
-                    <div className="h-4 w-px bg-gray-200 hidden md:block"></div>
-                    <span className="text-[11px] font-semibold text-gray-400 uppercase tracking-widest font-body">
-                        {inscripciones.length} Unidades registradas
-                    </span>
+                    <div className="hidden lg:block h-6 w-px bg-gray-200"></div>
+                    <div className="w-full lg:w-auto mt-2 lg:mt-0">
+                        <span className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] font-body bg-gray-50 px-3 py-1.5 rounded-full border border-gray-100">
+                            {totalItems} Registros totales
+                        </span>
+                    </div>
                 </div>
             </div>
 
@@ -260,32 +277,32 @@ export default function Inscripciones() {
                         </thead>
                         <tbody className="divide-y divide-gray-50">
                             {inscripciones.map((ins) => (
-                                <tr key={ins.id} className="group hover:bg-orange-50/20 transition-all duration-300">
-                                    <td className="px-8 py-6">
+                                <tr key={ins.id} className="group hover:bg-orange-50/20 transition-all duration-300 border-b border-gray-50 last:border-0">
+                                    <td className="px-4 md:px-8 py-5 md:py-6">
                                         <div className="flex flex-col font-body">
-                                            <span className="text-sm font-bold text-gray-900 leading-none mb-1.5">#{ins.id}</span>
-                                            <span className="text-[11px] text-gray-400 font-semibold uppercase tracking-tight">
+                                            <span className="text-[13px] md:text-sm font-bold text-gray-900 leading-none mb-1.5">#{ins.id}</span>
+                                            <span className="text-[10px] md:text-[11px] text-gray-400 font-semibold uppercase tracking-tight">
                                                 {new Date(ins.fecha_registro).toLocaleDateString('es-PE')}
                                             </span>
                                         </div>
                                     </td>
-                                    <td className="px-8 py-6">
-                                        <div className="flex flex-col gap-1.5 font-body">
+                                    <td className="px-4 md:px-8 py-5 md:py-6">
+                                        <div className="flex flex-col gap-1 md:gap-1.5 font-body">
                                             {ins.detalle_inscripcion?.map((det, idx) => (
-                                                <span key={idx} className="text-[13px] font-bold text-gray-800 tracking-tight">
+                                                <span key={idx} className="text-[12px] md:text-[13px] font-bold text-gray-800 tracking-tight leading-tight">
                                                     {det.nombres} {det.apellidos}
                                                 </span>
                                             ))}
                                         </div>
                                     </td>
-                                    <td className="px-8 py-6">
-                                        <span className="text-[11px] font-bold text-gray-600 uppercase tracking-wider bg-gray-100 px-3 py-1.5 rounded-sm font-body border border-gray-200/50">
+                                    <td className="px-4 md:px-8 py-5 md:py-6">
+                                        <span className="inline-block text-[9px] md:text-[11px] font-bold text-gray-600 uppercase tracking-wider bg-gray-50 px-2 md:px-3 py-1 md:py-1.5 rounded-sm font-body border border-gray-200/50 whitespace-nowrap">
                                             {ins.modalidad?.nombre || 'General'}
                                         </span>
                                     </td>
-                                    <td className="px-8 py-6 text-left">
+                                    <td className="px-4 md:px-8 py-5 md:py-6 text-left">
                                         <div className="flex items-center gap-3 font-body">
-                                            <span className={`px-4 py-1.5 text-[10px] font-bold uppercase tracking-widest border rounded-sm
+                                            <span className={`px-2 md:px-4 py-1.5 text-[9px] md:text-[10px] font-bold uppercase tracking-widest border rounded-sm whitespace-nowrap
                                                 ${ins.estado === 'A' ? 'bg-green-50 text-green-700 border-green-200' :
                                                     ins.estado === 'P' ? 'bg-yellow-50 text-yellow-700 border-yellow-200' :
                                                         'bg-red-50 text-red-700 border-red-200'}`}>
@@ -295,8 +312,8 @@ export default function Inscripciones() {
                                             </span>
                                         </div>
                                     </td>
-                                    <td className="px-8 py-6">
-                                        <div className="flex items-center justify-center gap-2">
+                                    <td className="px-4 md:px-8 py-5 md:py-6">
+                                        <div className="flex items-center justify-center gap-1 md:gap-2">
                                             {/* OJO: Ver Detalle */}
                                             <button
                                                 onClick={() => handleViewDetail(ins)}
@@ -309,7 +326,18 @@ export default function Inscripciones() {
                                                 </svg>
                                             </button>
 
-                                            <div className="h-4 w-px bg-gray-100 mx-1"></div>
+                                            {/* EDITAR: Lápiz (Solo Datos) */}
+                                            <button
+                                                onClick={() => handleEdit(ins)}
+                                                className="p-2 hover:bg-orange-50 text-gray-400 hover:text-orange-600 transition-all rounded-sm group/btn"
+                                                title="Editar Datos Personales"
+                                            >
+                                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                                </svg>
+                                            </button>
+
+                                            <div className="hidden xs:block h-4 w-px bg-gray-100 mx-0.5"></div>
 
                                             <button
                                                 onClick={() => updateEstado(ins.id, 'A')}
@@ -371,6 +399,13 @@ export default function Inscripciones() {
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
                 inscripcion={selectedInscripcion}
+            />
+
+            <EditInscripcionModal
+                isOpen={isEditModalOpen}
+                onClose={() => setIsEditModalOpen(false)}
+                inscripcion={editingInscripcion}
+                onUpdate={fetchInscripciones}
             />
 
             {/* Footer Técnico */}
