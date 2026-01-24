@@ -1,47 +1,164 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { supabase } from "../../supabaseClient";
 import InscripcionModal from "./InscripcionModal";
+import Filters from "./Filters";
+import Pagination from "./Pagination";
+import * as XLSX from 'xlsx';
+
+const DEFAULT_PER_PAGE = 10;
 
 export default function Inscripciones() {
     const [inscripciones, setInscripciones] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [exportLoading, setExportLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [modalities, setModalities] = useState([]);
+
+    // Filter states
+    const [search, setSearch] = useState("");
+    const [status, setStatus] = useState("ALL");
+    const [modality, setModality] = useState("ALL");
+
+    // Pagination states
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage, setItemsPerPage] = useState(DEFAULT_PER_PAGE);
+    const [totalItems, setTotalItems] = useState(0);
 
     // Modal state
     const [selectedInscripcion, setSelectedInscripcion] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const fetchInscripciones = async () => {
+    const fetchModalities = async () => {
+        const { data } = await supabase.from('modalidad').select('id, nombre').eq('estado', 'A');
+        setModalities(data || []);
+    };
+
+    const fetchInscripciones = useCallback(async () => {
         setLoading(true);
         try {
-            const { data, error } = await supabase
+            const from = (currentPage - 1) * itemsPerPage;
+            const to = from + itemsPerPage - 1;
+
+            let query = supabase
                 .from('inscripcion')
                 .select(`
                     id,
                     estado,
                     fecha_registro,
                     modalidad (nombre),
-                    detalle_inscripcion (*)
-                `)
-                .order('fecha_registro', { ascending: false });
+                    detalle_inscripcion!inner (*)
+                `, { count: 'exact' });
+
+            // Filter by Status
+            if (status !== "ALL") {
+                query = query.eq('estado', status);
+            }
+
+            // Filter by Modality
+            if (modality !== "ALL") {
+                query = query.eq('id_modalidad', modality);
+            }
+
+            // Search in Details (Nombres, Apellidos, DNI, Telefono)
+            if (search.trim()) {
+                const s = `%${search.trim().toLowerCase()}%`;
+                query = query.or(`nombres.ilike.${s},apellidos.ilike.${s},dni.ilike.${s},telefono.ilike.${s}`, { foreignTable: 'detalle_inscripcion' });
+            }
+
+            const { data, error, count } = await query
+                .order('fecha_registro', { ascending: false })
+                .range(from, to);
 
             if (error) throw error;
             setInscripciones(data || []);
+            setTotalItems(count || 0);
         } catch (err) {
             console.error("Error fetching inscripciones:", err);
             setError("Error al cargar los datos.");
         } finally {
             setLoading(false);
         }
-    };
+    }, [search, status, modality, currentPage, itemsPerPage]);
 
     useEffect(() => {
-        fetchInscripciones();
+        fetchModalities();
     }, []);
+
+    useEffect(() => {
+        // Debounce search
+        const timer = setTimeout(() => {
+            fetchInscripciones();
+        }, 300);
+        return () => clearTimeout(timer);
+    }, [fetchInscripciones]);
+
+    // Reset page to 1 when filters change
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [search, status, modality]);
+
+    const handleExportExcel = async () => {
+        setExportLoading(true);
+        try {
+            let query = supabase
+                .from('inscripcion')
+                .select(`
+                    id,
+                    estado,
+                    fecha_registro,
+                    modalidad (nombre),
+                    detalle_inscripcion!inner (*)
+                `);
+
+            if (status !== "ALL") query = query.eq('estado', status);
+            if (modality !== "ALL") query = query.eq('id_modalidad', modality);
+            if (search.trim()) {
+                const s = `%${search.trim().toLowerCase()}%`;
+                query = query.or(`nombres.ilike.${s},apellidos.ilike.${s},dni.ilike.${s},telefono.ilike.${s}`, { foreignTable: 'detalle_inscripcion' });
+            }
+
+            const { data, error } = await query.order('fecha_registro', { ascending: false });
+
+            if (error) throw error;
+
+            // Procesar datos para que sean filas planas de Excel
+            const flatData = data.flatMap(ins =>
+                ins.detalle_inscripcion.map(det => ({
+                    "ID INSCRIPCIÓN": ins.id,
+                    "FECHA REGISTRO": new Date(ins.fecha_registro).toLocaleString(),
+                    "MODALIDAD": ins.modalidad?.nombre,
+                    "NOMBRES": det.nombres,
+                    "APELLIDOS": det.apellidos,
+                    "DNI": det.dni,
+                    "TELÉFONO": det.telefono,
+                    "SEXO": det.sexo === 'F' ? 'MUJER' : 'HOMBRE',
+                    "ESTADO": ins.estado?.trim() === 'A' ? 'APROBADO' :
+                        ins.estado?.trim() === 'P' ? 'PENDIENTE' : 'INACTIVO'
+                }))
+            );
+
+            const ws = XLSX.utils.json_to_sheet(flatData);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Inscripciones");
+            XLSX.writeFile(wb, `Reporte_Inscripciones_${new Date().toISOString().split('T')[0]}.xlsx`);
+
+        } catch (err) {
+            console.error("Error exportando excel:", err);
+            alert("Error al exportar los datos.");
+        } finally {
+            setExportLoading(false);
+        }
+    };
+
+    const handleClearFilters = () => {
+        setSearch("");
+        setStatus("ALL");
+        setModality("ALL");
+        setCurrentPage(1);
+    };
 
     const updateEstado = async (id, nuevoEstado) => {
         try {
-            // 1. Actualizar estado de negocio en la cabecera
             const { error } = await supabase
                 .from('inscripcion')
                 .update({ estado: nuevoEstado })
@@ -49,7 +166,6 @@ export default function Inscripciones() {
 
             if (error) throw error;
 
-            // 2. Solo si inactivamos (I), marcamos los detalles como técnicos 'I'
             if (nuevoEstado === 'I') {
                 await supabase
                     .from('detalle_inscripcion')
@@ -68,15 +184,6 @@ export default function Inscripciones() {
         setIsModalOpen(true);
     };
 
-    if (loading) return (
-        <div className="flex items-center justify-center min-h-[400px]">
-            <div className="flex flex-col items-center gap-4">
-                <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-orange-600"></div>
-                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Sincronizando Base de Datos...</span>
-            </div>
-        </div>
-    );
-
     return (
         <div className="max-w-[1400px] mx-auto space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
 
@@ -90,6 +197,20 @@ export default function Inscripciones() {
                 </div>
                 <div className="flex items-center gap-4">
                     <button
+                        onClick={handleExportExcel}
+                        disabled={exportLoading || loading || totalItems === 0}
+                        className="px-6 py-2.5 bg-green-600 text-white text-[11px] font-bold uppercase tracking-widest hover:bg-green-700 transition-all rounded-sm font-body shadow-sm flex items-center gap-2 disabled:opacity-30 disabled:cursor-not-allowed disabled:bg-green-500"
+                    >
+                        {exportLoading ? (
+                            <div className="w-3 h-3 border-2 border-white/30 border-t-white animate-spin rounded-full"></div>
+                        ) : (
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                        )}
+                        Exportar Excel
+                    </button>
+                    <button
                         onClick={fetchInscripciones}
                         className="px-6 py-2.5 bg-gray-900 text-white text-[11px] font-bold uppercase tracking-widest hover:bg-orange-600 transition-all rounded-sm font-body shadow-sm"
                     >
@@ -102,8 +223,30 @@ export default function Inscripciones() {
                 </div>
             </div>
 
+            {/* Filtros */}
+            <Filters
+                search={search}
+                setSearch={setSearch}
+                status={status}
+                setStatus={setStatus}
+                modality={modality}
+                setModality={setModality}
+                modalities={modalities}
+                onClear={handleClearFilters}
+            />
+
             {/* Tabla Principal */}
-            <div className="bg-white border border-gray-100 shadow-[0_20px_50px_rgba(0,0,0,0.03)] rounded-sm overflow-hidden">
+            <div className="bg-white border border-gray-100 shadow-[0_20px_50px_rgba(0,0,0,0.03)] rounded-sm overflow-hidden relative min-h-[400px]">
+                {/* Localized Loading Overlay */}
+                {loading && (
+                    <div className="absolute inset-0 bg-white/60 backdrop-blur-[1px] z-10 flex items-center justify-center animate-in fade-in duration-300">
+                        <div className="flex flex-col items-center gap-4">
+                            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-600"></div>
+                            <span className="text-[9px] font-black uppercase tracking-[0.2em] text-gray-400">Actualizando...</span>
+                        </div>
+                    </div>
+                )}
+
                 <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse">
                         <thead className="bg-gray-50/50 border-b border-gray-100 font-body">
@@ -128,7 +271,7 @@ export default function Inscripciones() {
                                     </td>
                                     <td className="px-8 py-6">
                                         <div className="flex flex-col gap-1.5 font-body">
-                                            {ins.detalle_inscripcion.map((det, idx) => (
+                                            {ins.detalle_inscripcion?.map((det, idx) => (
                                                 <span key={idx} className="text-[13px] font-bold text-gray-800 tracking-tight">
                                                     {det.nombres} {det.apellidos}
                                                 </span>
@@ -202,16 +345,25 @@ export default function Inscripciones() {
                                     </td>
                                 </tr>
                             ))}
-                            {inscripciones.length === 0 && (
+                            {!loading && inscripciones.length === 0 && (
                                 <tr>
                                     <td colSpan="5" className="px-8 py-20 text-center">
-                                        <span className="text-[10px] font-black text-gray-300 uppercase tracking-[0.3em]">No hay inscripciones registradas</span>
+                                        <span className="text-[10px] font-black text-gray-300 uppercase tracking-[0.2em]">No se encontraron inscripciones con esos filtros</span>
                                     </td>
                                 </tr>
                             )}
                         </tbody>
                     </table>
                 </div>
+
+                {/* Paginación */}
+                <Pagination
+                    currentPage={currentPage}
+                    totalItems={totalItems}
+                    itemsPerPage={itemsPerPage}
+                    onPageChange={setCurrentPage}
+                    onItemsPerPageChange={setItemsPerPage}
+                />
             </div>
 
             {/* Modal de Detalle */}

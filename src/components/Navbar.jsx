@@ -46,6 +46,7 @@ export default function Navbar() {
     { name: "Bases", path: "#bases" },
     { name: "Modalidades", path: "#modalidades" },
     { name: "Inscripción", path: "#inscripcion" },
+    { name: "Consulta", path: "/consulta" },
   ];
 
   // Si hay sesión, añadir el módulo de Gestión
@@ -59,7 +60,7 @@ export default function Navbar() {
         <div className="grid grid-cols-2 lg:grid-cols-3 items-center gap-4">
 
           {/* LOGOS - IZQUIERDA */}
-          <div className="flex items-center gap-3 lg:gap-4 z-50 relative justify-start">
+          <div className="flex items-center gap-3 lg:gap-4 justify-start">
             <Link to="/" className="flex items-center gap-3 lg:gap-4 group" onClick={() => setIsOpen(false)}>
               <img
                 src={logoAsociacion}
@@ -70,7 +71,7 @@ export default function Navbar() {
           </div>
 
           {/* DESKTOP NAVIGATION - CENTRO */}
-          <div className="hidden lg:flex justify-center">
+          <div className="hidden lg:flex justify-center relative z-10">
             <ul className="flex items-center gap-8">
               {navItems.map((item, index) => {
                 const target = getLinkTarget(item.path);
