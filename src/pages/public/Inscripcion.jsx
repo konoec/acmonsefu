@@ -22,6 +22,7 @@ export default function Inscripcion() {
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [lastInscripcionData, setLastInscripcionData] = useState(null);
 
   // --- 1. Fetch Modalidades on Mount ---
   useEffect(() => {
@@ -263,10 +264,11 @@ export default function Inscripcion() {
         p_personas: p_personas
       };
 
-      const { error } = await supabase.rpc("registrar_inscripcion", payload);
+      const { data: inscripcionData, error } = await supabase.rpc("registrar_inscripcion", payload);
 
       if (error) throw error;
 
+      setLastInscripcionData(inscripcionData);
       setSuccess(true);
       window.scrollTo({ top: document.getElementById('inscripcion').offsetTop, behavior: 'smooth' });
 
@@ -284,6 +286,7 @@ export default function Inscripcion() {
     setSelectedTipo(null);
     setParticipants([]);
     setErrorMessage(null);
+    setLastInscripcionData(null);
   };
 
   return (
@@ -329,12 +332,26 @@ export default function Inscripcion() {
               <p className="text-gray-500 mb-10 max-w-md mx-auto leading-relaxed">
                 Tu inscripción ha sido recibida correctamente. Nos vemos en la pista de baile.
               </p>
-              <button
-                onClick={handleReset}
-                className="px-8 py-3 bg-gray-900 text-white font-medium text-sm rounded-sm hover:bg-orange-600 shadow-lg hover:shadow-orange-500/20"
-              >
-                Inscribir a otro participante
-              </button>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <button
+                  onClick={async () => {
+                    const { generateInscripcionPDF } = await import("../../utils/pdfGenerator");
+                    generateInscripcionPDF(lastInscripcionData);
+                  }}
+                  className="px-8 py-3 bg-orange-600 text-white font-bold text-xs uppercase tracking-[0.15em] rounded-sm hover:bg-orange-700 shadow-lg shadow-orange-500/20 flex items-center gap-3 transition-all"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                  </svg>
+                  Descargar Ficha (PDF)
+                </button>
+                <button
+                  onClick={handleReset}
+                  className="px-8 py-3 bg-gray-100 text-gray-700 font-bold text-xs uppercase tracking-[0.15em] rounded-sm hover:bg-gray-200 transition-all border border-gray-200"
+                >
+                  Inscribir a otro
+                </button>
+              </div>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-10">

@@ -124,39 +124,39 @@ export default function Modalidades() {
                     </div>
                 </header>
 
-                {/* Categories Grid - WordPress Premium Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                {/* Categories Slider - WordPress Premium Style */}
+                <div className="flex overflow-x-auto pb-8 gap-6 snap-x snap-mandatory scrollbar-hide lg:grid lg:grid-cols-3 xl:grid-cols-4 lg:overflow-visible lg:pb-0">
                     {categories.map((cat) => (
-                        <div key={cat.id} className="group bg-white rounded-sm border border-gray-100/60 p-6 shadow-[0_2px_10px_rgb(0,0,0,0.02)] hover:border-orange-200 hover:shadow-[0_8_30px_rgb(0,0,0,0.04)] transition-all duration-500 ease-out flex flex-col h-full hover:-translate-y-1">
+                        <div key={cat.id} className="min-w-[280px] sm:min-w-[320px] lg:min-w-0 snap-center group bg-white rounded-sm border border-gray-100/60 p-5 shadow-[0_2px_10px_rgb(0,0,0,0.02)] hover:border-orange-200 hover:shadow-[0_8_30px_rgb(0,0,0,0.04)] transition-all duration-500 ease-out flex flex-col h-full hover:-translate-y-1">
 
                             {/* Card Header Minimalista */}
-                            <div className="mb-5">
-                                <div className="flex items-center justify-between mb-3">
-                                    <span className="text-4xl font-heading font-extrabold text-gray-100 group-hover:text-orange-100 transition-colors duration-500">
+                            <div className="mb-3">
+                                <div className="flex items-center justify-between mb-2">
+                                    <span className="text-3xl font-heading font-extrabold text-gray-100 group-hover:text-orange-100 transition-colors duration-500">
                                         {cat.id}
                                     </span>
                                     {cat.subtitle && (
-                                        <span className="inline-block px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.15em] text-orange-700 bg-orange-50 rounded-sm">
+                                        <span className="inline-block px-2.5 py-1 text-[8px] font-bold uppercase tracking-[0.15em] text-orange-700 bg-orange-50 rounded-sm">
                                             {cat.subtitle}
                                         </span>
                                     )}
                                 </div>
-                                <h3 className="font-heading text-2xl font-bold text-gray-900 leading-tight group-hover:text-orange-900 transition-colors duration-300">
+                                <h3 className="font-heading text-xl font-bold text-gray-900 leading-tight group-hover:text-orange-900 transition-colors duration-300">
                                     {cat.title}
                                 </h3>
                             </div>
 
                             {/* Divider sutil */}
-                            <div className="w-8 h-0.5 bg-gray-100 group-hover:bg-orange-500 transition-all duration-500 mb-4"></div>
+                            <div className="w-8 h-0.5 bg-gray-100 group-hover:bg-orange-500 transition-all duration-500 mb-3"></div>
 
-                            {/* Lista de Niveles Limpia */}
-                            <ul className="space-y-2.5 mb-5 flex-grow">
+                            {/* Lista de Niveles Compacta */}
+                            <ul className="space-y-1.5 mb-4 flex-grow">
                                 {cat.levels.map((level, idx) => (
-                                    <li key={idx} className="flex flex-col sm:flex-row sm:justify-between sm:items-baseline border-b border-gray-50 pb-2 last:border-0 last:pb-0 gap-1 group/item">
-                                        <strong className="text-[13px] font-bold text-gray-800 group-hover/item:text-gray-900 transition-colors">
+                                    <li key={idx} className="flex flex-col sm:flex-row sm:justify-between sm:items-baseline border-b border-gray-50 pb-1.5 last:border-0 last:pb-0 gap-1 group/item">
+                                        <strong className="text-[12px] font-bold text-gray-800 group-hover/item:text-gray-900 transition-colors">
                                             {level.name}
                                         </strong>
-                                        <span className="text-[11px] text-gray-400 font-medium group-hover/item:text-gray-500 transition-colors tracking-tight">
+                                        <span className="text-[10px] text-gray-400 font-medium group-hover/item:text-gray-500 transition-colors tracking-tight">
                                             {level.age}
                                         </span>
                                     </li>
@@ -165,8 +165,8 @@ export default function Modalidades() {
 
                             {/* Notas al pie */}
                             {cat.note && (
-                                <div className="mt-auto pt-5 border-t border-gray-50">
-                                    <p className="text-xs text-red-500 font-medium leading-relaxed italic">
+                                <div className="mt-auto pt-3 border-t border-gray-50">
+                                    <p className="text-[10px] text-red-500 font-medium leading-tight italic">
                                         {cat.note}
                                     </p>
                                 </div>
