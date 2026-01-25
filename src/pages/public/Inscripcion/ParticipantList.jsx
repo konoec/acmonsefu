@@ -25,7 +25,7 @@ export default function ParticipantList({
                     </h3>
                     {autoCategoryName && (
                         <p className="text-[10px] font-medium text-orange-600 uppercase tracking-widest font-heading">
-                            Categoría: {autoCategoryName}
+                            Tipo de Participación: {autoCategoryName}
                         </p>
                     )}
                 </div>

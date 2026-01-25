@@ -1,14 +1,25 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import Toast from "../../../components/Toast";
 
 export default function SuccessState({ lastInscripcionData, onReset }) {
     const hasAutoDownloaded = useRef(false);
+    const [toast, setToast] = useState(null);
+
+    const showToast = (message, type = 'error') => {
+        setToast({ message, type });
+    };
 
     useEffect(() => {
         if (lastInscripcionData && !hasAutoDownloaded.current) {
             const autoDownload = async () => {
-                const { generateInscripcionPDF } = await import("../../../utils/pdfGenerator");
-                generateInscripcionPDF(lastInscripcionData);
-                hasAutoDownloaded.current = true;
+                try {
+                    const { generateInscripcionPDF } = await import("../../../utils/pdfGenerator");
+                    await generateInscripcionPDF(lastInscripcionData);
+                    hasAutoDownloaded.current = true;
+                } catch (err) {
+                    console.error("Auto-download failed:", err);
+                    showToast("No se pudo descargar automáticamente el PDF.");
+                }
             };
             autoDownload();
         }
@@ -30,8 +41,12 @@ export default function SuccessState({ lastInscripcionData, onReset }) {
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
                 <button
                     onClick={async () => {
-                        const { generateInscripcionPDF } = await import("../../../utils/pdfGenerator");
-                        generateInscripcionPDF(lastInscripcionData);
+                        try {
+                            const { generateInscripcionPDF } = await import("../../../utils/pdfGenerator");
+                            await generateInscripcionPDF(lastInscripcionData);
+                        } catch (err) {
+                            showToast("Error al generar el PDF.");
+                        }
                     }}
                     className="px-10 py-4 bg-gray-900 text-white font-bold text-[10px] uppercase tracking-[0.2em] rounded-sm hover:bg-orange-600 shadow-xl font-heading flex items-center gap-3"
                 >
@@ -47,6 +62,14 @@ export default function SuccessState({ lastInscripcionData, onReset }) {
                     Inscribir a otro
                 </button>
             </div>
+
+            {toast && (
+                <Toast
+                    message={toast.message}
+                    type={toast.type}
+                    onClose={() => setToast(null)}
+                />
+            )}
         </div>
     );
 }

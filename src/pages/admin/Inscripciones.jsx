@@ -4,6 +4,7 @@ import InscripcionModal from "./InscripcionModal";
 import EditInscripcionModal from "./EditInscripcionModal";
 import Filters from "./Filters";
 import Pagination from "./Pagination";
+import Toast from "../../components/Toast";
 
 const DEFAULT_PER_PAGE = 10;
 
@@ -30,6 +31,13 @@ export default function Inscripciones() {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [editingInscripcion, setEditingInscripcion] = useState(null);
 
+    // Toast state
+    const [toast, setToast] = useState(null);
+
+    const showToast = (message, type = 'error') => {
+        setToast({ message, type });
+    };
+
     const fetchModalities = async () => {
         const { data } = await supabase.from('modalidad').select('id, nombre').eq('estado', 'A');
         setModalities(data || []);
@@ -47,8 +55,12 @@ export default function Inscripciones() {
                     id,
                     estado,
                     fecha_registro,
+                    academia,
+                    id_modalidad,
+                    categoria_id,
                     modalidad (nombre),
-                    detalle_inscripcion!inner (*)
+                    categoria (nombre),
+                    detalle_inscripcion!inner (*, tipo_participacion (nombre))
                 `, { count: 'exact' });
 
             // Filter by Status
@@ -61,10 +73,10 @@ export default function Inscripciones() {
                 query = query.eq('id_modalidad', modality);
             }
 
-            // Search in Details (Nombres, Apellidos, DNI, Telefono)
+            // Search in Details (Nombres, Apellidos, DNI, Telefono) or Academy
             if (search.trim()) {
                 const s = `%${search.trim().toLowerCase()}%`;
-                query = query.or(`nombres.ilike.${s},apellidos.ilike.${s},dni.ilike.${s},telefono.ilike.${s}`, { foreignTable: 'detalle_inscripcion' });
+                query = query.or(`academia.ilike.${s},detalle_inscripcion.nombres.ilike.${s},detalle_inscripcion.apellidos.ilike.${s},detalle_inscripcion.dni.ilike.${s},detalle_inscripcion.telefono.ilike.${s}`);
             }
 
             const { data, error, count } = await query
@@ -108,15 +120,19 @@ export default function Inscripciones() {
                     id,
                     estado,
                     fecha_registro,
+                    academia,
+                    id_modalidad,
                     modalidad (nombre),
-                    detalle_inscripcion!inner (*)
+                    categoria (nombre),
+                    detalle_inscripcion!inner (*, tipo_participacion (nombre))
                 `);
 
             if (status !== "ALL") query = query.eq('estado', status);
             if (modality !== "ALL") query = query.eq('id_modalidad', modality);
+
             if (search.trim()) {
                 const s = `%${search.trim().toLowerCase()}%`;
-                query = query.or(`nombres.ilike.${s},apellidos.ilike.${s},dni.ilike.${s},telefono.ilike.${s}`, { foreignTable: 'detalle_inscripcion' });
+                query = query.or(`academia.ilike.${s},detalle_inscripcion.nombres.ilike.${s},detalle_inscripcion.apellidos.ilike.${s},detalle_inscripcion.dni.ilike.${s},detalle_inscripcion.telefono.ilike.${s}`);
             }
 
             const { data, error } = await query.order('fecha_registro', { ascending: false });
@@ -132,11 +148,15 @@ export default function Inscripciones() {
                     "ID INSCRIPCIÓN": ins.id,
                     "FECHA REGISTRO": new Date(ins.fecha_registro).toLocaleString(),
                     "MODALIDAD": ins.modalidad?.nombre,
+                    "CATEGORÍA": ins.categoria?.nombre,
+                    "TIPO PARTICIPACIÓN": det.tipo_participacion?.nombre,
+                    "ACADEMIA": ins.academia,
                     "NOMBRES": det.nombres,
                     "APELLIDOS": det.apellidos,
                     "DNI": det.dni,
+                    "FECHA NACIMIENTO": det.fecha_nacimiento ? new Date(det.fecha_nacimiento).toLocaleDateString('es-PE') : 'N/A',
                     "TELÉFONO": det.telefono,
-                    "SEXO": det.sexo === 'F' ? 'MUJER' : 'HOMBRE',
+                    "SEXO": det.sexo === 'F' ? 'DAMA' : 'VARÓN',
                     "ESTADO": ins.estado?.trim() === 'A' ? 'APROBADO' :
                         ins.estado?.trim() === 'P' ? 'PENDIENTE' : 'INACTIVO'
                 }))
@@ -149,7 +169,7 @@ export default function Inscripciones() {
 
         } catch (err) {
             console.error("Error exportando excel:", err);
-            alert("Error al exportar los datos.");
+            showToast("Error al exportar los datos.");
         } finally {
             setExportLoading(false);
         }
@@ -164,6 +184,38 @@ export default function Inscripciones() {
 
     const updateEstado = async (id, nuevoEstado) => {
         try {
+            // Si intentamos activar (Aprobado o Pendiente), validar duplicados en frontend
+            if (nuevoEstado === 'A' || nuevoEstado === 'P') {
+                const currentIns = inscripciones.find(i => i.id === id);
+                if (currentIns) {
+                    const dnis = currentIns.detalle_inscripcion.map(d => d.dni);
+                    const modalityId = currentIns.id_modalidad || (modalities.find(m => m.nombre === currentIns.modalidad?.nombre)?.id);
+
+                    // Buscar si alguno de estos DNIs ya tiene otra inscripción ACTIVA/PENDIENTE en la misma modalidad
+                    const finalModalityId = currentIns.id_modalidad || (modalities.find(m => m.nombre === currentIns.modalidad?.nombre)?.id);
+
+                    if (!finalModalityId) {
+                        console.warn("No se pudo determinar el ID de la modalidad.");
+                    }
+
+                    const { data: duplicates, error: checkError } = await supabase
+                        .from('detalle_inscripcion')
+                        .select('inscripcion_id, dni, inscripcion!inner(id, id_modalidad, estado)')
+                        .in('dni', dnis)
+                        .eq('inscripcion.id_modalidad', finalModalityId)
+                        .in('inscripcion.estado', ['A', 'P'])
+                        .neq('inscripcion_id', id);
+
+                    if (checkError) throw checkError;
+
+                    if (duplicates && duplicates.length > 0) {
+                        const duplicateDni = duplicates[0].dni;
+                        showToast(`ERROR DE DUPLICIDAD: El participante con DNI ${duplicateDni} ya tiene otra inscripción ACTIVA o PENDIENTE en esta misma modalidad (#${duplicates[0].inscripcion_id}). Debes desactivar la otra primero.`);
+                        return;
+                    }
+                }
+            }
+
             const { error } = await supabase
                 .from('inscripcion')
                 .update({ estado: nuevoEstado })
@@ -176,11 +228,18 @@ export default function Inscripciones() {
                     .from('detalle_inscripcion')
                     .update({ estado: 'I' })
                     .eq('inscripcion_id', id);
+            } else {
+                // Al activar la inscripción, también activamos sus detalles
+                await supabase
+                    .from('detalle_inscripcion')
+                    .update({ estado: 'A' })
+                    .eq('inscripcion_id', id);
             }
 
             fetchInscripciones();
+            showToast("Estado actualizado correctamente", "success");
         } catch (err) {
-            alert("Error al actualizar el estado: " + err.message);
+            showToast("Error al actualizar el estado: " + err.message);
         }
     };
 
@@ -272,6 +331,8 @@ export default function Inscripciones() {
                                 <th className="px-4 py-3 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Registro</th>
                                 <th className="px-4 py-3 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Participantes</th>
                                 <th className="px-4 py-3 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Modalidad</th>
+                                <th className="px-4 py-3 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Categoría</th>
+                                <th className="px-4 py-3 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Academia</th>
                                 <th className="px-4 py-3 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Estatus</th>
                                 <th className="px-4 py-3 text-[10px] font-bold text-gray-400 uppercase tracking-widest text-center">Acciones</th>
                             </tr>
@@ -299,6 +360,16 @@ export default function Inscripciones() {
                                     <td className="px-4 py-3">
                                         <span className="inline-block text-[9px] font-bold text-gray-600 uppercase tracking-wider bg-gray-50 px-2 py-1 rounded-sm font-body border border-gray-200/50 whitespace-nowrap">
                                             {ins.modalidad?.nombre || 'General'}
+                                        </span>
+                                    </td>
+                                    <td className="px-4 py-3">
+                                        <span className="inline-block text-[9px] font-bold text-orange-600 uppercase tracking-wider bg-orange-50 px-2 py-1 rounded-sm font-body border border-orange-100 whitespace-nowrap">
+                                            {ins.categoria?.nombre || 'N/A'}
+                                        </span>
+                                    </td>
+                                    <td className="px-4 py-3">
+                                        <span className="text-[11px] font-medium text-gray-700 font-body capitalize">
+                                            {ins.academia || '---'}
                                         </span>
                                     </td>
                                     <td className="px-4 py-3 text-left">
@@ -406,6 +477,14 @@ export default function Inscripciones() {
                 inscripcion={editingInscripcion}
                 onUpdate={fetchInscripciones}
             />
+
+            {toast && (
+                <Toast
+                    message={toast.message}
+                    type={toast.type}
+                    onClose={() => setToast(null)}
+                />
+            )}
 
             {/* Footer Técnico */}
             <div className="flex justify-between items-center text-[10px] text-gray-300 font-bold uppercase tracking-widest italic pt-10">

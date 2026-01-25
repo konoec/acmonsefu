@@ -20,127 +20,183 @@ const imageToBase64 = async (url) => {
 };
 
 /**
- * Genera y descarga el PDF de la ficha de inscripción.
- * Basado en el diseño institucional de festivales tradicionales (estilo Club Libertad).
+ * Genera el PDF de la ficha de inscripción
+ * Estilo institucional fino (Club Libertad).
  */
 export const generateInscripcionPDF = async (inscripcion) => {
-    console.log("Iniciando generación de PDF con datos:", inscripcion);
 
     if (!inscripcion || !inscripcion.id) {
-        alert("Error: Datos de inscripción no válidos.");
-        return;
+        throw new Error("Datos de inscripción inválidos");
     }
 
     try {
         const logoBase64 = await imageToBase64(logoAsociacion);
+
         const modalidadNombre = inscripcion.modalidad || "General";
+        const categoriaNombre = inscripcion.categoria || "N/A";
+        const academia = inscripcion.academia || "N/A";
         const participantes = inscripcion.participantes || [];
-        const fechaRegistro = inscripcion.fecha_registro ? new Date(inscripcion.fecha_registro).toLocaleDateString('es-PE') : "N/A";
-        const fechaEvento = "22 de Febrero, 2026";
+        const tipoParticipacion = inscripcion.tipo_participacion || (participantes.length > 1 ? "PAREJA" : "INDIVIDUAL");
+        const fechaRegistro = inscripcion.fecha_registro
+            ? new Date(inscripcion.fecha_registro).toLocaleDateString("es-PE")
+            : "N/A";
 
         const htmlContent = `
-            <style>
-                @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap');
-            </style>
-            <div style="font-family: 'Inter', sans-serif; color: #333; background: #fff; width: 720px; margin: 0 auto; padding: 40px; box-sizing: border-box; line-height: 1.4; position: relative;">
-                
-                <!-- ID BOX SUPERIOR IZQUIERDA -->
-                <div style="position: absolute; top: 40px; left: 40px; border: 3px solid #4a7eba; padding: 12px 25px; font-weight: 800; font-size: 20px; color: #333; background: #fff; z-index: 10; font-family: 'Plus Jakarta Sans', sans-serif;">
-                    ${inscripcion.id.toString().padStart(5, '0')}
-                </div>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600&display=swap');
+        </style>
 
-                <!-- LOGO BAJO EL ID -->
-                <div style="position: absolute; top: 110px; left: 40px; z-index: 10;">
-                    <img src="${logoBase64}" style="width: 110px; height: auto;" />
-                </div>
+        <div style="
+            font-family: 'Inter', sans-serif;
+            color: #333;
+            width: 720px;
+            margin: 0 auto;
+            padding: 40px;
+            position: relative;
+            line-height: 1.5;
+        ">
 
-                <!-- CABECERA CENTRAL -->
-                <div style="text-align: center; margin-bottom: 50px;">
-                    <h1 style="margin: 0; color: #4a7eba; font-size: 28px; font-weight: 800; letter-spacing: -0.02em; text-transform: uppercase; font-family: 'Plus Jakarta Sans', sans-serif;">
-                        FESTIVAL GOLPE TIERRA 2026
-                    </h1>
-                    <p style="margin: 8px 0; color: #4a7eba; font-size: 20px; font-style: normal; font-weight: 700; font-family: 'Plus Jakarta Sans', sans-serif;">
-                        organiza: &nbsp; AC Monsefú
-                    </p>
+            <!-- NÚMERO DE INSCRIPCIÓN (CENTRADO REAL) -->
+            <div style="
+                position:absolute;
+                top:40px;
+                left:40px;
+                width:120px;
+                height:50px;
+                border:2px solid #4a7eba;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                font-size:18px;
+                font-weight:500;
+                line-height:1;
+                padding:0;
+                font-family:'Plus Jakarta Sans', sans-serif;
+            ">
+                ${inscripcion.id.toString().padStart(5, "0")}
+            </div>
 
-                    <!-- CAJA DE ETAPA (ELIMINATORIAS ESTILO) -->
-                    <div style="display: inline-block; border: 2.5px solid #000; padding: 6px 70px; margin: 15px 0; font-weight: 800; font-size: 16px; text-transform: uppercase; letter-spacing: 1px; font-family: 'Plus Jakarta Sans', sans-serif;">
-                        2026 - REGISTRO OFICIAL
-                    </div>
+            <!-- LOGO -->
+            <div style="position:absolute; top:105px; left:40px;">
+                <img src="${logoBase64}" style="width:95px;" />
+            </div>
 
-                    <p style="margin: 5px 0; font-size: 14px; font-weight: 700; color: #333; text-transform: uppercase; font-family: 'Plus Jakarta Sans', sans-serif;">
-                        FECHA DEL EVENTO: ${fechaEvento}
-                    </p>
+            <!-- CABECERA -->
+            <div style="text-align:center; margin-bottom:25px;">
+                <h1 style="
+                    margin:0;
+                    font-size:26px;
+                    font-weight:600;
+                    color:#4a7eba;
+                    font-family:'Plus Jakarta Sans', sans-serif;
+                ">
+                    FESTIVAL GOLPE TIERRA 2026
+                </h1>
 
-                    <!-- CATEGORIA / MODALIDAD -->
-                    <h2 style="margin: 35px 0 10px 0; color: #4a7eba; font-size: 24px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; font-family: 'Plus Jakarta Sans', sans-serif;">
-                        MODALIDAD : ${modalidadNombre}
-                    </h2>
-                </div>
+                <p style="
+                    margin:6px 0 12px;
+                    font-size:16px;
+                    font-weight:500;
+                    color:#4a7eba;
+                ">
+                    organiza: AC Monsefú
+                </p>
 
-                <!-- SECCIÓN DE PARTICIPANTES -->
-                <div style="margin-left: 100px; margin-top: 20px;">
-                    ${participantes.map((p) => `
-                        <div style="margin-bottom: 45px;">
-                            <p style="text-decoration: underline; font-weight: 800; font-size: 16px; margin-bottom: 22px; text-transform: uppercase; color: #333; letter-spacing: 1px; font-family: 'Plus Jakarta Sans', sans-serif;">
-                                DATOS ${p.sexo === 'F' ? 'MUJER' : 'HOMBRE'}
-                            </p>
-                            
-                            <table style="width: 100%; border-collapse: collapse; font-size: 14.5px; color: #333; font-family: 'Inter', sans-serif;">
-                                <tr>
-                                    <td style="width: 200px; padding: 6px 0; font-weight: 700;">- NOMBRES :</td>
-                                    <td style="font-weight: 400; text-transform: uppercase;">${p.nombres}</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 6px 0; font-weight: 700;">- APELLIDOS :</td>
-                                    <td style="font-weight: 400; text-transform: uppercase;">${p.apellidos}</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 6px 0; font-weight: 700;">- DOCUMENTO IDENTIDAD :</td>
-                                    <td style="font-weight: 400;">${p.dni}</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 6px 0; font-weight: 700;">- TELEFONO :</td>
-                                    <td style="font-weight: 400;">${p.telefono}</td>
-                                </tr>
-                            </table>
-                        </div>
-                    `).join('')}
-                </div>
-
-                <!-- FOOTER - FECHA Y OBSERVACIONES -->
-                <div style="margin-top: 80px; padding-top: 15px; border-top: 1.5px solid #666; font-size: 14px; color: #444; font-weight: 400; font-family: 'Inter', sans-serif;">
-                    <p style="margin: 8px 0;">++++++ FECHA DE INSCRIPCION: ${fechaRegistro}</p>
-                    <p style="margin: 8px 0;">++++++ OBSERVACIONES: ________________________________________________</p>
-                </div>
-
-                <!-- ZONA DE FIRMA -->
-                <div style="margin-top: 60px; text-align: center;">
-                    <div style="display: inline-block; width: 350px; border-top: 1.5px solid #000; padding-top: 10px;">
-                        <p style="margin: 0; font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; font-family: 'Plus Jakarta Sans', sans-serif;">FIRMA DEL PARTICIPANTE</p>
-                    </div>
+                <!-- RECTÁNGULO REGISTRO (CENTRADO REAL) -->
+                <div style="
+                    width:420px;
+                    height:40px;
+                    margin:0 auto;
+                    border:2px solid #000;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    font-size:14px;
+                    font-weight:500;
+                    line-height:1;
+                    padding:0;
+                    text-transform:uppercase;
+                    font-family:'Plus Jakarta Sans', sans-serif;
+                ">
+                    2026 - REGISTRO OFICIAL
                 </div>
             </div>
+
+            <!-- INFO GENERAL -->
+            <div style="
+                margin-left:110px;
+                border:1px solid #4a7eba;
+                padding:14px;
+                margin-bottom:28px;
+            ">
+                <table style="width:100%; font-size:14px;">
+                    <tr><td style="width:160px; color:#4a7eba;">MODALIDAD:</td><td>${modalidadNombre}</td></tr>
+                    <tr><td style="color:#4a7eba;">CATEGORÍA:</td><td>${categoriaNombre}</td></tr>
+                    <tr><td style="color:#4a7eba;">TIPO PARTICIPACIÓN:</td><td>${tipoParticipacion}</td></tr>
+                </table>
+            </div>
+
+            <!-- PARTICIPANTES -->
+            <div style="margin-left:110px;">
+                ${participantes.map((p, idx) => `
+                <div style="margin-bottom:26px;">
+                    <div style="
+                        font-size:14px;
+                        font-weight:600;
+                        margin-bottom:10px;
+                        text-decoration:underline;
+                    ">
+                        PARTICIPANTE ${idx + 1} (${p.sexo === "F" ? "DAMA" : "VARÓN"})
+                    </div>
+
+                    <table style="width:100%; font-size:13.5px;">
+                        <tr><td style="width:190px;">- NOMBRES :</td><td>${p.nombres}</td></tr>
+                        <tr><td>- APELLIDOS :</td><td>${p.apellidos}</td></tr>
+                        <tr><td>- FECHA DE NACIMIENTO :</td><td>${p.fecha_nacimiento ? new Date(p.fecha_nacimiento).toLocaleDateString("es-PE") : "N/A"}</td></tr>
+                        <tr><td>- DNI :</td><td>${p.dni}</td></tr>
+                        <tr><td>- TELÉFONO :</td><td>${p.telefono}</td></tr>
+                        <tr><td>- ACADEMIA :</td><td>${academia}</td></tr>
+                    </table>
+                </div>
+                `).join("")}
+            </div>
+
+            <!-- FOOTER -->
+            <div style="
+                margin-top:35px;
+                padding-top:14px;
+                border-top:1px solid #777;
+                font-size:13px;
+            ">
+                <p>++++++ FECHA DE INSCRIPCIÓN: ${fechaRegistro}</p>
+                <p>++++++ OBSERVACIONES: ________________________________________________</p>
+            </div>
+
+            <!-- FIRMA -->
+            <div style="margin-top:45px; text-align:center;">
+                <div style="width:340px; margin:auto; border-top:1px solid #000; padding-top:8px;">
+                    <span style="font-size:13px; font-weight:600;">
+                        FIRMA DEL PARTICIPANTE
+                    </span>
+                </div>
+            </div>
+
+        </div>
         `;
 
         const opt = {
-            margin: [0, 0, 0, 0],
+            margin: 0,
             filename: `ficha_inscripcion_${inscripcion.id}.pdf`,
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: {
-                scale: 2.5,
-                useCORS: true,
-                letterRendering: true
-            },
-            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            image: { type: "jpeg", quality: 0.98 },
+            html2canvas: { scale: 2.5, useCORS: true },
+            jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }
         };
 
         const html2pdf = (await import("html2pdf.js")).default;
         await html2pdf().set(opt).from(htmlContent).save();
-        console.log("PDF generado con éxito (Tipografía actualizada, Estructura original).");
 
     } catch (err) {
-        console.error("Error crítico:", err);
-        alert("Falla en la generación del PDF.");
+        console.error(err);
+        throw new Error("Error al generar PDF");
     }
 };

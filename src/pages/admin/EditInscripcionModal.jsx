@@ -1,13 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from "../../supabaseClient";
+import Toast from "../../components/Toast";
 
 export default function EditInscripcionModal({ isOpen, onClose, inscripcion, onUpdate }) {
     const [formData, setFormData] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [toast, setToast] = useState(null);
+
+    const showToast = (message, type = 'error') => {
+        setToast({ message, type });
+    };
 
     useEffect(() => {
         if (inscripcion) {
             setFormData({
+                academia: inscripcion.academia || "",
                 // Solo necesitamos el detalle para editar datos personales
                 detalle: (inscripcion.detalle_inscripcion || []).map(d => ({ ...d }))
             });
@@ -22,6 +29,10 @@ export default function EditInscripcionModal({ isOpen, onClose, inscripcion, onU
         setFormData({ ...formData, detalle: newDetalle });
     };
 
+    const handleAcademiaChange = (value) => {
+        setFormData({ ...formData, academia: value });
+    };
+
     const handleSave = async () => {
         setLoading(true);
         try {
@@ -33,7 +44,7 @@ export default function EditInscripcionModal({ isOpen, onClose, inscripcion, onU
                 if (p.dni.length !== 8) throw new Error(`El DNI de ${p.nombres} debe tener 8 dígitos.`);
             }
 
-            // Guardar cambios
+            // Guardar cambios en detalle_inscripcion
             for (const det of formData.detalle) {
                 const { error: errorDet } = await supabase
                     .from('detalle_inscripcion')
@@ -48,13 +59,22 @@ export default function EditInscripcionModal({ isOpen, onClose, inscripcion, onU
                 if (errorDet) throw errorDet;
             }
 
+            // Guardar cambios en inscripcion (academia)
+            const { error: errorIns } = await supabase
+                .from('inscripcion')
+                .update({ academia: formData.academia })
+                .eq('id', inscripcion.id);
+
+            if (errorIns) throw errorIns;
+
             onUpdate();
-            onClose();
-            alert("Datos actualizados correctamente.");
+            // onClose(); // No cerramos aún para que vea el toast
+            showToast("Datos actualizados correctamente.", "success");
+            setTimeout(onClose, 2000);
 
         } catch (err) {
             console.error("Error al editar:", err);
-            alert("Error al guardar: " + err.message);
+            showToast("Error al guardar: " + err.message);
         } finally {
             setLoading(false);
         }
@@ -83,6 +103,24 @@ export default function EditInscripcionModal({ isOpen, onClose, inscripcion, onU
 
                 {/* Body (Scrollable) */}
                 <div className="p-8 overflow-y-auto space-y-8 font-body">
+
+                    {/* Sección Academia */}
+                    <div className="space-y-4">
+                        <div className="flex items-center gap-3">
+                            <div className="w-1 h-4 bg-gray-900"></div>
+                            <h4 className="text-[11px] font-black uppercase text-gray-400 tracking-widest">Institución / Academia</h4>
+                        </div>
+                        <div className="space-y-1.5">
+                            <label className="text-[9px] font-bold text-gray-400 uppercase tracking-widest ml-1">Nombre de la Academia</label>
+                            <input
+                                type="text"
+                                value={formData.academia}
+                                onChange={(e) => handleAcademiaChange(e.target.value)}
+                                className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-sm text-sm font-medium focus:border-orange-500 focus:bg-white outline-none transition-all uppercase"
+                                placeholder="Escribe el nombre de la academia"
+                            />
+                        </div>
+                    </div>
 
                     {/* Sección Participantes */}
                     <div className="space-y-6">
@@ -170,6 +208,14 @@ export default function EditInscripcionModal({ isOpen, onClose, inscripcion, onU
                     </button>
                 </div>
             </div>
+
+            {toast && (
+                <Toast
+                    message={toast.message}
+                    type={toast.type}
+                    onClose={() => setToast(null)}
+                />
+            )}
         </div>
     );
 }

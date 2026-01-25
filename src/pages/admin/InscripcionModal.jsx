@@ -68,11 +68,23 @@ export default function InscripcionModal({ isOpen, onClose, inscripcion }) {
                 {/* Body */}
                 <div className="flex-grow overflow-y-auto p-5 lg:p-6 space-y-6 font-body">
 
-                    <div className="grid grid-cols-3 gap-4 border-b border-gray-100 pb-4 text-left">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 border-b border-gray-100 pb-4 text-left">
                         <div>
                             <span className="text-[9px] font-bold text-gray-400 uppercase tracking-widest block mb-1">Modalidad</span>
                             <p className="text-sm font-bold text-gray-900 leading-tight">
                                 {inscripcion.modalidad?.nombre || 'General'}
+                            </p>
+                        </div>
+                        <div>
+                            <span className="text-[9px] font-bold text-gray-400 uppercase tracking-widest block mb-1">Categoría</span>
+                            <p className="text-sm font-bold text-orange-600 leading-tight uppercase">
+                                {inscripcion.categoria?.nombre || 'N/A'}
+                            </p>
+                        </div>
+                        <div>
+                            <span className="text-[9px] font-bold text-gray-400 uppercase tracking-widest block mb-1">Academia</span>
+                            <p className="text-sm font-bold text-gray-900 leading-tight">
+                                {inscripcion.academia || '---'}
                             </p>
                         </div>
                         <div>
@@ -86,14 +98,15 @@ export default function InscripcionModal({ isOpen, onClose, inscripcion }) {
                                         'Inactivo'}
                             </span>
                         </div>
-                        <div>
-                            <span className="text-[9px] font-bold text-gray-400 uppercase tracking-widest block mb-1">Registro</span>
-                            <p className="text-sm font-bold text-gray-900">
-                                {new Date(inscripcion.fecha_registro).toLocaleDateString('es-PE', {
-                                    year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
-                                })}
-                            </p>
-                        </div>
+                    </div>
+
+                    <div className="text-left border-b border-gray-100 pb-4">
+                        <span className="text-[9px] font-bold text-gray-400 uppercase tracking-widest block mb-1">Fecha de Registro</span>
+                        <p className="text-sm font-bold text-gray-900">
+                            {new Date(inscripcion.fecha_registro).toLocaleDateString('es-PE', {
+                                year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
+                            })}
+                        </p>
                     </div>
 
                     {/* Sección: Participantes */}
@@ -108,17 +121,23 @@ export default function InscripcionModal({ isOpen, onClose, inscripcion }) {
                                 <span className="text-[9px] font-bold text-gray-400 uppercase tracking-widest">Sincronizando...</span>
                             </div>
                         ) : (
-                            <div className="space-y-2">
+                            <div className="space-y-3">
                                 {participantes.length > 0 ? participantes.map((p, idx) => (
-                                    <div key={idx} className="bg-gray-50 p-3 rounded-sm border-l-2 border-gray-900">
-                                        <div className="grid grid-cols-4 gap-4 items-end">
+                                    <div key={idx} className="bg-gray-50 p-4 rounded-sm border-l-4 border-gray-900">
+                                        <div className="grid grid-cols-2 md:grid-cols-3 gap-y-4 gap-x-6 items-start">
                                             <div className="space-y-0.5">
-                                                <span className="text-[8px] font-bold text-gray-400 uppercase tracking-widest block">Nombres</span>
-                                                <p className="text-[11px] font-bold text-gray-900 tracking-tight">{p.nombres} {p.apellidos}</p>
+                                                <span className="text-[8px] font-bold text-gray-400 uppercase tracking-widest block">Nombres y Apellidos</span>
+                                                <p className="text-[11px] font-bold text-gray-900 tracking-tight uppercase">{p.nombres} {p.apellidos}</p>
                                             </div>
                                             <div className="space-y-0.5">
                                                 <span className="text-[8px] font-bold text-gray-400 uppercase tracking-widest block">DNI</span>
                                                 <p className="text-[11px] font-semibold text-gray-700 tracking-tight">{p.dni}</p>
+                                            </div>
+                                            <div className="space-y-0.5">
+                                                <span className="text-[8px] font-bold text-gray-400 uppercase tracking-widest block">F. Nacimiento</span>
+                                                <p className="text-[11px] font-semibold text-gray-700 tracking-tight">
+                                                    {p.fecha_nacimiento ? new Date(p.fecha_nacimiento).toLocaleDateString('es-PE') : '---'}
+                                                </p>
                                             </div>
                                             <div className="space-y-0.5">
                                                 <span className="text-[8px] font-bold text-gray-400 uppercase tracking-widest block">Teléfono</span>
@@ -126,7 +145,7 @@ export default function InscripcionModal({ isOpen, onClose, inscripcion }) {
                                             </div>
                                             <div className="space-y-0.5">
                                                 <span className="text-[8px] font-bold text-gray-400 uppercase tracking-widest block">Sexo</span>
-                                                <p className="text-[11px] font-semibold text-gray-700 uppercase tracking-tight">{p.sexo === 'M' ? 'M' : 'F'}</p>
+                                                <p className="text-[11px] font-semibold text-gray-700 uppercase tracking-tight">{p.sexo === 'M' ? 'VARÓN' : 'DAMA'}</p>
                                             </div>
                                         </div>
                                     </div>

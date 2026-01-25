@@ -93,14 +93,27 @@ export default function ParticipantCard({
                     />
                 </div>
 
+                {/* Fecha de Nacimiento */}
+                <div className="space-y-1">
+                    <label className="block text-[10px] uppercase text-gray-500 font-bold tracking-widest font-heading">
+                        Fecha de Nacimiento <span className="text-orange-500">*</span>
+                    </label>
+                    <input
+                        type="date"
+                        value={participant.fecha_nacimiento || ""}
+                        onChange={(e) => onChange(index, "fecha_nacimiento", e.target.value)}
+                        className="w-full px-0 py-2 bg-transparent border-b border-gray-200 focus:border-orange-500 outline-none font-body text-sm text-gray-800"
+                    />
+                </div>
+
                 {/* SEXO SELECTION */}
                 {!lockedSex && (
-                    <div className="md:col-span-2 lg:col-span-4 space-y-2 pt-2">
+                    <div className="md:col-span-1 lg:col-span-1 space-y-2 pt-2">
                         <label className="block text-[10px] uppercase text-gray-500 font-bold tracking-widest font-heading">
                             Sexo <span className="text-orange-500">*</span>
                         </label>
-                        <div className="flex gap-8">
-                            <label className="group flex items-center gap-3 cursor-pointer">
+                        <div className="flex gap-4">
+                            <label className="group flex items-center gap-2 cursor-pointer">
                                 <div className="relative flex items-center justify-center">
                                     <input
                                         type="radio"
@@ -108,14 +121,14 @@ export default function ParticipantCard({
                                         value="F"
                                         checked={sexo === "F"}
                                         onChange={(e) => onChange(index, "sexo", e.target.value)}
-                                        className="peer appearance-none w-5 h-5 border border-gray-300 rounded-sm checked:border-orange-600"
+                                        className="peer appearance-none w-4 h-4 border border-gray-300 rounded-sm checked:border-orange-600"
                                     />
-                                    <div className="absolute w-2.5 h-2.5 bg-orange-600 rounded-sm opacity-0 peer-checked:opacity-100"></div>
+                                    <div className="absolute w-2 h-2 bg-orange-600 rounded-sm opacity-0 peer-checked:opacity-100"></div>
                                 </div>
-                                <span className={`text-xs font-bold uppercase tracking-wider ${sexo === "F" ? "text-orange-900" : "text-gray-400 group-hover:text-gray-600"}`}>Dama</span>
+                                <span className={`text-[10px] font-bold uppercase tracking-wider ${sexo === "F" ? "text-orange-900" : "text-gray-400 group-hover:text-gray-600"}`}>Dama</span>
                             </label>
 
-                            <label className="group flex items-center gap-3 cursor-pointer">
+                            <label className="group flex items-center gap-2 cursor-pointer">
                                 <div className="relative flex items-center justify-center">
                                     <input
                                         type="radio"
@@ -123,11 +136,11 @@ export default function ParticipantCard({
                                         value="M"
                                         checked={sexo === "M"}
                                         onChange={(e) => onChange(index, "sexo", e.target.value)}
-                                        className="peer appearance-none w-5 h-5 border border-gray-300 rounded-sm checked:border-orange-600"
+                                        className="peer appearance-none w-4 h-4 border border-gray-300 rounded-sm checked:border-orange-600"
                                     />
-                                    <div className="absolute w-2.5 h-2.5 bg-orange-600 rounded-sm opacity-0 peer-checked:opacity-100"></div>
+                                    <div className="absolute w-2 h-2 bg-orange-600 rounded-sm opacity-0 peer-checked:opacity-100"></div>
                                 </div>
-                                <span className={`text-xs font-bold uppercase tracking-wider ${sexo === "M" ? "text-orange-900" : "text-gray-400 group-hover:text-gray-600"}`}>Varón</span>
+                                <span className={`text-[10px] font-bold uppercase tracking-wider ${sexo === "M" ? "text-orange-900" : "text-gray-400 group-hover:text-gray-600"}`}>Varón</span>
                             </label>
                         </div>
                     </div>

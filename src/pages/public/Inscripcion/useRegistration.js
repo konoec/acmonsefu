@@ -5,15 +5,19 @@ export const useRegistration = () => {
     // --- States ---
     const [modalidades, setModalidades] = useState([]);
     const [tiposParticipacion, setTiposParticipacion] = useState([]);
+    const [categorias, setCategorias] = useState([]);
 
     const [selectedModalidad, setSelectedModalidad] = useState("");
     const [selectedTipo, setSelectedTipo] = useState(null);
+    const [selectedCategoriaId, setSelectedCategoriaId] = useState("");
+    const [academia, setAcademia] = useState("");
 
     // Participants array
     const [participants, setParticipants] = useState([]);
 
     const [loadingModalidades, setLoadingModalidades] = useState(true);
     const [loadingTipos, setLoadingTipos] = useState(false);
+    const [loadingCategorias, setLoadingCategorias] = useState(false);
     const [submitting, setSubmitting] = useState(false);
     const [success, setSuccess] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
@@ -58,27 +62,27 @@ export const useRegistration = () => {
 
         if (rule === 'X') {
             initialParticipants = [
-                { nombres: "", apellidos: "", dni: "", telefono: "", sexo: "M", lockedSex: true, label: "Participante 1 (Varón)" },
-                { nombres: "", apellidos: "", dni: "", telefono: "", sexo: "F", lockedSex: true, label: "Participante 2 (Dama)" }
+                { nombres: "", apellidos: "", dni: "", telefono: "", fecha_nacimiento: "", sexo: "M", lockedSex: true, label: "Participante 1 (Varón)" },
+                { nombres: "", apellidos: "", dni: "", telefono: "", fecha_nacimiento: "", sexo: "F", lockedSex: true, label: "Participante 2 (Dama)" }
             ];
         } else if (rule === 'M') {
             for (let i = 0; i < minQty; i++) {
                 initialParticipants.push({
-                    nombres: "", apellidos: "", dni: "", telefono: "", sexo: "M", lockedSex: true,
+                    nombres: "", apellidos: "", dni: "", telefono: "", fecha_nacimiento: "", sexo: "M", lockedSex: true,
                     label: minQty > 1 ? `Participante ${i + 1} (Varón)` : "Participante (Varón)"
                 });
             }
         } else if (rule === 'F') {
             for (let i = 0; i < minQty; i++) {
                 initialParticipants.push({
-                    nombres: "", apellidos: "", dni: "", telefono: "", sexo: "F", lockedSex: true,
+                    nombres: "", apellidos: "", dni: "", telefono: "", fecha_nacimiento: "", sexo: "F", lockedSex: true,
                     label: minQty > 1 ? `Participante ${i + 1} (Dama)` : "Participante (Dama)"
                 });
             }
         } else {
             for (let i = 0; i < minQty; i++) {
                 initialParticipants.push({
-                    nombres: "", apellidos: "", dni: "", telefono: "", sexo: "", lockedSex: false,
+                    nombres: "", apellidos: "", dni: "", telefono: "", fecha_nacimiento: "", sexo: "", lockedSex: false,
                     label: minQty > 1 ? `Participante ${i + 1}` : "Participante"
                 });
             }
@@ -93,14 +97,18 @@ export const useRegistration = () => {
         setSelectedModalidad(modId);
 
         setSelectedTipo(null);
+        setSelectedCategoriaId("");
         setParticipants([]);
         setTiposParticipacion([]);
+        setCategorias([]);
         setErrorMessage(null);
 
         if (!modId) return;
 
         setLoadingTipos(true);
+        setLoadingCategorias(true);
         try {
+            // Fetch Tipos
             const { data: typesData, error: typesError } = await supabase
                 .from("modalidad_tipo")
                 .select(`
@@ -141,11 +149,29 @@ export const useRegistration = () => {
                 initializeParticipants(mergedTypes[0]);
             }
 
+            // Fetch Categorias
+            const { data: catsData, error: catsError } = await supabase
+                .from("modalidad_categoria")
+                .select(`
+                    categoria (
+                        id,
+                        nombre
+                    )
+                `)
+                .eq("modalidad_id", modId)
+                .eq("estado", "A");
+
+            if (catsError) throw catsError;
+
+            const fetchedCats = catsData.map(c => c.categoria).filter(Boolean);
+            setCategorias(fetchedCats);
+
         } catch (err) {
-            console.error("Error fetching types/rules:", err);
+            console.error("Error fetching types/categories/rules:", err);
             setErrorMessage("Error al cargar configuración de inscripción.");
         } finally {
             setLoadingTipos(false);
+            setLoadingCategorias(false);
         }
     };
 
@@ -156,13 +182,17 @@ export const useRegistration = () => {
         initializeParticipants(tipo || null);
     };
 
+    const handleCategoriaChange = (e) => {
+        setSelectedCategoriaId(e.target.value);
+    };
+
     const addParticipant = () => {
         if (!selectedTipo) return;
         if (participants.length >= (selectedTipo.cantidad_maxima || 2)) return;
 
         const rule = selectedTipo.regla_sexo;
         const nextIndex = participants.length + 1;
-        const newP = { nombres: "", apellidos: "", dni: "", telefono: "", sexo: "", lockedSex: false, label: `Participante #${nextIndex}` };
+        const newP = { nombres: "", apellidos: "", dni: "", telefono: "", fecha_nacimiento: "", sexo: "", lockedSex: false, label: `Participante #${nextIndex}` };
 
         if (rule === 'M') {
             newP.sexo = 'M';
@@ -202,12 +232,22 @@ export const useRegistration = () => {
         if (e) e.preventDefault();
         setErrorMessage(null);
 
+        if (!selectedCategoriaId) {
+            setErrorMessage("Por favor selecciona una categoría.");
+            return;
+        }
+
+        if (!academia.trim()) {
+            setErrorMessage("Por favor ingresa el nombre de tu academia.");
+            return;
+        }
+
         const missingFieldsLabels = [];
         const invalidDniLabels = [];
 
         for (let i = 0; i < participants.length; i++) {
             const p = participants[i];
-            const isMissing = !p.nombres || !p.apellidos || !p.dni || !p.telefono || !p.sexo;
+            const isMissing = !p.nombres || !p.apellidos || !p.dni || !p.telefono || !p.sexo || !p.fecha_nacimiento;
             const isInvalidDni = p.dni && p.dni.length !== 8;
 
             if (isMissing) {
@@ -218,7 +258,7 @@ export const useRegistration = () => {
         }
 
         if (missingFieldsLabels.length > 0) {
-            setErrorMessage(`Por favor completa todos los campos de: ${missingFieldsLabels.join(", ")}.`);
+            setErrorMessage(`Por favor completa todos los campos (incluyendo fecha de nacimiento) de: ${missingFieldsLabels.join(", ")}.`);
             return;
         }
 
@@ -236,11 +276,14 @@ export const useRegistration = () => {
                 apellidos: p.apellidos,
                 dni: p.dni,
                 telefono: p.telefono,
-                sexo: p.sexo
+                sexo: p.sexo,
+                fecha_nacimiento: p.fecha_nacimiento
             }));
 
             const payload = {
                 p_modalidad_id: parseInt(selectedModalidad),
+                p_categoria_id: parseInt(selectedCategoriaId),
+                p_academia: academia.trim(),
                 p_personas: p_personas
             };
 
@@ -248,7 +291,15 @@ export const useRegistration = () => {
 
             if (error) throw error;
 
-            setLastInscripcionData(inscripcionData);
+            // Enriquecer los datos para el PDF ya que el RPC no devuelve los nombres de categoría y tipo
+            const categoryObj = categorias.find(c => c.id === parseInt(selectedCategoriaId));
+            const enrichedData = {
+                ...inscripcionData,
+                categoria: categoryObj?.nombre || "N/A",
+                tipo_participacion: selectedTipo?.nombre || (participants.length > 1 ? "Pareja" : "Individual")
+            };
+
+            setLastInscripcionData(enrichedData);
             setSuccess(true);
             window.scrollTo({ top: document.getElementById('inscripcion').offsetTop, behavior: 'smooth' });
 
@@ -264,6 +315,8 @@ export const useRegistration = () => {
         setSuccess(false);
         setSelectedModalidad("");
         setSelectedTipo(null);
+        setSelectedCategoriaId("");
+        setAcademia("");
         setParticipants([]);
         setErrorMessage(null);
         setLastInscripcionData(null);
@@ -272,21 +325,28 @@ export const useRegistration = () => {
     return {
         modalidades,
         tiposParticipacion,
+        categorias,
         selectedModalidad,
         selectedTipo,
+        selectedCategoriaId,
+        academia,
+        setAcademia,
         participants,
         loadingModalidades,
         loadingTipos,
+        loadingCategorias,
         submitting,
         success,
         errorMessage,
         lastInscripcionData,
         handleModalidadChange,
         handleTipoChange,
+        handleCategoriaChange,
         addParticipant,
         removeParticipant,
         handleParticipantChange,
         handleSubmit,
         handleReset,
     };
+
 };

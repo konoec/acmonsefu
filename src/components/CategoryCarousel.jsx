@@ -35,8 +35,6 @@ const categories = [
     { name: "Marinera Tradicional", Icon: Icons.Mask },
     { name: "Novel Nacional", Icon: Icons.Star },
     { name: "Individual Dama", Icon: Icons.Sparkles },
-    { name: "Parejas Mixtas", Icon: Icons.Handshake },
-    { name: "Campeón de Campeones", Icon: Icons.Crown },
 ];
 
 export default function CategoryCarousel() {

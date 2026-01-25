@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { supabase } from "../../supabaseClient";
 import { generateInscripcionPDF } from "../../utils/pdfGenerator";
+import Toast from "../../components/Toast";
 
 /* ===============================
    IMPORTACIÓN DE IMÁGENES - GALERÍA BENTO
@@ -102,6 +103,11 @@ export default function ConsultaInscripcion() {
     const [loading, setLoading] = useState(false);
     const [downloadingId, setDownloadingId] = useState(null);
     const [searched, setSearched] = useState(false);
+    const [toast, setToast] = useState(null);
+
+    const showToast = (message, type = 'error') => {
+        setToast({ message, type });
+    };
 
     const handleSearch = async (e) => {
         if (e) e.preventDefault();
@@ -122,11 +128,12 @@ export default function ConsultaInscripcion() {
                         id,
                         estado,
                         fecha_registro,
-                        modalidad (nombre)
+                        academia,
+                        modalidad (nombre),
+                        categoria (nombre)
                     )
                 `)
-                .eq('dni', dni)
-                .neq('estado', 'I');
+                .eq('dni', dni);
 
             if (error) throw error;
             setResults(data || []);
@@ -146,8 +153,10 @@ export default function ConsultaInscripcion() {
                 .select(`
                     id,
                     fecha_registro,
+                    academia,
                     modalidad (nombre),
-                    detalle_inscripcion (*)
+                    categoria (nombre),
+                    detalle_inscripcion (*, tipo_participacion (nombre))
                 `)
                 .eq('id', inscripcionId)
                 .single();
@@ -159,19 +168,23 @@ export default function ConsultaInscripcion() {
                 id: data.id,
                 fecha_registro: data.fecha_registro,
                 modalidad: data.modalidad?.nombre,
+                categoria: data.categoria?.nombre,
+                academia: data.academia,
+                tipo_participacion: data.detalle_inscripcion[0]?.tipo_participacion?.nombre,
                 participantes: data.detalle_inscripcion.map(d => ({
                     nombres: d.nombres,
                     apellidos: d.apellidos,
                     dni: d.dni,
                     telefono: d.telefono,
-                    sexo: d.sexo
+                    sexo: d.sexo,
+                    fecha_nacimiento: d.fecha_nacimiento
                 }))
             };
 
             await generateInscripcionPDF(pdfData);
         } catch (err) {
             console.error("Error al descargar PDF:", err);
-            alert("No se pudo generar el PDF por un error de conexión.");
+            showToast("No se pudo generar el PDF por un error de conexión.");
         } finally {
             setDownloadingId(null);
         }
@@ -246,6 +259,8 @@ export default function ConsultaInscripcion() {
                                             </h3>
                                             <p className="text-[11px] text-gray-400 font-medium italic">
                                                 Registrado el {new Date(res.inscripcion?.fecha_registro).toLocaleDateString()}
+                                                {res.inscripcion?.categoria?.nombre && ` • Categoría: ${res.inscripcion.categoria.nombre}`}
+                                                {res.inscripcion?.academia && ` • Academia: ${res.inscripcion.academia}`}
                                             </p>
                                         </div>
 
@@ -315,6 +330,14 @@ export default function ConsultaInscripcion() {
                 </div>
 
             </div>
+
+            {toast && (
+                <Toast
+                    message={toast.message}
+                    type={toast.type}
+                    onClose={() => setToast(null)}
+                />
+            )}
         </div>
     );
 }

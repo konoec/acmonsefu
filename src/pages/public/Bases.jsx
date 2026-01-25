@@ -24,7 +24,7 @@ export default function Bases() {
             </h2>
           </div>
           <p className="text-base lg:text-lg text-gray-500 leading-snug max-w-sm border-l-2 border-orange-500/20 pl-6">
-            Transparencia, tradición y excelencia. Conoce los lineamientos que rigen nuestro gran encuentro cultural.
+            Arte, cultura e historia conoce los lineamientos y lo demas que estas escrito.
           </p>
         </header>
 
