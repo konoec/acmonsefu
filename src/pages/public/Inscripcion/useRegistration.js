@@ -240,15 +240,17 @@ export const useRegistration = () => {
         }
     };
 
-    const handleParticipantChange = (index, field, value) => {
+    const handleParticipantChange = React.useCallback((index, field, value) => {
         if ((field === "dni" || field === "telefono") && !/^\d*$/.test(value)) return;
         if (field === "dni" && value.length > 8) return;
         if (field === "telefono" && value.length > 9) return;
 
-        const updated = [...participants];
-        updated[index] = { ...updated[index], [field]: value };
-        setParticipants(updated);
-    };
+        setParticipants(prev => {
+            const updated = [...prev];
+            updated[index] = { ...updated[index], [field]: value };
+            return updated;
+        });
+    }, []);
 
     const handleSubmit = async (e) => {
         if (e) e.preventDefault();

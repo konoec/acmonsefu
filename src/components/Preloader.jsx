@@ -8,11 +8,10 @@ export default function Preloader({ onFinish }) {
     // Force a minimum display time of 1.5s for branding impact
     const minTimePromise = new Promise(resolve => setTimeout(resolve, 1500));
 
-    // Preload ALL images
+    // Preload ONLY critical images
     const imagePromises = [
       IMAGES.LOGO,
       ...IMAGES.HOME,
-      ...IMAGES.GALERIA
     ].map(src => {
       return new Promise((resolve, reject) => {
         const img = new Image();

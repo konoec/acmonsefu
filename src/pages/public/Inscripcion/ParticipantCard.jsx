@@ -1,12 +1,12 @@
-import React from "react";
+import React, { memo } from "react";
 
-export default function ParticipantCard({
+const ParticipantCard = memo(({
     participant,
     index,
     onRemove,
     onChange,
     canRemove,
-}) {
+}) => {
     const { dni, telefono, nombres, apellidos, sexo, lockedSex, label } = participant;
 
     return (
@@ -34,7 +34,7 @@ export default function ParticipantCard({
                 </h4>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-3 items-end">
+            <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 ${lockedSex ? 'lg:grid-cols-5' : 'lg:grid-cols-6'} gap-x-12 gap-y-3 items-start`}>
                 {/* Nombres */}
                 <div className="space-y-1">
                     <label className="block text-[10px] uppercase text-gray-500 font-bold tracking-widest font-heading">
@@ -108,11 +108,11 @@ export default function ParticipantCard({
 
                 {/* SEXO SELECTION */}
                 {!lockedSex && (
-                    <div className="md:col-span-1 lg:col-span-1 space-y-2 pt-2">
+                    <div className="space-y-1">
                         <label className="block text-[10px] uppercase text-gray-500 font-bold tracking-widest font-heading">
                             Sexo <span className="text-orange-500">*</span>
                         </label>
-                        <div className="flex gap-4">
+                        <div className="flex gap-4 h-[37px] items-center">
                             <label className="group flex items-center gap-2 cursor-pointer">
                                 <div className="relative flex items-center justify-center">
                                     <input
@@ -148,4 +148,6 @@ export default function ParticipantCard({
             </div>
         </div>
     );
-}
+});
+
+export default ParticipantCard;

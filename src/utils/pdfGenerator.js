@@ -21,7 +21,7 @@ const imageToBase64 = async (url) => {
 
 /**
  * Genera el PDF de la ficha de inscripción
- * Estilo institucional fino (Club Libertad).
+ * Diseño formal y profesional tipo documento Word
  */
 export const generateInscripcionPDF = async (inscripcion) => {
 
@@ -43,141 +43,310 @@ export const generateInscripcionPDF = async (inscripcion) => {
 
         const htmlContent = `
         <style>
-            @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600&display=swap');
+            @import url('https://fonts.googleapis.com/css2?family=Calibri:wght@400;700&family=Arial&display=swap');
+            
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            
+            table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+            
+            th, td {
+                text-align: left;
+                vertical-align: top;
+            }
         </style>
 
         <div style="
-            font-family: 'Inter', sans-serif;
-            color: #333;
-            width: 720px;
+            font-family: 'Calibri', Arial, sans-serif;
+            color: #000;
+            width: 210mm;
+            min-height: 297mm;
             margin: 0 auto;
-            padding: 40px;
-            position: relative;
-            line-height: 1.5;
+            padding: 25mm 20mm;
+            background: white;
         ">
 
-            <!-- NÚMERO DE INSCRIPCIÓN (CENTRADO REAL) -->
+            <!-- CABECERA TIPO WORD -->
             <div style="
-                position:absolute;
-                top:40px;
-                left:40px;
-                width:120px;
-                height:50px;
-                border:2px solid #4a7eba;
-                display:flex;
-                align-items:center;
-                justify-content:center;
-                font-size:18px;
-                font-weight:500;
-                line-height:1;
-                padding:0;
-                font-family:'Plus Jakarta Sans', sans-serif;
+                border-bottom: 2px solid #000;
+                padding-bottom: 10px;
+                margin-bottom: 15px;
             ">
-                ${inscripcion.id.toString().padStart(5, "0")}
-            </div>
-
-            <!-- LOGO -->
-            <div style="position:absolute; top:105px; left:40px;">
-                <img src="${logoBase64}" style="width:95px;" />
-            </div>
-
-            <!-- CABECERA -->
-            <div style="text-align:center; margin-bottom:25px;">
-                <h1 style="
-                    margin:0;
-                    font-size:26px;
-                    font-weight:600;
-                    color:#4a7eba;
-                    font-family:'Plus Jakarta Sans', sans-serif;
-                ">
-                    FESTIVAL GOLPE TIERRA 2026
-                </h1>
-
-                <p style="
-                    margin:6px 0 12px;
-                    font-size:16px;
-                    font-weight:500;
-                    color:#4a7eba;
-                ">
-                    organiza: AC Monsefú
-                </p>
-
-                <!-- RECTÁNGULO REGISTRO (CENTRADO REAL) -->
-                <div style="
-                    width:420px;
-                    height:40px;
-                    margin:0 auto;
-                    border:2px solid #000;
-                    display:flex;
-                    align-items:center;
-                    justify-content:center;
-                    font-size:14px;
-                    font-weight:500;
-                    line-height:1;
-                    padding:0;
-                    text-transform:uppercase;
-                    font-family:'Plus Jakarta Sans', sans-serif;
-                ">
-                    2026 - REGISTRO OFICIAL
-                </div>
-            </div>
-
-            <!-- INFO GENERAL -->
-            <div style="
-                margin-left:110px;
-                border:1px solid #4a7eba;
-                padding:14px;
-                margin-bottom:28px;
-            ">
-                <table style="width:100%; font-size:14px;">
-                    <tr><td style="width:160px; color:#4a7eba;">MODALIDAD:</td><td>${modalidadNombre}</td></tr>
-                    <tr><td style="color:#4a7eba;">CATEGORÍA:</td><td>${categoriaNombre}</td></tr>
-                    <tr><td style="color:#4a7eba;">TIPO PARTICIPACIÓN:</td><td>${tipoParticipacion}</td></tr>
+                <table style="width: 100%;">
+                    <tr>
+                        <td style="width: 100px; vertical-align: top;">
+                            <img src="${logoBase64}" style="width: 85px; height: auto;" />
+                        </td>
+                        <td style="vertical-align: middle; text-align: center;">
+                            <div style="
+                                font-size: 18px;
+                                font-weight: 700;
+                                color: #000;
+                                text-transform: uppercase;
+                                letter-spacing: 0.5px;
+                                margin-bottom: 3px;
+                            ">
+                                Asociación Cultural Monsefú
+                            </div>
+                            <div style="
+                                font-size: 15px;
+                                font-weight: 700;
+                                color: #000;
+                                margin-bottom: 2px;
+                            ">
+                                Festival Golpe Tierra 2026
+                            </div>
+                            <div style="
+                                font-size: 11px;
+                                color: #333;
+                            ">
+                                Ficha de Inscripción Oficial
+                            </div>
+                        </td>
+                        <td style="width: 120px; vertical-align: top; text-align: right;">
+                            <div style="
+                                border: 2px solid #000;
+                                padding: 8px 12px;
+                                display: inline-block;
+                            ">
+                                <div style="font-size: 10px; color: #333;">N° INSCRIPCIÓN</div>
+                                <div style="font-size: 18px; font-weight: 700; color: #000;">
+                                    ${inscripcion.id.toString().padStart(5, "0")}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
                 </table>
             </div>
 
-            <!-- PARTICIPANTES -->
-            <div style="margin-left:110px;">
-                ${participantes.map((p, idx) => `
-                <div style="margin-bottom:26px;">
-                    <div style="
-                        font-size:14px;
-                        font-weight:600;
-                        margin-bottom:10px;
-                        text-decoration:underline;
-                    ">
-                        PARTICIPANTE ${idx + 1} (${p.sexo === "F" ? "DAMA" : "VARÓN"})
-                    </div>
-
-                    <table style="width:100%; font-size:13.5px;">
-                        <tr><td style="width:190px;">- NOMBRES :</td><td>${p.nombres}</td></tr>
-                        <tr><td>- APELLIDOS :</td><td>${p.apellidos}</td></tr>
-                        <tr><td>- FECHA DE NACIMIENTO :</td><td>${p.fecha_nacimiento ? new Date(p.fecha_nacimiento).toLocaleDateString("es-PE") : "N/A"}</td></tr>
-                        <tr><td>- DNI :</td><td>${p.dni}</td></tr>
-                        <tr><td>- TELÉFONO :</td><td>${p.telefono}</td></tr>
-                        <tr><td>- ACADEMIA :</td><td>${academia}</td></tr>
-                    </table>
+            <!-- INFORMACIÓN GENERAL -->
+            <div style="margin-bottom: 15px;">
+                <div style="
+                    background: #000;
+                    color: white;
+                    padding: 5px 10px;
+                    font-size: 12px;
+                    font-weight: 700;
+                    text-transform: uppercase;
+                    margin-bottom: 8px;
+                ">
+                    Datos de la Inscripción
                 </div>
-                `).join("")}
+                
+                <table style="width: 100%; border: 1px solid #000;">
+                    <tr>
+                        <td style="
+                            width: 35%;
+                            padding: 6px 10px;
+                            background: #f3f4f6;
+                            border-right: 1px solid #000;
+                            border-bottom: 1px solid #000;
+                            font-weight: 700;
+                            font-size: 11px;
+                        ">Modalidad:</td>
+                        <td style="
+                            padding: 6px 10px;
+                            border-bottom: 1px solid #000;
+                            font-size: 11px;
+                        ">${modalidadNombre}</td>
+                    </tr>
+                    <tr>
+                        <td style="
+                            padding: 6px 10px;
+                            background: #f3f4f6;
+                            border-right: 1px solid #000;
+                            border-bottom: 1px solid #000;
+                            font-weight: 700;
+                            font-size: 11px;
+                        ">Categoría:</td>
+                        <td style="
+                            padding: 6px 10px;
+                            border-bottom: 1px solid #000;
+                            font-size: 11px;
+                        ">${categoriaNombre}</td>
+                    </tr>
+                    <tr>
+                        <td style="
+                            padding: 6px 10px;
+                            background: #f3f4f6;
+                            border-right: 1px solid #000;
+                            border-bottom: 1px solid #000;
+                            font-weight: 700;
+                            font-size: 11px;
+                        ">Tipo de Participación:</td>
+                        <td style="
+                            padding: 6px 10px;
+                            border-bottom: 1px solid #000;
+                            font-size: 11px;
+                        ">${tipoParticipacion}</td>
+                    </tr>
+                    <tr>
+                        <td style="
+                            padding: 6px 10px;
+                            background: #f3f4f6;
+                            border-right: 1px solid #000;
+                            font-weight: 700;
+                            font-size: 11px;
+                        ">Academia:</td>
+                        <td style="
+                            padding: 6px 10px;
+                            font-size: 11px;
+                        ">${academia}</td>
+                    </tr>
+                </table>
             </div>
 
-            <!-- FOOTER -->
+            <!-- TABLA DE PARTICIPANTES -->
+            <div style="margin-bottom: 15px;">
+                <div style="
+                    background: #000;
+                    color: white;
+                    padding: 5px 10px;
+                    font-size: 12px;
+                    font-weight: 700;
+                    text-transform: uppercase;
+                    margin-bottom: 8px;
+                ">
+                    Datos de Participantes
+                </div>
+                
+                <table style="width: 100%; border: 1px solid #000;">
+                    <thead>
+                        <tr style="background: #f3f4f6;">
+                            <th style="
+                                padding: 6px 5px;
+                                border-right: 1px solid #000;
+                                border-bottom: 1px solid #000;
+                                font-size: 10px;
+                                font-weight: 700;
+                                text-align: center;
+                            ">N°</th>
+                            <th style="
+                                padding: 6px 5px;
+                                border-right: 1px solid #000;
+                                border-bottom: 1px solid #000;
+                                font-size: 10px;
+                                font-weight: 700;
+                            ">Apellidos y Nombres</th>
+                            <th style="
+                                padding: 6px 5px;
+                                border-right: 1px solid #000;
+                                border-bottom: 1px solid #000;
+                                font-size: 10px;
+                                font-weight: 700;
+                                text-align: center;
+                            ">DNI</th>
+                            <th style="
+                                padding: 6px 5px;
+                                border-right: 1px solid #000;
+                                border-bottom: 1px solid #000;
+                                font-size: 10px;
+                                font-weight: 700;
+                                text-align: center;
+                            ">Sexo</th>
+                            <th style="
+                                padding: 6px 5px;
+                                border-right: 1px solid #000;
+                                border-bottom: 1px solid #000;
+                                font-size: 10px;
+                                font-weight: 700;
+                                text-align: center;
+                            ">Fecha Nac.</th>
+                            <th style="
+                                padding: 6px 5px;
+                                border-bottom: 1px solid #000;
+                                font-size: 10px;
+                                font-weight: 700;
+                                text-align: center;
+                            ">Teléfono</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${participantes.map((p, idx) => `
+                        <tr style="${idx % 2 === 0 ? 'background: #ffffff;' : 'background: #f9fafb;'}">
+                            <td style="
+                                padding: 6px 5px;
+                                border-right: 1px solid #000;
+                                ${idx < participantes.length - 1 ? 'border-bottom: 1px solid #000;' : ''}
+                                font-size: 10px;
+                                text-align: center;
+                                font-weight: 700;
+                            ">${idx + 1}</td>
+                            <td style="
+                                padding: 6px 5px;
+                                border-right: 1px solid #000;
+                                ${idx < participantes.length - 1 ? 'border-bottom: 1px solid #000;' : ''}
+                                font-size: 10px;
+                            ">${p.apellidos} ${p.nombres}</td>
+                            <td style="
+                                padding: 6px 5px;
+                                border-right: 1px solid #000;
+                                ${idx < participantes.length - 1 ? 'border-bottom: 1px solid #000;' : ''}
+                                font-size: 10px;
+                                text-align: center;
+                            ">${p.dni}</td>
+                            <td style="
+                                padding: 6px 5px;
+                                border-right: 1px solid #000;
+                                ${idx < participantes.length - 1 ? 'border-bottom: 1px solid #000;' : ''}
+                                font-size: 10px;
+                                text-align: center;
+                            ">${p.sexo === "F" ? "F" : "M"}</td>
+                            <td style="
+                                padding: 6px 5px;
+                                border-right: 1px solid #000;
+                                ${idx < participantes.length - 1 ? 'border-bottom: 1px solid #000;' : ''}
+                                font-size: 10px;
+                                text-align: center;
+                            ">${p.fecha_nacimiento ? new Date(p.fecha_nacimiento).toLocaleDateString("es-PE") : "N/A"}</td>
+                            <td style="
+                                padding: 6px 5px;
+                                ${idx < participantes.length - 1 ? 'border-bottom: 1px solid #000;' : ''}
+                                font-size: 10px;
+                                text-align: center;
+                            ">${p.telefono}</td>
+                        </tr>
+                        `).join("")}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- PIE DE PÁGINA -->
             <div style="
-                margin-top:35px;
-                padding-top:14px;
-                border-top:1px solid #777;
-                font-size:13px;
+                margin-top: 15px;
+                padding: 10px;
+                background: #f9fafb;
+                border: 1px solid #000;
+                font-size: 10px;
             ">
-                <p>++++++ FECHA DE INSCRIPCIÓN: ${fechaRegistro}</p>
-                <p>++++++ OBSERVACIONES: ________________________________________________</p>
+                <div style="margin-bottom: 6px;">
+                    <strong>Fecha de Inscripción:</strong> ${fechaRegistro}
+                </div>
+                <div>
+                    <strong>Observaciones:</strong> _______________________________________________
+                </div>
             </div>
 
             <!-- FIRMA -->
-            <div style="margin-top:45px; text-align:center;">
-                <div style="width:340px; margin:auto; border-top:1px solid #000; padding-top:8px;">
-                    <span style="font-size:13px; font-weight:600;">
+            <div style="margin-top: 30px; text-align: center;">
+                <div style="
+                    border-top: 1.5px solid #000;
+                    padding-top: 6px;
+                    margin: 0 auto;
+                    width: 280px;
+                ">
+                    <div style="font-size: 11px; font-weight: 700;">
                         FIRMA DEL PARTICIPANTE
-                    </span>
+                    </div>
+                    <div style="font-size: 9px; color: #333; margin-top: 3px;">
+                        DNI: _______________
+                    </div>
                 </div>
             </div>
 

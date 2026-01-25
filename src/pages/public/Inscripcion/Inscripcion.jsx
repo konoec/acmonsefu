@@ -40,7 +40,7 @@ export default function Inscripcion() {
     <section id="inscripcion" className="py-24 lg:py-32 bg-[#FDFBF7] font-body relative overflow-hidden">
       <RunningStamp />
 
-      <div className="max-w-4xl mx-auto px-6 lg:px-8 relative z-10">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
         {/* Header Hero Layout */}
         <div className="text-center mb-16 space-y-6">
           <div className="flex flex-col items-center justify-center gap-6">
@@ -193,6 +193,6 @@ export default function Inscripcion() {
           )}
         </div>
       </div>
-    </section>
+    </section >
   );
 }
