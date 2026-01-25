@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { supabase } from "../../../supabaseClient";
 
 export const useRegistration = () => {
@@ -22,6 +22,10 @@ export const useRegistration = () => {
     const [success, setSuccess] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
     const [lastInscripcionData, setLastInscripcionData] = useState(null);
+
+    // Cache para detalles de modalidad (Tipos + Categorias + Reglas)
+    // Estructura: { [modId]: { tipos: [], categorias: [] } }
+    const detailsCache = React.useRef({});
 
     // --- 1. Fetch Modalidades on Mount ---
     useEffect(() => {
@@ -91,7 +95,7 @@ export const useRegistration = () => {
         setParticipants(initialParticipants);
     };
 
-    // --- 2. Handle Modalidad Selection ---
+    // --- 2. Handle Modalidad Selection (OPTIMIZED) ---
     const handleModalidadChange = async (e) => {
         const modId = e.target.value;
         setSelectedModalidad(modId);
@@ -99,40 +103,65 @@ export const useRegistration = () => {
         setSelectedTipo(null);
         setSelectedCategoriaId("");
         setParticipants([]);
-        setTiposParticipacion([]);
-        setCategorias([]);
+        // No limpiamos tipos/categorias inmediatamente para evitar flash si usamos caché
+        // Pero idealmente deberíamos si cambia ID. 
+        // Si hay cache, el set será instantáneo.
+
         setErrorMessage(null);
 
-        if (!modId) return;
+        if (!modId) {
+            setTiposParticipacion([]);
+            setCategorias([]);
+            return;
+        }
+
+        // CHECK CACHE
+        if (detailsCache.current[modId]) {
+            console.log("Loading from cache for modality:", modId);
+            const cached = detailsCache.current[modId];
+            setTiposParticipacion(cached.tipos);
+            setCategorias(cached.categorias);
+
+            if (cached.tipos.length === 1) {
+                initializeParticipants(cached.tipos[0]);
+            }
+            return;
+        }
 
         setLoadingTipos(true);
         setLoadingCategorias(true);
+        // Limpiamos stado visualmente "sucio" mientras carga nuevo (si no es cache)
+        setTiposParticipacion([]);
+        setCategorias([]);
+
         try {
-            // Fetch Tipos
-            const { data: typesData, error: typesError } = await supabase
-                .from("modalidad_tipo")
-                .select(`
-          tipo_participacion (
-            id,
-            nombre,
-            cantidad_minima,
-            cantidad_maxima
-          )
-        `)
-                .eq("modalidad_id", modId);
+            // PARALLEL FETCHING
+            const [typesData, rulesData, catsData] = await Promise.all([
+                // 1. Tipos
+                supabase.from("modalidad_tipo")
+                    .select(`tipo_participacion (id, nombre, cantidad_minima, cantidad_maxima)`)
+                    .eq("modalidad_id", modId),
 
-            if (typesError) throw typesError;
+                // 2. Reglas
+                supabase.from("modalidad_regla_sexo")
+                    .select("tipo_participacion_id, regla_sexo")
+                    .eq("modalidad_id", modId),
 
-            const { data: rulesData, error: rulesError } = await supabase
-                .from("modalidad_regla_sexo")
-                .select("tipo_participacion_id, regla_sexo")
-                .eq("modalidad_id", modId);
+                // 3. Categorías
+                supabase.from("modalidad_categoria")
+                    .select(`categoria (id, nombre)`)
+                    .eq("modalidad_id", modId)
+                    .eq("estado", "A")
+            ]);
 
-            if (rulesError) throw rulesError;
+            if (typesData.error) throw typesData.error;
+            if (rulesData.error) throw rulesData.error;
+            if (catsData.error) throw catsData.error;
 
-            const mergedTypes = typesData.map((item) => {
+            // Process Types & Rules
+            const mergedTypes = typesData.data.map((item) => {
                 const t = item.tipo_participacion;
-                const ruleObj = rulesData.find(r => r.tipo_participacion_id === t.id);
+                const ruleObj = rulesData.data.find(r => r.tipo_participacion_id === t.id);
                 let finalRule = ruleObj ? ruleObj.regla_sexo.trim().toUpperCase() : 'A';
                 if (finalRule === 'FM') finalRule = 'X';
                 if (finalRule === 'LIBRE') finalRule = 'A';
@@ -143,28 +172,21 @@ export const useRegistration = () => {
                 };
             }).filter(Boolean);
 
+            // Process Categories
+            const fetchedCats = catsData.data.map(c => c.categoria).filter(Boolean);
+
+            // SAVE TO CACHE
+            detailsCache.current[modId] = {
+                tipos: mergedTypes,
+                categorias: fetchedCats
+            };
+
             setTiposParticipacion(mergedTypes);
+            setCategorias(fetchedCats);
 
             if (mergedTypes.length === 1) {
                 initializeParticipants(mergedTypes[0]);
             }
-
-            // Fetch Categorias
-            const { data: catsData, error: catsError } = await supabase
-                .from("modalidad_categoria")
-                .select(`
-                    categoria (
-                        id,
-                        nombre
-                    )
-                `)
-                .eq("modalidad_id", modId)
-                .eq("estado", "A");
-
-            if (catsError) throw catsError;
-
-            const fetchedCats = catsData.map(c => c.categoria).filter(Boolean);
-            setCategorias(fetchedCats);
 
         } catch (err) {
             console.error("Error fetching types/categories/rules:", err);

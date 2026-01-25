@@ -77,29 +77,33 @@ export default function Navbar() {
             <ul className="flex items-center gap-8">
               {navItems.map((item, index) => {
                 const target = getLinkTarget(item.path);
-                // Detectar si es un link de anclaje (hash)
                 const isAnchor = item.path.startsWith("#");
+
+                const handleNavClick = (e) => {
+                  if (isAnchor && isHome) {
+                    e.preventDefault();
+                    const elementId = item.path.substring(1);
+                    const element = document.getElementById(elementId);
+                    if (element) {
+                      element.scrollIntoView({ behavior: 'smooth' });
+                      // Update URL hash without reload
+                      window.history.pushState(null, '', item.path);
+                    }
+                  }
+                  // If not home, let Link handle the routing to "/" + hash
+                };
 
                 return (
                   <li key={index}>
-                    {isAnchor && isHome ? (
-                      <a
-                        href={target}
-                        className="relative text-[13px] font-bold text-gray-700 uppercase tracking-widest hover:text-orange-600 transition-colors py-2 group"
-                      >
-                        {item.name}
-                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-orange-600 transition-all duration-300 group-hover:w-full"></span>
-                      </a>
-                    ) : (
-                      <Link
-                        to={target}
-                        className={`relative text-[13px] font-bold uppercase tracking-widest transition-colors py-2 group
-                          ${location.pathname === target ? 'text-orange-600' : 'text-gray-700 hover:text-orange-600'}`}
-                      >
-                        {item.name}
-                        <span className={`absolute bottom-0 left-0 h-0.5 bg-orange-600 transition-all duration-300 group-hover:w-full ${location.pathname === target ? 'w-full' : 'w-0'}`}></span>
-                      </Link>
-                    )}
+                    <Link
+                      to={target}
+                      onClick={handleNavClick}
+                      className={`relative text-[13px] font-bold uppercase tracking-widest transition-colors py-2 group
+                        ${location.hash === item.path || (location.pathname === item.path && !isAnchor) ? 'text-orange-600' : 'text-gray-700 hover:text-orange-600'}`}
+                    >
+                      {item.name}
+                      <span className={`absolute bottom-0 left-0 h-0.5 bg-orange-600 transition-all duration-300 group-hover:w-full ${location.hash === item.path || (location.pathname === item.path && !isAnchor) ? 'w-full' : 'w-0'}`}></span>
+                    </Link>
                   </li>
                 );
               })}

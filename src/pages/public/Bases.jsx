@@ -143,7 +143,7 @@ export default function Bases() {
         </div>
 
         {/* CTA */}
-        <div className="mt-20 lg:mt-28 pt-12 border-t border-gray-200">
+        <div className="mt-12 lg:mt-16 pt-12 border-t border-gray-200">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
             <p className="text-gray-500 italic max-w-xl">
               "Las parejas campeonas asumen el compromiso de asistir a su entrega de campeonato en el Festival Golpe Tierra 2027."

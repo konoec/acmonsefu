@@ -2,95 +2,53 @@ import React, { useState } from 'react';
 import { supabase } from "../../supabaseClient";
 import { generateInscripcionPDF } from "../../utils/pdfGenerator";
 import Toast from "../../components/Toast";
-
-/* ===============================
-   IMPORTACIÓN DE IMÁGENES - GALERÍA BENTO
-   Para agregar/quitar imágenes, solo modifica este array
-================================ */
-import galeria1 from "../../assets/images/galeria/ganadores1.webp";
-import galeria2 from "../../assets/images/galeria/ganadores2.webp";
-import galeria3 from "../../assets/images/galeria/ganadores3.webp";
-import galeria4 from "../../assets/images/galeria/ganadores4.webp";
-import galeria5 from "../../assets/images/galeria/ganadores5.webp";
-import galeria6 from "../../assets/images/galeria/ganadores6.webp";
-import galeria7 from "../../assets/images/galeria/ganadores7.webp";
-import galeria8 from "../../assets/images/galeria/ganadores8.webp";
-import galeria9 from "../../assets/images/galeria/ganadores9.webp";
-import galeria10 from "../../assets/images/galeria/ganadores10.webp";
-import galeria11 from "../../assets/images/galeria/ganadores11.webp";
-import galeria12 from "../../assets/images/galeria/ganadores12.webp";
-import galeria13 from "../../assets/images/galeria/ganadores13.webp";
-import galeria14 from "../../assets/images/galeria/ganadores14.webp";
-import galeria15 from "../../assets/images/galeria/ganadores15.webp";
-import galeria16 from "../../assets/images/galeria/ganadores16.webp";
-import galeria17 from "../../assets/images/galeria/ganadores17.webp";
-import galeria18 from "../../assets/images/galeria/ganadores18.webp";
-import galeria19 from "../../assets/images/galeria/ganadores19.webp";
-import galeria20 from "../../assets/images/galeria/ganadores20.webp";
-import galeria21 from "../../assets/images/galeria/ganadores21.webp";
-import galeria22 from "../../assets/images/galeria/ganadores22.webp";
-import galeria23 from "../../assets/images/galeria/ganadores23.webp";
-import galeria24 from "../../assets/images/galeria/ganadores24.webp";
-
-const GALERIA_IMAGES = [
-    galeria1, galeria2, galeria3, galeria4, galeria5, galeria6,
-    galeria7, galeria8, galeria9, galeria10, galeria11, galeria12, galeria13, galeria14, galeria15, galeria16, galeria17, galeria18, galeria19, galeria20,
-    galeria21, galeria22, galeria23, galeria24
-];
+import { IMAGES } from "../../constants/images";
 
 /* ===============================
    COMPONENTE DE GALERÍA BENTO ANIMADA
 ================================ */
 const BentoGalleryBackground = () => {
-    // Dividir imágenes en 3 filas para efecto bento
-    const row1 = GALERIA_IMAGES.slice(0, 4);
-    const row2 = GALERIA_IMAGES.slice(4, 8);
-    const row3 = GALERIA_IMAGES.slice(8, 14);
+    // Optimización: Usar solo 12 imágenes para reducir consumo de RAM
+    const smallSet = IMAGES.GALERIA.slice(0, 12);
+    const row1 = smallSet.slice(0, 4);
+    const row2 = smallSet.slice(4, 8);
+    const row3 = smallSet.slice(8, 12);
 
-    // Duplicar para crear efecto infinito
-    const infiniteRow1 = [...row1, ...row1, ...row1];
-    const infiniteRow2 = [...row2, ...row2, ...row2];
-    const infiniteRow3 = [...row3, ...row3, ...row3];
+    // Duplicamos SOLO UNA VEZ para el loop infinito (total 24 nodos de imagen en vez de 72)
+    const infiniteRow1 = [...row1, ...row1];
+    const infiniteRow2 = [...row2, ...row2];
+    const infiniteRow3 = [...row3, ...row3];
 
     return (
-        <div className="absolute inset-0 overflow-hidden opacity-[0.12] pointer-events-none">
-            {/* Fila 1 - Movimiento a la derecha */}
-            <div className="flex gap-3 mb-3 animate-scroll-right" style={{ width: 'max-content' }}>
+        <div className="absolute inset-0 overflow-hidden opacity-[0.12] pointer-events-none content-visibility-auto">
+            {/* Fila 1 */}
+            <div className="flex gap-3 mb-3 animate-scroll-right will-change-transform" style={{ width: 'max-content' }}>
                 {infiniteRow1.map((img, i) => (
-                    <div
-                        key={`row1-${i}`}
-                        className={`shrink-0 rounded-lg overflow-hidden ${i % 3 === 0 ? 'w-48 h-32' : i % 3 === 1 ? 'w-64 h-32' : 'w-40 h-32'}`}
-                    >
-                        <img src={img} alt="" className="w-full h-full object-cover grayscale" />
+                    <div key={`r1-${i}`} className="shrink-0 w-48 h-32 rounded-lg overflow-hidden bg-gray-200">
+                        <img src={img} loading="lazy" alt="" className="w-full h-full object-cover grayscale" />
                     </div>
                 ))}
             </div>
 
-            {/* Fila 2 - Movimiento a la izquierda */}
-            <div className="flex gap-3 mb-3 animate-scroll-left" style={{ width: 'max-content' }}>
+            {/* Fila 2 */}
+            <div className="flex gap-3 mb-3 animate-scroll-left will-change-transform" style={{ width: 'max-content' }}>
                 {infiniteRow2.map((img, i) => (
-                    <div
-                        key={`row2-${i}`}
-                        className={`shrink-0 rounded-lg overflow-hidden ${i % 3 === 0 ? 'w-56 h-40' : i % 3 === 1 ? 'w-44 h-40' : 'w-72 h-40'}`}
-                    >
-                        <img src={img} alt="" className="w-full h-full object-cover grayscale" />
+                    <div key={`r2-${i}`} className="shrink-0 w-56 h-40 rounded-lg overflow-hidden bg-gray-200">
+                        <img src={img} loading="lazy" alt="" className="w-full h-full object-cover grayscale" />
                     </div>
                 ))}
             </div>
 
-            {/* Fila 3 - Movimiento a la derecha */}
-            <div className="flex gap-3 mb-3 animate-scroll-right-slow" style={{ width: 'max-content' }}>
+            {/* Fila 3 */}
+            <div className="flex gap-3 mb-3 animate-scroll-right-slow will-change-transform" style={{ width: 'max-content' }}>
                 {infiniteRow3.map((img, i) => (
-                    <div
-                        key={`row3-${i}`}
-                        className={`shrink-0 rounded-lg overflow-hidden ${i % 3 === 0 ? 'w-40 h-36' : i % 3 === 1 ? 'w-60 h-36' : 'w-52 h-36'}`}
-                    >
-                        <img src={img} alt="" className="w-full h-full object-cover grayscale" />
+                    <div key={`r3-${i}`} className="shrink-0 w-40 h-36 rounded-lg overflow-hidden bg-gray-200">
+                        <img src={img} loading="lazy" alt="" className="w-full h-full object-cover grayscale" />
                     </div>
                 ))}
             </div>
 
-            {/* Overlay degradado para suavizar bordes */}
+            {/* Overlay degradado */}
             <div className="absolute inset-0 bg-gradient-to-b from-[#FDFBF7] via-transparent to-[#FDFBF7]"></div>
             <div className="absolute inset-0 bg-gradient-to-r from-[#FDFBF7] via-transparent to-[#FDFBF7]"></div>
         </div>
@@ -191,7 +149,7 @@ export default function ConsultaInscripcion() {
     };
 
     return (
-        <div id="consulta" className="relative min-h-screen flex flex-col items-center justify-center pt-20 pb-20 p-4 md:p-8 animate-in fade-in duration-700 bg-[#FDFBF7] overflow-hidden">
+        <div id="consulta" className="relative min-h-screen flex flex-col items-center justify-center pt-20 pb-20 p-4 md:p-8 bg-[#FDFBF7] overflow-hidden">
             {/* Fondo de Galería Bento Animada */}
             <BentoGalleryBackground />
 
@@ -245,7 +203,7 @@ export default function ConsultaInscripcion() {
                         </div>
                     ) : searched ? (
                         results.length > 0 ? (
-                            <div className="grid grid-cols-1 gap-4 animate-in slide-in-from-bottom-4 duration-500">
+                            <div className="grid grid-cols-1 gap-4">
                                 {results.map((res) => (
                                     <div key={res.id} className="bg-white border border-gray-100 p-6 flex flex-col md:flex-row md:items-center justify-between gap-6 rounded-sm shadow-sm hover:shadow-md transition-shadow group">
                                         <div className="space-y-1">
