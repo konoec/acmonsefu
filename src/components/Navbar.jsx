@@ -36,6 +36,8 @@ export default function Navbar() {
   // Helper to determine the correct target link
   const getLinkTarget = (path) => {
     if (path.startsWith("#")) {
+      // Si estamos en la home, usamos solo el hash (#seccion)
+      // Si no, necesitamos prefijar con / para que el router sepa ir a la raíz primero (/#seccion)
       return isHome ? path : `/${path}`;
     }
     return path;
@@ -75,11 +77,12 @@ export default function Navbar() {
             <ul className="flex items-center gap-8">
               {navItems.map((item, index) => {
                 const target = getLinkTarget(item.path);
-                const isHash = target.startsWith("#");
+                // Detectar si es un link de anclaje (hash)
+                const isAnchor = item.path.startsWith("#");
 
                 return (
                   <li key={index}>
-                    {isHash ? (
+                    {isAnchor && isHome ? (
                       <a
                         href={target}
                         className="relative text-[13px] font-bold text-gray-700 uppercase tracking-widest hover:text-orange-600 transition-colors py-2 group"
@@ -155,11 +158,11 @@ export default function Navbar() {
           <div className="flex flex-col gap-1 py-4 border-t border-gray-100">
             {navItems.map((item, index) => {
               const target = getLinkTarget(item.path);
-              const isHash = target.startsWith("#");
+              const isAnchor = item.path.startsWith("#");
 
               return (
                 <div key={index}>
-                  {isHash ? (
+                  {isAnchor && isHome ? (
                     <a
                       href={target}
                       onClick={() => setIsOpen(false)}
