@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { supabase } from "../../supabaseClient";
 import { useNavigate } from "react-router-dom";
-import logoFestival from "../../assets/images/logos/logo_asociacion.png";
+import logoFestival from "../../assets/images/logos/logo_asociacion.webp";
 import RunningStamp from "../../components/RunningStamp";
 
 export default function Login() {

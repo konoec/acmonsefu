@@ -268,51 +268,50 @@ export default function Inscripciones() {
                     <table className="w-full text-left border-collapse">
                         <thead className="bg-gray-50/50 border-b border-gray-100 font-body">
                             <tr>
-                                <th className="px-8 py-5 text-[11px] font-bold text-gray-400 uppercase tracking-widest">ID / Registro</th>
-                                <th className="px-8 py-5 text-[11px] font-bold text-gray-400 uppercase tracking-widest">Participantes</th>
-                                <th className="px-8 py-5 text-[11px] font-bold text-gray-400 uppercase tracking-widest">Modalidad</th>
-                                <th className="px-8 py-5 text-[11px] font-bold text-gray-400 uppercase tracking-widest">Estatus</th>
-                                <th className="px-8 py-5 text-[11px] font-bold text-gray-400 uppercase tracking-widest text-center">Acciones</th>
+                                <th className="px-4 py-3 text-[10px] font-bold text-gray-400 uppercase tracking-widest">ID</th>
+                                <th className="px-4 py-3 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Registro</th>
+                                <th className="px-4 py-3 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Participantes</th>
+                                <th className="px-4 py-3 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Modalidad</th>
+                                <th className="px-4 py-3 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Estatus</th>
+                                <th className="px-4 py-3 text-[10px] font-bold text-gray-400 uppercase tracking-widest text-center">Acciones</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-50">
                             {inscripciones.map((ins) => (
                                 <tr key={ins.id} className="group hover:bg-orange-50/20 transition-all duration-300 border-b border-gray-50 last:border-0">
-                                    <td className="px-4 md:px-8 py-5 md:py-6">
-                                        <div className="flex flex-col font-body">
-                                            <span className="text-[13px] md:text-sm font-bold text-gray-900 leading-none mb-1.5">#{ins.id}</span>
-                                            <span className="text-[10px] md:text-[11px] text-gray-400 font-semibold uppercase tracking-tight">
-                                                {new Date(ins.fecha_registro).toLocaleDateString('es-PE')}
-                                            </span>
-                                        </div>
+                                    <td className="px-4 py-3">
+                                        <span className="text-sm font-bold text-gray-900 font-body">#{ins.id}</span>
                                     </td>
-                                    <td className="px-4 md:px-8 py-5 md:py-6">
-                                        <div className="flex flex-col gap-1 md:gap-1.5 font-body">
+                                    <td className="px-4 py-3">
+                                        <span className="text-[10px] text-gray-400 font-semibold font-body">
+                                            {new Date(ins.fecha_registro).toLocaleDateString('es-PE')}
+                                        </span>
+                                    </td>
+                                    <td className="px-4 py-3">
+                                        <div className="flex flex-col gap-0.5 font-body">
                                             {ins.detalle_inscripcion?.map((det, idx) => (
-                                                <span key={idx} className="text-[12px] md:text-[13px] font-bold text-gray-800 tracking-tight leading-tight">
+                                                <span key={idx} className="text-[12px] font-bold text-gray-800 tracking-tight leading-tight">
                                                     {det.nombres} {det.apellidos}
                                                 </span>
                                             ))}
                                         </div>
                                     </td>
-                                    <td className="px-4 md:px-8 py-5 md:py-6">
-                                        <span className="inline-block text-[9px] md:text-[11px] font-bold text-gray-600 uppercase tracking-wider bg-gray-50 px-2 md:px-3 py-1 md:py-1.5 rounded-sm font-body border border-gray-200/50 whitespace-nowrap">
+                                    <td className="px-4 py-3">
+                                        <span className="inline-block text-[9px] font-bold text-gray-600 uppercase tracking-wider bg-gray-50 px-2 py-1 rounded-sm font-body border border-gray-200/50 whitespace-nowrap">
                                             {ins.modalidad?.nombre || 'General'}
                                         </span>
                                     </td>
-                                    <td className="px-4 md:px-8 py-5 md:py-6 text-left">
-                                        <div className="flex items-center gap-3 font-body">
-                                            <span className={`px-2 md:px-4 py-1.5 text-[9px] md:text-[10px] font-bold uppercase tracking-widest border rounded-sm whitespace-nowrap
-                                                ${ins.estado === 'A' ? 'bg-green-50 text-green-700 border-green-200' :
-                                                    ins.estado === 'P' ? 'bg-yellow-50 text-yellow-700 border-yellow-200' :
-                                                        'bg-red-50 text-red-700 border-red-200'}`}>
-                                                {ins.estado === 'A' ? 'Aprobado' :
-                                                    ins.estado === 'P' ? 'Pendiente' :
-                                                        'Inactivo'}
-                                            </span>
-                                        </div>
+                                    <td className="px-4 py-3 text-left">
+                                        <span className={`px-2 py-1 text-[9px] font-bold uppercase tracking-widest border rounded-sm whitespace-nowrap
+                                            ${ins.estado === 'A' ? 'bg-green-50 text-green-700 border-green-200' :
+                                                ins.estado === 'P' ? 'bg-yellow-50 text-yellow-700 border-yellow-200' :
+                                                    'bg-red-50 text-red-700 border-red-200'}`}>
+                                            {ins.estado === 'A' ? 'Aprobado' :
+                                                ins.estado === 'P' ? 'Pendiente' :
+                                                    'Inactivo'}
+                                        </span>
                                     </td>
-                                    <td className="px-4 md:px-8 py-5 md:py-6">
+                                    <td className="px-4 py-3">
                                         <div className="flex items-center justify-center gap-1 md:gap-2">
                                             {/* OJO: Ver Detalle */}
                                             <button
@@ -375,7 +374,7 @@ export default function Inscripciones() {
                             ))}
                             {!loading && inscripciones.length === 0 && (
                                 <tr>
-                                    <td colSpan="5" className="px-8 py-20 text-center">
+                                    <td colSpan="6" className="px-4 py-12 text-center">
                                         <span className="text-[10px] font-black text-gray-300 uppercase tracking-[0.2em]">No se encontraron inscripciones con esos filtros</span>
                                     </td>
                                 </tr>

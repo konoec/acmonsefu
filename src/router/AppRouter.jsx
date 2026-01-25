@@ -4,7 +4,6 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import PublicLayout from "../layouts/PublicLayout.jsx";
 import PublicLanding from "../pages/public/index.jsx";
 import Login from "../pages/public/Login.jsx";
-import ConsultaInscripcion from "../pages/public/ConsultaInscripcion.jsx";
 
 import Panel from "../pages/admin/Inscripciones.jsx";
 import ProtectedRoute from "./ProtectedRoute.jsx";
@@ -21,7 +20,6 @@ export default function AppRouter() {
       <Route element={<PublicLayout />}>
         <Route path="/" element={<PublicLanding />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/consulta" element={<ConsultaInscripcion />} />
       </Route>
 
       {/* ===================== */}

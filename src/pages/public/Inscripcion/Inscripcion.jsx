@@ -4,7 +4,7 @@ import StepModalidad from "./StepModalidad";
 import StepTipo from "./StepTipo";
 import ParticipantList from "./ParticipantList";
 import SuccessState from "./SuccessState";
-import logoFestival from "../../../assets/images/logos/logo_festival.png";
+import logoFestival from "../../../assets/images/logos/logo_festival.webp";
 import RunningStamp from "../../../components/RunningStamp";
 
 export default function Inscripcion() {
@@ -60,7 +60,7 @@ export default function Inscripcion() {
               onReset={handleReset}
             />
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-10">
+            <form onSubmit={handleSubmit} className="space-y-6">
               {/* --- STEP 1: Modalidad --- */}
               <div className="relative z-20">
                 <StepModalidad
@@ -88,7 +88,7 @@ export default function Inscripcion() {
 
               {/* --- CONTENT (Only visible when modalida selected) --- */}
               {selectedModalidad && (
-                <div className="space-y-10">
+                <div className="space-y-6">
                   {/* --- STEP 2: Tipo Participación --- */}
                   {tiposParticipacion.length > 1 && (
                     <StepTipo
@@ -100,7 +100,7 @@ export default function Inscripcion() {
                   )}
 
                   {/* --- STEP 3: Participants --- */}
-                  <div className="pt-4 border-t border-gray-100">
+                  <div className="pt-2 border-t border-gray-100">
                     <ParticipantList
                       participants={participants}
                       selectedTipo={selectedTipo}
@@ -122,23 +122,10 @@ export default function Inscripcion() {
                     </div>
                   )}
 
-                  {/* --- Advertencia de Consistencia de Datos --- */}
-                  <div className="p-5 bg-orange-50/70 border border-orange-100 rounded-sm flex gap-4 items-start">
-                    <div className="bg-orange-100 p-2 rounded-full text-orange-600 shrink-0">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                      </svg>
-                    </div>
-                    <div className="space-y-1">
-                      <p className="text-[10px] font-black uppercase text-orange-900 tracking-widest leading-none">IMPORTANTE: Verificación de Datos</p>
-                      <p className="text-[11px] text-orange-800/80 font-medium leading-relaxed">
-                        Asegúrate de que los nombres y apellidos coincidan exactamente con tu DNI. Recuerda usar <strong>siempre el mismo nombre</strong> en todas tus inscripciones para evitar duplicidad de registros o rechazos.
-                      </p>
-                    </div>
-                  </div>
+
 
                   {/* --- Submit Button --- */}
-                  <div className="pt-4">
+                  <div className="pt-2">
                     <button
                       type="submit"
                       disabled={submitting || !selectedTipo || participants.length === 0}
@@ -159,6 +146,20 @@ export default function Inscripcion() {
                         </span>
                       )}
                     </button>
+                  </div>
+                  {/* --- Advertencia de Consistencia de Datos --- */}
+                  <div className="p-4 bg-orange-50/70 border border-orange-100 rounded-sm flex gap-3 items-start">
+                    <div className="bg-orange-100 p-2 rounded-full text-orange-600 shrink-0">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                      </svg>
+                    </div>
+                    <div className="space-y-1">
+                      <p className="text-[10px] font-black uppercase text-orange-900 tracking-widest leading-none">IMPORTANTE: Verificación de Datos</p>
+                      <p className="text-[11px] text-orange-800/80 font-medium leading-relaxed">
+                        Asegúrate de que los nombres y apellidos coincidan exactamente con tu DNI. Recuerda usar <strong>siempre el mismo nombre</strong> en todas tus inscripciones para evitar duplicidad de registros o rechazos.
+                      </p>
+                    </div>
                   </div>
                 </div>
               )}

@@ -1,4 +1,4 @@
-import logoFestival from "../../assets/images/logos/logo_festival.png";
+import logoFestival from "../../assets/images/logos/logo_festival.webp";
 import RunningStamp from "../../components/RunningStamp";
 
 export default function Modalidades() {
@@ -150,9 +150,9 @@ export default function Modalidades() {
                             <div className="w-8 h-0.5 bg-gray-100 group-hover:bg-orange-500 transition-all duration-500 mb-3"></div>
 
                             {/* Lista de Niveles Compacta */}
-                            <ul className="space-y-1.5 mb-4 flex-grow">
+                            <ul className="space-y-0.5 mb-4 flex-grow">
                                 {cat.levels.map((level, idx) => (
-                                    <li key={idx} className="flex flex-col sm:flex-row sm:justify-between sm:items-baseline border-b border-gray-50 pb-1.5 last:border-0 last:pb-0 gap-1 group/item">
+                                    <li key={idx} className="flex flex-col sm:flex-row sm:justify-between sm:items-baseline border-b border-gray-50 pb-1 last:border-0 last:pb-0 gap-0.5 group/item">
                                         <strong className="text-[12px] font-bold text-gray-800 group-hover/item:text-gray-900 transition-colors">
                                             {level.name}
                                         </strong>

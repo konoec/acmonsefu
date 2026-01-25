@@ -1,7 +1,7 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { supabase } from "../supabaseClient";
-import logoAsociacion from "../assets/images/logos/logo_asociacion.png";
+import logoAsociacion from "../assets/images/logos/logo_asociacion.webp";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -46,7 +46,7 @@ export default function Navbar() {
     { name: "Bases", path: "#bases" },
     { name: "Modalidades", path: "#modalidades" },
     { name: "Inscripción", path: "#inscripcion" },
-    { name: "Consulta", path: "/consulta" },
+    { name: "Consulta", path: "#consulta" },
   ];
 
   // Si hay sesión, añadir el módulo de Gestión

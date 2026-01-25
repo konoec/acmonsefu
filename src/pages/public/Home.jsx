@@ -3,17 +3,14 @@ import { useEffect, useState } from "react";
 /* ===============================
    IMPORTACIÓN DE IMÁGENES
 ================================ */
-import img1 from "../../assets/images/home/image.png";
-import img2 from "../../assets/images/home/image2.png";
-import img3 from "../../assets/images/home/image3.png";
-import img4 from "../../assets/images/home/image4.png";
-import img5 from "../../assets/images/home/image5.png";
-import img6 from "../../assets/images/home/image6.png";
-import img7 from "../../assets/images/home/image7.png";
-import img8 from "../../assets/images/home/image8.png";
-import logoFestival from "../../assets/images/logos/logo_festival.png";
+import img1 from "../../assets/images/home/home1.webp";
+import img2 from "../../assets/images/home/home2.webp";
+import img3 from "../../assets/images/home/home3.webp";
+import img4 from "../../assets/images/home/home4.webp";
+import img5 from "../../assets/images/home/home5.webp";
+import logoFestival from "../../assets/images/logos/logo_festival.webp";
 
-const HOME_IMAGES = [img1, img2, img3, img4, img5, img6, img7, img8];
+const HOME_IMAGES = [img1, img2, img3, img4, img5];
 
 export default function Home() {
   const [current, setCurrent] = useState(0);

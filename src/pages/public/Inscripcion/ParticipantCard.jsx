@@ -25,7 +25,7 @@ export default function ParticipantCard({
                 </button>
             )}
 
-            <div className="flex items-center gap-4 mb-4">
+            <div className="flex items-center gap-3 mb-2">
                 <span className="w-10 h-10 rounded-sm bg-gray-900 text-white flex items-center justify-center text-xs font-bold font-heading">
                     {String(index + 1).padStart(2, '0')}
                 </span>
@@ -34,9 +34,9 @@ export default function ParticipantCard({
                 </h4>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-6 items-end">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-3 items-end">
                 {/* Nombres */}
-                <div className="space-y-2">
+                <div className="space-y-1">
                     <label className="block text-[10px] uppercase text-gray-500 font-bold tracking-widest font-heading">
                         Nombres <span className="text-orange-500">*</span>
                     </label>
@@ -50,7 +50,7 @@ export default function ParticipantCard({
                 </div>
 
                 {/* Apellidos */}
-                <div className="space-y-2">
+                <div className="space-y-1">
                     <label className="block text-[10px] uppercase text-gray-500 font-bold tracking-widest font-heading">
                         Apellidos <span className="text-orange-500">*</span>
                     </label>
@@ -64,7 +64,7 @@ export default function ParticipantCard({
                 </div>
 
                 {/* DNI */}
-                <div className="space-y-2">
+                <div className="space-y-1">
                     <label className="block text-[10px] uppercase text-gray-500 font-bold tracking-widest font-heading">
                         DNI <span className="text-orange-500">*</span>
                     </label>
@@ -79,7 +79,7 @@ export default function ParticipantCard({
                 </div>
 
                 {/* Telefono */}
-                <div className="space-y-2">
+                <div className="space-y-1">
                     <label className="block text-[10px] uppercase text-gray-500 font-bold tracking-widest font-heading">
                         Teléfono <span className="text-orange-500">*</span>
                     </label>
@@ -95,7 +95,7 @@ export default function ParticipantCard({
 
                 {/* SEXO SELECTION */}
                 {!lockedSex && (
-                    <div className="md:col-span-2 lg:col-span-4 space-y-4 pt-4">
+                    <div className="md:col-span-2 lg:col-span-4 space-y-2 pt-2">
                         <label className="block text-[10px] uppercase text-gray-500 font-bold tracking-widest font-heading">
                             Sexo <span className="text-orange-500">*</span>
                         </label>

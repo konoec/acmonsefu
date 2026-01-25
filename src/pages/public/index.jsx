@@ -2,6 +2,7 @@ import Home from "./Home";
 import Bases from "./Bases";
 import Modalidades from "./Modalidades";
 import Inscripcion from "./Inscripcion/Inscripcion";
+import ConsultaInscripcion from "./ConsultaInscripcion";
 import CategoryCarousel from "../../components/CategoryCarousel";
 
 export default function ClientLanding() {
@@ -14,6 +15,8 @@ export default function ClientLanding() {
       <Modalidades />
       <CategoryCarousel />
       <Inscripcion />
+      <CategoryCarousel />
+      <ConsultaInscripcion />
     </>
   );
 }

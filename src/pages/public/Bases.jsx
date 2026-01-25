@@ -1,4 +1,4 @@
-import logoFestival from "../../assets/images/logos/logo_festival.png";
+import logoFestival from "../../assets/images/logos/logo_festival.webp";
 import RunningStamp from "../../components/RunningStamp";
 
 export default function Bases() {

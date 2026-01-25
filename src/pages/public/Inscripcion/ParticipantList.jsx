@@ -17,8 +17,8 @@ export default function ParticipantList({
     const canAdd = participants.length < max;
 
     return (
-        <div className="space-y-6">
-            <div className="flex items-center justify-between border-b border-gray-100 pb-4">
+        <div className="space-y-4">
+            <div className="flex items-center justify-between border-b border-gray-100 pb-2">
                 <div className="space-y-1">
                     <h3 className="text-xs font-bold text-gray-900 uppercase tracking-[0.2em] font-heading">
                         {showTitle ? "3. Datos de los Participantes" : "2. Datos de los Participantes"}

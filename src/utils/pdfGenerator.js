@@ -1,4 +1,4 @@
-import logoAsociacion from "../assets/images/logos/logo_asociacion.png";
+import logoAsociacion from "../assets/images/logos/logo_asociacion.webp";
 
 /**
  * Convierte una URL de imagen a Base64 de forma asíncrona.

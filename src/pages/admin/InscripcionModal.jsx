@@ -66,21 +66,31 @@ export default function InscripcionModal({ isOpen, onClose, inscripcion }) {
                 </div>
 
                 {/* Body */}
-                <div className="flex-grow overflow-y-auto p-6 lg:p-10 space-y-10 font-body">
+                <div className="flex-grow overflow-y-auto p-5 lg:p-6 space-y-6 font-body">
 
-                    {/* Sección: Modalidad */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 border-b border-gray-100 pb-8 text-left">
+                    <div className="grid grid-cols-3 gap-4 border-b border-gray-100 pb-4 text-left">
                         <div>
-                            <span className="text-[11px] font-bold text-gray-400 uppercase tracking-widest block mb-2">Categoría / Modalidad</span>
-                            <p className="text-lg font-bold text-gray-900 leading-tight">
+                            <span className="text-[9px] font-bold text-gray-400 uppercase tracking-widest block mb-1">Modalidad</span>
+                            <p className="text-sm font-bold text-gray-900 leading-tight">
                                 {inscripcion.modalidad?.nombre || 'General'}
                             </p>
                         </div>
                         <div>
-                            <span className="text-[11px] font-bold text-gray-400 uppercase tracking-widest block mb-2">Fecha de Registro</span>
-                            <p className="text-lg font-bold text-gray-900">
+                            <span className="text-[9px] font-bold text-gray-400 uppercase tracking-widest block mb-1">Estado</span>
+                            <span className={`inline-block px-2 py-1 text-[9px] font-bold uppercase tracking-widest border rounded-sm
+                                ${inscripcion.estado === 'A' ? 'bg-green-50 text-green-700 border-green-200' :
+                                    inscripcion.estado === 'P' ? 'bg-yellow-50 text-yellow-700 border-yellow-200' :
+                                        'bg-red-50 text-red-700 border-red-200'}`}>
+                                {inscripcion.estado === 'A' ? 'Aprobado' :
+                                    inscripcion.estado === 'P' ? 'Pendiente' :
+                                        'Inactivo'}
+                            </span>
+                        </div>
+                        <div>
+                            <span className="text-[9px] font-bold text-gray-400 uppercase tracking-widest block mb-1">Registro</span>
+                            <p className="text-sm font-bold text-gray-900">
                                 {new Date(inscripcion.fecha_registro).toLocaleDateString('es-PE', {
-                                    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'
+                                    year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
                                 })}
                             </p>
                         </div>
@@ -88,62 +98,45 @@ export default function InscripcionModal({ isOpen, onClose, inscripcion }) {
 
                     {/* Sección: Participantes */}
                     <div className="text-left">
-                        <span className="text-xs font-bold text-orange-600 uppercase tracking-[0.2em] block mb-6">
-                            CUERPO DE PARTICIPANTES
+                        <span className="text-[10px] font-bold text-orange-600 uppercase tracking-[0.2em] block mb-3">
+                            PARTICIPANTES
                         </span>
 
                         {loadingExtra ? (
-                            <div className="flex items-center gap-3 py-4">
-                                <div className="animate-spin h-4 w-4 border-b-2 border-orange-600 rounded-full"></div>
-                                <span className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">Sincronizando detalles...</span>
+                            <div className="flex items-center gap-2 py-2">
+                                <div className="animate-spin h-3 w-3 border-b-2 border-orange-600 rounded-full"></div>
+                                <span className="text-[9px] font-bold text-gray-400 uppercase tracking-widest">Sincronizando...</span>
                             </div>
                         ) : (
-                            <div className="space-y-6">
+                            <div className="space-y-2">
                                 {participantes.length > 0 ? participantes.map((p, idx) => (
-                                    <div key={idx} className="bg-gray-50 p-6 rounded-sm border-l-4 border-gray-900 relative">
-                                        <div className="absolute top-4 right-6">
-                                            <span className="text-[32px] font-bold text-gray-200/50 leading-none select-none">0{idx + 1}</span>
-                                        </div>
-                                        <h4 className="text-xl font-bold text-gray-900 mb-6">
-                                            {p.nombres} {p.apellidos}
-                                        </h4>
-
-                                        <div className="grid grid-cols-2 lg:grid-cols-3 gap-8">
-                                            <div>
-                                                <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-1">DNI / Documento</span>
-                                                <p className="text-sm font-semibold text-gray-800 tracking-tight">{p.dni}</p>
+                                    <div key={idx} className="bg-gray-50 p-3 rounded-sm border-l-2 border-gray-900">
+                                        <div className="grid grid-cols-4 gap-4 items-end">
+                                            <div className="space-y-0.5">
+                                                <span className="text-[8px] font-bold text-gray-400 uppercase tracking-widest block">Nombres</span>
+                                                <p className="text-[11px] font-bold text-gray-900 tracking-tight">{p.nombres} {p.apellidos}</p>
                                             </div>
-                                            <div>
-                                                <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-1">Teléfono</span>
-                                                <p className="text-sm font-semibold text-gray-800 tracking-tight">{p.telefono || '---'}</p>
+                                            <div className="space-y-0.5">
+                                                <span className="text-[8px] font-bold text-gray-400 uppercase tracking-widest block">DNI</span>
+                                                <p className="text-[11px] font-semibold text-gray-700 tracking-tight">{p.dni}</p>
                                             </div>
-                                            <div>
-                                                <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-1">Sexo</span>
-                                                <p className="text-sm font-semibold text-gray-800 uppercase tracking-tight">{p.sexo === 'M' ? 'Masculino' : 'Femenino'}</p>
+                                            <div className="space-y-0.5">
+                                                <span className="text-[8px] font-bold text-gray-400 uppercase tracking-widest block">Teléfono</span>
+                                                <p className="text-[11px] font-semibold text-gray-700 tracking-tight">{p.telefono || '---'}</p>
+                                            </div>
+                                            <div className="space-y-0.5">
+                                                <span className="text-[8px] font-bold text-gray-400 uppercase tracking-widest block">Sexo</span>
+                                                <p className="text-[11px] font-semibold text-gray-700 uppercase tracking-tight">{p.sexo === 'M' ? 'M' : 'F'}</p>
                                             </div>
                                         </div>
                                     </div>
                                 )) : (
-                                    <p className="text-[11px] font-bold text-gray-400 uppercase italic">No se encontraron datos de participantes.</p>
+                                    <p className="text-[9px] font-bold text-gray-400 uppercase italic">No se encontraron datos.</p>
                                 )}
                             </div>
                         )}
                     </div>
 
-                    {/* Sección: Estado */}
-                    <div className="pt-4 text-left">
-                        <div className="flex items-center gap-6 p-5 border border-gray-200 rounded-sm bg-gray-50/30">
-                            <span className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">ESTADO ACTUAL:</span>
-                            <span className={`px-4 py-1.5 text-[10px] font-bold uppercase tracking-widest border rounded-sm
-                                ${inscripcion.estado === 'A' ? 'bg-green-50 text-green-700 border-green-200' :
-                                    inscripcion.estado === 'P' ? 'bg-yellow-50 text-yellow-700 border-yellow-200' :
-                                        'bg-red-50 text-red-700 border-red-200'}`}>
-                                {inscripcion.estado === 'A' ? 'Aprobado y Vigente' :
-                                    inscripcion.estado === 'P' ? 'Trámite Pendiente' :
-                                        'Inactivo'}
-                            </span>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
