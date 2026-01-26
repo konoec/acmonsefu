@@ -40,7 +40,7 @@ export default function Home() {
             <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white/80 backdrop-blur-sm rounded-sm shadow-sm border border-orange-100/50">
               <div className="w-1.5 h-1.5 bg-orange-500 rounded-full animate-pulse"></div>
               <span className="text-[10px] font-bold tracking-[0.2em] text-orange-900/70 uppercase">
-                Tercera Edición
+                Octava Edición
               </span>
             </div>
 

@@ -1,6 +1,6 @@
 # Festival Golpe Tierra 2026 🏛️💃✨
 
-Bienvenido al repositorio oficial del **Tercera Edición del Festival Golpe Tierra 2026**. Una plataforma diseñada para la gestión de inscripciones y difusión cultural de nuestras danzas tradicionales.
+Bienvenido al repositorio oficial del **Octava Edición del Festival Golpe Tierra 2026**. Una plataforma diseñada para la gestión de inscripciones y difusión cultural de nuestras danzas tradicionales.
 
 ## 🚀 Tecnologías
 - **Frontend**: React 19 + Vite
