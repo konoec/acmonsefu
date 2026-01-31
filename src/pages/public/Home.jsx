@@ -24,12 +24,12 @@ export default function Home() {
   }, []);
 
   return (
-    <section id="inicio" className="relative w-full min-h-screen flex items-center bg-[#FDFBF7] overflow-hidden content-visibility-auto contain-strict">
+    <section id="inicio" className="relative w-full min-h-screen flex flex-col justify-center bg-[#FDFBF7] overflow-x-hidden pt-28 pb-20 lg:pt-24 lg:pb-24">
       {/* Elementos decorativos de fondo - Optimizado: reduce blur y usa will-change */}
       <div className="absolute top-20 right-0 w-[400px] h-[400px] bg-orange-100/20 rounded-full blur-[80px] will-change-transform"></div>
       <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-yellow-100/20 rounded-full blur-[80px] will-change-transform"></div>
 
-      <div className="relative max-w-[1400px] mx-auto px-6 lg:px-12 py-20 lg:py-24 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center z-10 w-full">
+      <div className="relative max-w-[1400px] mx-auto px-6 lg:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center z-10 w-full">
 
         {/* ===============================
             TEXTO (IZQUIERDA) - 5 columnas en desktop
@@ -49,14 +49,15 @@ export default function Home() {
               <img
                 src={IMAGES.LOGO}
                 alt="Festival Golpe Tierra 2026"
-                className="h-32 sm:h-44 lg:h-56 xl:h-[22rem] w-auto object-contain group-hover:scale-[1.02]"
+                className="h-28 sm:h-44 lg:h-56 xl:h-[22rem] w-auto object-contain group-hover:scale-[1.02] transition-transform duration-300"
               />
             </div>
           </div>
 
           {/* Descripción - mejor line-height estilo WordPress */}
-          <p className="text-base lg:text-lg text-gray-500 leading-relaxed max-w-xl font-normal opacity-90">
-            Tradición, identidad y cultura viva. Un espacio donde nuestros bailes tradicionales celebran
+          <p className="text-sm sm:text-base lg:text-lg text-gray-500 leading-relaxed max-w-xl font-normal opacity-90">
+            <span className="text-orange-900 font-bold block mb-1">Tradición, identidad y cultura viva.</span>
+            Un espacio donde nuestros bailes tradicionales celebran
             el talento, la herencia y el orgullo de nuestros pueblos.
           </p>
 
@@ -109,7 +110,7 @@ export default function Home() {
             <div className="flex w-full">
               <a
                 href="#inscripcion"
-                className="group relative inline-flex items-center justify-center px-8 py-3 text-sm font-semibold text-white bg-gradient-to-r from-gray-900 to-gray-800 rounded-sm overflow-hidden transition-all duration-300 hover:shadow-2xl hover:scale-105 hover:from-[#BC5A45] hover:to-[#A04935]"
+                className="group relative inline-flex items-center justify-center px-8 lg:px-10 py-3.5 text-sm font-semibold text-white bg-gradient-to-r from-gray-900 to-gray-800 rounded-sm overflow-hidden transition-all duration-300 hover:shadow-2xl hover:scale-105 hover:from-[#BC5A45] hover:to-[#A04935] w-full sm:w-auto"
               >
                 <span className="relative z-10 tracking-[0.1em] text-xs uppercase font-bold">
                   Inscríbete Ahora
@@ -126,28 +127,19 @@ export default function Home() {
             ÁLBUM DE FOTOS (DERECHA) - Optimizado para fit de pantalla
             FIX: Usar keys estables para evitar re-montaje del DOM
         ================================ */}
-        <div className="lg:col-span-7 relative h-[400px] sm:h-[500px] lg:h-[550px] xl:h-[600px] w-full flex items-center justify-center perspective-[1500px]">
+        <div className="lg:col-span-7 relative h-[300px] sm:h-[500px] lg:h-[550px] xl:h-[600px] w-full flex items-center justify-center perspective-[1500px] mt-12 lg:mt-0">
           {IMAGES.HOME.map((img, i) => {
-            // Calcular qué estilo le toca a esta imagen (i) basándonos en el current
-            // Si current es 0: img0 recibe style0, img1 recibe style1...
-            // Si current es 1: img0 recibe style4 (último), img1 recibe style0...
-            // La lógica previa era: (current + i) % length.
-            // Para mantener la consistencia con las keys estables, necesitamos calcular el "índice de estilo"
-
-            // Queremos que cuando 'current' sube, las imagenes roten.
-            // Style index para la imagen 'i'
             const styleIndex = (i - current + IMAGES.HOME.length) % IMAGES.HOME.length;
 
             return (
               <div
-                key={i} /* Key estable: el índice original de la imagen */
-                className={`absolute w-60 h-44 sm:w-80 sm:h-60 lg:w-[380px] lg:h-[280px] xl:w-[450px] xl:h-[340px] bg-white p-2 lg:p-2.5 shadow-[0_20px_60px_rgba(0,0,0,0.15)] rounded-sm transition-all duration-700 ease-in-out transform hover:scale-110 hover:z-[60] hover:rotate-0 hover:shadow-[0_30px_80px_rgba(0,0,0,0.25)] cursor-pointer ${STACK_STYLES[styleIndex] || ""}`}
+                key={i}
+                className={`absolute w-56 h-40 sm:w-80 sm:h-60 lg:w-[380px] lg:h-[280px] xl:w-[450px] xl:h-[340px] bg-white p-2 shadow-[0_20px_60px_rgba(0,0,0,0.15)] rounded-sm transition-all duration-700 ease-in-out transform hover:scale-110 hover:z-[60] hover:rotate-0 hover:shadow-[0_30px_80px_rgba(0,0,0,0.25)] cursor-pointer ${STACK_STYLES[styleIndex] || ""}`}
               >
                 <div className="w-full h-full overflow-hidden rounded-sm relative">
                   <img
                     src={img}
                     alt={`Golpe Tierra ${i}`}
-                    /* Solo carga eager las primeras para LCP */
                     loading={styleIndex === 4 ? "eager" : "lazy"}
                     className="w-full h-full object-cover select-none"
                   />
