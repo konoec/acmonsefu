@@ -1,14 +1,10 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: '/FestivalGolpeTierra2026',
   build: {
-    // Desactivar sourcemaps para reducir el tamaño del build
     sourcemap: false,
-    // Optimización de chunks
     rollupOptions: {
       output: {
         manualChunks: {
@@ -17,7 +13,6 @@ export default defineConfig({
         },
       },
     },
-    // Reducir advertencia de tamaño de chunk
     chunkSizeWarningLimit: 1000,
   }
 })
