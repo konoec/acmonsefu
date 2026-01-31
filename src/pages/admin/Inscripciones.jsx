@@ -154,7 +154,12 @@ export default function Inscripciones() {
                     "NOMBRES": det.nombres,
                     "APELLIDOS": det.apellidos,
                     "DNI": det.dni,
-                    "FECHA NACIMIENTO": det.fecha_nacimiento ? new Date(det.fecha_nacimiento).toLocaleDateString('es-PE') : 'N/A',
+                    "FECHA NACIMIENTO": (() => {
+                        if (!det.fecha_nacimiento) return 'N/A';
+                        const s = String(det.fecha_nacimiento).substring(0, 10);
+                        const [y, m, d] = s.split("-");
+                        return `${d}/${m}/${y}`;
+                    })(),
                     "TELÉFONO": det.telefono,
                     "SEXO": det.sexo === 'F' ? 'DAMA' : 'VARÓN',
                     "ESTADO": ins.estado?.trim() === 'A' ? 'APROBADO' :

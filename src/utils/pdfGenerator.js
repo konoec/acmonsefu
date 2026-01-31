@@ -20,6 +20,20 @@ const imageToBase64 = async (url) => {
 };
 
 /**
+ * Helper para formatear fecha MANUALMENTE y evitar bug de zona horaria (-1 día).
+ * Convierte "YYYY-MM-DD" o ISO string a "D/M/YYYY" (formato Perú visual).
+ */
+const formatDate = (dateString) => {
+    if (!dateString) return "N/A";
+    // Tomar solo la parte de la fecha YYYY-MM-DD
+    const s = String(dateString).split("T")[0];
+    const [year, month, day] = s.split("-");
+    // Retornar en formato D/M/YYYY (sin ceros a la izquierda si se prefiere visualmente limpio, o tal cual)
+    // Usamos parseInt para limpiar ceros a la izquierda del día y mes (ej: 03 -> 3)
+    return `${parseInt(day)}/${parseInt(month)}/${year}`;
+};
+
+/**
  * Genera el PDF de la ficha de inscripción
  * Diseño formal y profesional tipo documento Word
  */
@@ -38,7 +52,7 @@ export const generateInscripcionPDF = async (inscripcion) => {
         const participantes = inscripcion.participantes || [];
         const tipoParticipacion = inscripcion.tipo_participacion || (participantes.length > 1 ? "PAREJA" : "INDIVIDUAL");
         const fechaRegistro = inscripcion.fecha_registro
-            ? new Date(inscripcion.fecha_registro).toLocaleDateString("es-PE")
+            ? formatDate(inscripcion.fecha_registro)
             : "N/A";
 
         const htmlContent = `
@@ -304,7 +318,7 @@ export const generateInscripcionPDF = async (inscripcion) => {
                                 ${idx < participantes.length - 1 ? 'border-bottom: 1px solid #000;' : ''}
                                 font-size: 10px;
                                 text-align: center;
-                            ">${p.fecha_nacimiento ? new Date(p.fecha_nacimiento).toLocaleDateString("es-PE") : "N/A"}</td>
+                            ">${p.fecha_nacimiento ? formatDate(p.fecha_nacimiento) : "N/A"}</td>
                             <td style="
                                 padding: 6px 5px;
                                 ${idx < participantes.length - 1 ? 'border-bottom: 1px solid #000;' : ''}

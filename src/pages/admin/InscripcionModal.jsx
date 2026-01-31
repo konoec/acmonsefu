@@ -136,7 +136,10 @@ export default function InscripcionModal({ isOpen, onClose, inscripcion }) {
                                             <div className="space-y-0.5">
                                                 <span className="text-[8px] font-bold text-gray-400 uppercase tracking-widest block">F. Nacimiento</span>
                                                 <p className="text-[11px] font-semibold text-gray-700 tracking-tight">
-                                                    {p.fecha_nacimiento ? new Date(p.fecha_nacimiento).toLocaleDateString('es-PE') : '---'}
+                                                    {p.fecha_nacimiento ? (() => {
+                                                        const [y, m, d] = p.fecha_nacimiento.toString().split('T')[0].split('-');
+                                                        return `${parseInt(d)}/${parseInt(m)}/${y}`;
+                                                    })() : '---'}
                                                 </p>
                                             </div>
                                             <div className="space-y-0.5">

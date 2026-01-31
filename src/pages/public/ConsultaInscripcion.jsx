@@ -216,7 +216,11 @@ export default function ConsultaInscripcion() {
                                                 {res.nombres} {res.apellidos}
                                             </h3>
                                             <p className="text-[11px] text-gray-400 font-medium italic">
-                                                Registrado el {new Date(res.inscripcion?.fecha_registro).toLocaleDateString()}
+                                                Registrado el {(() => {
+                                                    if (!res.inscripcion?.fecha_registro) return '';
+                                                    const [y, m, d] = res.inscripcion.fecha_registro.toString().split('T')[0].split('-');
+                                                    return `${d}/${m}/${y}`;
+                                                })()}
                                                 {res.inscripcion?.categoria?.nombre && ` • Categoría: ${res.inscripcion.categoria.nombre}`}
                                                 {res.inscripcion?.academia && ` • Academia: ${res.inscripcion.academia}`}
                                             </p>

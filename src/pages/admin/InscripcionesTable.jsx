@@ -47,7 +47,11 @@ const InscripcionesTable = memo(function InscripcionesTable({
                                 </td>
                                 <td className="px-4 py-3">
                                     <span className="text-[10px] text-gray-400 font-semibold font-body">
-                                        {new Date(ins.fecha_registro).toLocaleDateString('es-PE')}
+                                        {(() => {
+                                            if (!ins.fecha_registro) return 'N/A';
+                                            const [y, m, d] = ins.fecha_registro.toString().split('T')[0].split('-');
+                                            return `${d}/${m}/${y}`;
+                                        })()}
                                     </span>
                                 </td>
                                 <td className="px-4 py-3">
