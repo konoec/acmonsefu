@@ -45,13 +45,13 @@ export default function Home() {
             </div>
 
             {/* Logo Principal en lugar de Texto */}
-            <div className="relative group">
+            <h1 className="relative group m-0">
               <img
                 src={IMAGES.LOGO}
                 alt="Festival Golpe Tierra 2026"
                 className="h-28 sm:h-44 lg:h-56 xl:h-[22rem] w-auto object-contain group-hover:scale-[1.02] transition-transform duration-300"
               />
-            </div>
+            </h1>
           </div>
 
           {/* Descripción - mejor line-height estilo WordPress */}
