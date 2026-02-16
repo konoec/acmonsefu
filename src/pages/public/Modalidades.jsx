@@ -61,7 +61,7 @@ export default function Modalidades() {
                 { name: "Juvenil", age: "18 a 22 años cumplidos" },
                 { name: "Adultos", age: "23 años a más" },
             ],
-            note: "Restricción: Los participantes no deben haber ganado ningún campeonato Novel o Nacional.",
+            note: "Restricción: Los participantes no deben haber ganado ningún campeonato Nacional.",
         },
         {
             id: "06",
