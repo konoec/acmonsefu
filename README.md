@@ -19,13 +19,13 @@ Bienvenido al repositorio oficial del **Octava Edición del Festival Golpe Tierr
 
 1. Clonar el repositorio:
    ```bash
-   git clone https://github.com/darkira2004/FestivalGolpeTierra2026.git
+   git clone https://github.com/konoec/acmonsefu.git
    ```
-2. Instalar dependencias:
+2. Crear un archivo `.env` con las credenciales de Supabase (ver `.env.example`).
+3. Instalar dependencias:
    ```bash
    npm install
    ```
-3. Configurar variables de entorno: Crear un archivo `.env` con las credenciales de Supabase.
 4. Iniciar modo desarrollo:
    ```bash
    npm run dev
