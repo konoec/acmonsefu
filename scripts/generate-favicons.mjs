@@ -43,9 +43,9 @@ console.log("ok favicon.svg (base64 embed)");
 
 const ogSvg = readFileSync(join(SCRIPTS, "og-template.svg"));
 const ogBg = await sharp(ogSvg).resize(1200, 630).png().toBuffer();
-const icon = await brandBrown(logo).resize(430, 430).png().toBuffer();
+const icon = await brandBrown(logo).resize(340, 340).png().toBuffer();
 const og = await sharp(ogBg)
-  .composite([{ input: icon, left: 90, top: 100 }])
+  .composite([{ input: icon, left: 430, top: 60 }])
   .png()
   .toBuffer();
 writeFileSync(join(PUBLIC, "og-image.png"), og);
