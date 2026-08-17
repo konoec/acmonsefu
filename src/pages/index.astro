@@ -1,0 +1,229 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
+import { SITE } from "../data/site";
+import { MODALIDADES } from "../data/festival";
+import logoAsociacion from "../assets/images/logos/logo_asociacion.webp";
+import logoFestival from "../assets/images/logos/logo_festival.webp";
+import heroImg from "../assets/images/home/home1.webp";
+import aboutImg from "../assets/images/home/home3.webp";
+
+const noticias = (await getCollection("noticias"))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+
+const marquee = MODALIDADES.map((m) => m.title);
+---
+
+<Layout
+  title="Asociación Cultural Monsefú"
+  description="AC Monsefú: difundimos y preservamos nuestras danzas y tradiciones. Organizadores del Festival Golpe Tierra."
+>
+  <section class="relative overflow-hidden bg-cream-50">
+    <div class="pointer-events-none absolute -top-24 right-0 h-96 w-96 rounded-full bg-brand-500/10 blur-[90px]"></div>
+    <div class="pointer-events-none absolute bottom-0 left-0 h-80 w-80 rounded-full bg-amber-200/20 blur-[90px]"></div>
+
+    <div class="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-5 pb-20 pt-16 lg:grid-cols-2 lg:px-8 lg:pb-28 lg:pt-24">
+      <div class="relative z-10">
+        <img src={logoAsociacion.src} alt="Logo AC Monsefú" class="h-14 w-auto object-contain" width="120" height="48" />
+        <h1 class="mt-6 font-heading text-4xl font-extrabold leading-[1.05] tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
+          {SITE.fullName}
+        </h1>
+        <p class="mt-4 max-w-lg text-lg leading-relaxed text-gray-600">{SITE.tagline}.</p>
+        <p class="mt-4 max-w-lg text-base leading-relaxed text-gray-500">
+          Somos una asociación dedicada a la difusión de la danza y la cultura tradicional. Organizamos eventos,
+          concursos y espectáculos que celebran el talento y la herencia de nuestros pueblos.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-4">
+          <a
+            href="/nosotros"
+            class="inline-flex items-center justify-center rounded-sm bg-gray-900 px-6 py-3 text-xs font-bold uppercase tracking-[0.15em] text-white transition-all hover:bg-brand-600"
+          >
+            Conócenos
+          </a>
+          <a
+            href="/golpe-tierra"
+            class="inline-flex items-center justify-center rounded-sm border border-brand-600 px-6 py-3 text-xs font-bold uppercase tracking-[0.15em] text-brand-600 transition-all hover:bg-brand-600 hover:text-white"
+          >
+            Festival Golpe Tierra
+          </a>
+        </div>
+      </div>
+
+      <div class="relative z-10 mx-auto w-full max-w-md lg:max-w-none">
+        <Image
+          src={heroImg}
+          alt="Presentación de danzas tradicionales"
+          class="aspect-[4/5] w-full rounded-sm object-cover shadow-2xl"
+          width={700}
+        />
+        <div class="absolute -bottom-4 -left-4 -z-10 h-full w-full rounded-sm bg-gradient-to-br from-brand-500 to-brand-700 opacity-20"></div>
+      </div>
+    </div>
+
+    <div class="overflow-hidden border-y border-gray-100 bg-white py-3">
+      <div class="flex w-max animate-marquee items-center gap-10">
+        {[...marquee, ...marquee].map((name, i) => (
+          <span key={i} class="flex items-center gap-10 whitespace-nowrap text-[11px] font-bold uppercase tracking-[0.25em] text-gray-400">
+            {name}
+            <span class="h-1 w-1 rounded-full bg-gray-300"></span>
+          </span>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-5 py-20 lg:px-8 lg:py-28">
+    <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
+      <div class="relative">
+        <Image src={aboutImg} alt="Danza tradicional" class="aspect-[4/3] w-full rounded-sm object-cover shadow-xl" width={800} />
+      </div>
+      <div>
+        <p class="text-[11px] font-bold uppercase tracking-[0.3em] text-brand-600">Quiénes somos</p>
+        <h2 class="mt-3 font-heading text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+          Cultura que se baila y se siente
+        </h2>
+        <p class="mt-4 text-base leading-relaxed text-gray-600">
+          AC Monsefú nace con la misión de preservar y difundir la identidad cultural de nuestros pueblos a través de la
+          danza, la música y las tradiciones que nos definen.
+        </p>
+        <p class="mt-3 text-base leading-relaxed text-gray-500">
+          Organizamos el Festival Golpe Tierra, ofrecemos espectáculos culturales y trabajamos por acercar la cultura a
+          las nuevas generaciones.
+        </p>
+        <a
+          href="/nosotros"
+          class="mt-6 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.15em] text-brand-600 transition-colors hover:text-brand-700"
+        >
+          Conoce nuestra historia
+          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-white py-20 lg:py-28">
+    <div class="mx-auto max-w-6xl px-5 lg:px-8">
+      <div class="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
+        <div>
+          <p class="text-[11px] font-bold uppercase tracking-[0.3em] text-brand-600">Servicios</p>
+          <h2 class="mt-3 font-heading text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+            Espectáculos y eventos
+          </h2>
+        </div>
+        <a
+          href="/servicios"
+          class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.15em] text-brand-600 transition-colors hover:text-brand-700"
+        >
+          Ver todos los servicios
+          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
+        </a>
+      </div>
+
+      <div class="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
+        {[
+          {
+            title: "Festivales y concursos",
+            text: "Organización de eventos competitivos de danza como el Festival Golpe Tierra.",
+          },
+          {
+            title: "Shows y espectáculos",
+            text: "Presentaciones de danzas tradicionales para empresas, instituciones y fechas especiales.",
+          },
+          {
+            title: "Talleres y difusión",
+            text: "Iniciativas para enseñar nuestras danzas y acercar la cultura a la comunidad.",
+          },
+        ].map((service) => (
+          <article class="group rounded-sm border border-gray-100 bg-cream-50 p-7 transition-all duration-300 hover:-translate-y-1 hover:border-brand-200 hover:shadow-xl">
+            <div class="flex h-11 w-11 items-center justify-center rounded-sm bg-brand-600/10 text-brand-600 transition-colors group-hover:bg-brand-600 group-hover:text-white">
+              <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 0 0-2 2v3a2 2 0 1 1 0 4v3a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-3a2 2 0 1 1 0-4V7a2 2 0 0 0-2-2H5Z" />
+              </svg>
+            </div>
+            <h3 class="mt-5 font-heading text-lg font-bold text-gray-900">{service.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-gray-500">{service.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="relative overflow-hidden bg-gradient-to-br from-brand-600 to-brand-700">
+    <div class="mx-auto flex max-w-6xl flex-col items-center gap-8 px-5 py-20 text-center lg:flex-row lg:justify-between lg:px-8 lg:text-left">
+      <div class="max-w-xl">
+        <img src={logoFestival.src} alt="Logo Festival Golpe Tierra" class="mx-auto h-16 w-auto object-contain lg:mx-0" width="140" height="60" />
+        <h2 class="mt-5 font-heading text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+          Festival Golpe Tierra
+        </h2>
+        <p class="mt-3 text-base leading-relaxed text-white/80">
+          Nuestro concurso de danzas tradicionales más importante. Una celebración de talento, herencia y orgullo
+          cultural que reunirá a bailarines de todo el país.
+        </p>
+      </div>
+      <a
+        href="/golpe-tierra"
+        class="inline-flex shrink-0 items-center justify-center rounded-sm bg-white px-8 py-4 text-xs font-black uppercase tracking-[0.15em] text-brand-700 transition-all hover:bg-gray-100"
+      >
+        Ir al festival
+      </a>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-5 py-20 lg:px-8 lg:py-28">
+    <div class="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
+      <div>
+        <p class="text-[11px] font-bold uppercase tracking-[0.3em] text-brand-600">Novedades</p>
+        <h2 class="mt-3 font-heading text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+          Últimas noticias
+        </h2>
+      </div>
+      <a
+        href="/novedades"
+        class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.15em] text-brand-600 transition-colors hover:text-brand-700"
+      >
+        Ver todas
+        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+        </svg>
+      </a>
+    </div>
+
+    <div class="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
+      {noticias.map((post) => (
+        <a
+          href={`/novedades/${post.id}`}
+          class="group rounded-sm border border-gray-100 bg-white p-7 transition-all duration-300 hover:-translate-y-1 hover:border-brand-200 hover:shadow-xl"
+        >
+          <p class="text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400">
+            {post.data.date.toLocaleDateString("es-PE", { day: "2-digit", month: "long", year: "numeric" })}
+          </p>
+          <h3 class="mt-3 font-heading text-lg font-bold leading-snug text-gray-900 transition-colors group-hover:text-brand-600">
+            {post.data.title}
+          </h3>
+          <p class="mt-2 text-sm leading-relaxed text-gray-500">{post.data.excerpt}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="border-t border-gray-100 bg-white">
+    <div class="mx-auto flex max-w-6xl flex-col items-center gap-6 px-5 py-16 text-center lg:flex-row lg:justify-between lg:px-8 lg:text-left">
+      <div>
+        <h2 class="font-heading text-2xl font-extrabold tracking-tight text-gray-900">¿Quieres saber más?</h2>
+        <p class="mt-2 text-gray-500">Escríbenos y con gusto te responderemos.</p>
+      </div>
+      <a
+        href="/contacto"
+        class="inline-flex shrink-0 items-center justify-center rounded-sm bg-gray-900 px-8 py-4 text-xs font-bold uppercase tracking-[0.15em] text-white transition-all hover:bg-brand-600"
+      >
+        Contacto
+      </a>
+    </div>
+  </section>
+</Layout>

@@ -16,13 +16,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Create env file
-        run: |
-          cat > .env <<'EOF'
-          VITE_SUPABASE_URL=${{ secrets.VITE_SUPABASE_URL }}
-          VITE_SUPABASE_ANON_KEY=${{ secrets.VITE_SUPABASE_ANON_KEY }}
-          EOF
-
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
@@ -32,7 +25,7 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build
+      - name: Build (Astro)
         run: npm run build
 
       - name: Setup Pages
