@@ -45,7 +45,7 @@ const ogSvg = readFileSync(join(SCRIPTS, "og-template.svg"));
 const ogBg = await sharp(ogSvg).resize(1200, 630).png().toBuffer();
 const icon = await brandBrown(logo).resize(340, 340).png().toBuffer();
 const og = await sharp(ogBg)
-  .composite([{ input: icon, left: 430, top: 60 }])
+  .composite([{ input: icon, left: 430, top: 35 }])
   .png()
   .toBuffer();
 writeFileSync(join(PUBLIC, "og-image.png"), og);
