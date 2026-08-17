@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fdfbf7"/>
+      <stop offset="1" stop-color="#f7f1e6"/>
+    </linearGradient>
+    <linearGradient id="txt" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#bc5a45"/>
+      <stop offset="1" stop-color="#a04935"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <text x="570" y="250" font-family="Arial, sans-serif" font-size="34" font-weight="700" letter-spacing="2" fill="#bc5a45">ASOCIACIÓN CULTURAL</text>
+  <text x="566" y="330" font-family="Arial, sans-serif" font-size="96" font-weight="900" letter-spacing="4" fill="url(#txt)">MONSEFÚ</text>
+  <text x="570" y="400" font-family="Arial, sans-serif" font-size="28" fill="#6b7280">Cultura viva, identidad y tradición</text>
+  <text x="570" y="470" font-family="Arial, sans-serif" font-size="24" font-weight="700" letter-spacing="2" fill="#bc5a45">acmonsefu.com</text>
+</svg>
