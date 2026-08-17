@@ -6,10 +6,16 @@ const year = new Date().getFullYear();
 const links = [
   { label: "Inicio", href: "/" },
   { label: "Nosotros", href: "/nosotros" },
-  { label: "Servicios", href: "/servicios" },
+  { label: "Proyectos", href: "/proyectos" },
   { label: "Novedades", href: "/novedades" },
   { label: "Contacto", href: "/contacto" },
+];
+
+const proyectos = [
   { label: "Festival Golpe Tierra", href: "/golpe-tierra" },
+  { label: "Shows y espectáculos", href: "/proyectos" },
+  { label: "Talleres y formación", href: "/proyectos" },
+  { label: "Eventos institucionales", href: "/proyectos" },
 ];
 
 const socials = [
@@ -35,6 +41,17 @@ const socials = [
             <li>
               <a href={link.href} class="text-sm text-gray-600 transition-colors hover:text-brand-600">
                 {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+
+        <p class="mt-6 text-xs font-bold uppercase tracking-[0.2em] text-gray-400">Proyectos</p>
+        <ul class="mt-4 space-y-2.5">
+          {proyectos.map((proyecto) => (
+            <li>
+              <a href={proyecto.href} class="text-sm text-gray-600 transition-colors hover:text-brand-600">
+                {proyecto.label}
               </a>
             </li>
           ))}
@@ -74,7 +91,7 @@ const socials = [
     <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 px-5 py-5 text-xs text-gray-400 sm:flex-row lg:px-8">
       <p>© {year} {SITE.fullName}. Todos los derechos reservados.</p>
       <p>
-        <a href="/golpe-tierra" class="transition-colors hover:text-brand-600">Festival Golpe Tierra</a>
+        <a href="/proyectos" class="transition-colors hover:text-brand-600">Proyectos</a>
         <span class="mx-2 text-gray-300">·</span>
         <a href="/novedades" class="transition-colors hover:text-brand-600">Novedades</a>
       </p>

@@ -3,7 +3,7 @@ import Layout from "../../layouts/Layout.astro";
 import { Image } from "astro:assets";
 import { FESTIVAL, MODALIDADES } from "../../data/festival";
 import { SITE } from "../../data/site";
-import logoFestival from "../../assets/images/logos/logo_festival.webp";
+import logoFestivalLight from "../../assets/images/logos/logo_festival_light.webp";
 
 const galleryImages = Object.values(
   import.meta.glob("../../assets/images/galeria/*.webp", { eager: true, import: "default" }),
@@ -12,13 +12,25 @@ const galleryImages = Object.values(
 
 <Layout
   title={`${FESTIVAL.name} ${FESTIVAL.year} | ${FESTIVAL.edition}`}
-  description={`${FESTIVAL.name}: concurso de danzas tradicionales organizado por ${SITE.fullName}. ${FESTIVAL.place}.`}
+  description={`${FESTIVAL.name}: concurso de danzas tradicionales y uno de los proyectos culturales de ${SITE.fullName}. ${FESTIVAL.place}.`}
 >
   <section class="relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-900 to-brand-800 text-white">
     <div class="pointer-events-none absolute -right-24 top-0 h-96 w-96 rounded-full bg-brand-500/20 blur-[100px]"></div>
     <div class="mx-auto max-w-6xl px-5 py-24 lg:px-8 lg:py-32">
-      <img src={logoFestival.src} alt={`Logo ${FESTIVAL.name}`} class="h-20 w-auto object-contain" width="160" height="80" />
-      <h1 class="mt-6 font-heading text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
+      <a
+        href="/proyectos"
+        class="text-[11px] font-bold uppercase tracking-[0.25em] text-white/60 transition-colors hover:text-white"
+      >
+        ← Un proyecto de AC Monsefú
+      </a>
+      <img
+        src={logoFestivalLight.src}
+        alt={`Logo ${FESTIVAL.name}`}
+        class="mt-6 h-20 w-auto object-contain"
+        width="160"
+        height="80"
+      />
+      <h1 class="mt-6 font-heading text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
         {FESTIVAL.name}
       </h1>
       <p class="mt-3 inline-block rounded-sm bg-white/10 px-3 py-1 text-[11px] font-black uppercase tracking-[0.25em] text-white/90">

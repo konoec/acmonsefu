@@ -28,7 +28,7 @@ src/
 ├── assets/images/       # Imágenes optimizadas (home, galería, logos)
 ├── components/          # Componentes reutilizables (Navbar, Footer)
 ├── content/noticias/    # Novedades en markdown (Content Collections)
-├── data/                # Datos estáticos (site.js, festival.js)
+├── data/                # Datos estáticos (site.js, festival.js, proyectos.js)
 ├── layouts/             # Layout.astro (SEO, fonts, estructura global)
 ├── pages/               # Rutas del sitio
 └── styles/global.css    # Tema Tailwind (paleta cultural)
@@ -41,7 +41,7 @@ scripts/optimize-images.mjs  # Optimiza imágenes con sharp
 | --- | --- |
 | `/` | Home ACMONSEFU |
 | `/nosotros` | Historia, misión, valores |
-| `/servicios` | Shows y espectáculos |
+| `/proyectos` | Proyectos de la asociación (festival, shows, talleres, eventos) |
 | `/novedades` + `/novedades/[slug]` | Noticias (markdown) |
 | `/contacto` | Contacto (WhatsApp, redes) |
 | `/golpe-tierra` | Landing informativo del Festival Golpe Tierra |

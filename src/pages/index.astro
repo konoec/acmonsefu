@@ -4,16 +4,18 @@ import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
 import { SITE } from "../data/site";
 import { MODALIDADES } from "../data/festival";
+import { PROYECTOS } from "../data/proyectos";
 import logoAsociacion from "../assets/images/logos/logo_asociacion_brown.webp";
-import logoFestival from "../assets/images/logos/logo_festival.webp";
-import heroImg from "../assets/images/home/home1.webp";
+import logoFestivalLight from "../assets/images/logos/logo_festival_light.webp";
 import aboutImg from "../assets/images/home/home3.webp";
 
 const noticias = (await getCollection("noticias"))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 3);
 
-const marquee = MODALIDADES.map((m) => m.title);
+const marquee = [...new Set(MODALIDADES.map((m) => m.title))];
+const featuredProject = PROYECTOS.find((p) => p.featured);
+const otherProjects = PROYECTOS.filter((p) => !p.featured);
 ---
 
 <Layout
@@ -25,9 +27,18 @@ const marquee = MODALIDADES.map((m) => m.title);
     <div class="pointer-events-none absolute bottom-0 left-0 h-80 w-80 rounded-full bg-amber-200/20 blur-[90px]"></div>
 
     <div class="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-5 pb-20 pt-16 lg:grid-cols-2 lg:px-8 lg:pb-28 lg:pt-24">
-      <div class="relative z-10">
-        <img src={logoAsociacion.src} alt="Logo AC Monsefú" class="h-14 w-auto object-contain" width="120" height="48" />
-        <h1 class="mt-6 font-heading text-4xl font-extrabold leading-[1.05] tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
+      <div class="relative z-10 order-1 flex items-center justify-center">
+        <img
+          src={logoAsociacion.src}
+          alt="Logo AC Monsefú"
+          class="h-56 w-auto object-contain sm:h-72 lg:h-80"
+          width="560"
+          height="560"
+        />
+      </div>
+
+      <div class="relative z-10 order-2">
+        <h1 class="font-heading text-4xl font-extrabold leading-[1.05] tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
           {SITE.fullName}
         </h1>
         <p class="mt-4 max-w-lg text-lg leading-relaxed text-gray-600">{SITE.tagline}.</p>
@@ -43,28 +54,18 @@ const marquee = MODALIDADES.map((m) => m.title);
             Conócenos
           </a>
           <a
-            href="/golpe-tierra"
+            href="/proyectos"
             class="inline-flex items-center justify-center rounded-sm border border-brand-600 px-6 py-3 text-xs font-bold uppercase tracking-[0.15em] text-brand-600 transition-all hover:bg-brand-600 hover:text-white"
           >
-            Festival Golpe Tierra
+            Nuestros proyectos
           </a>
         </div>
-      </div>
-
-      <div class="relative z-10 mx-auto w-full max-w-md lg:max-w-none">
-        <Image
-          src={heroImg}
-          alt="Presentación de danzas tradicionales"
-          class="aspect-[4/5] w-full rounded-sm object-cover shadow-2xl"
-          width={700}
-        />
-        <div class="absolute -bottom-4 -left-4 -z-10 h-full w-full rounded-sm bg-gradient-to-br from-brand-500 to-brand-700 opacity-20"></div>
       </div>
     </div>
 
     <div class="overflow-hidden border-y border-gray-100 bg-white py-3">
       <div class="flex w-max animate-marquee items-center gap-10">
-        {[...marquee, ...marquee].map((name, i) => (
+        {[...marquee, ...marquee, ...marquee, ...marquee].map((name, i) => (
           <span key={i} class="flex items-center gap-10 whitespace-nowrap text-[11px] font-bold uppercase tracking-[0.25em] text-gray-400">
             {name}
             <span class="h-1 w-1 rounded-full bg-gray-300"></span>
@@ -109,69 +110,67 @@ const marquee = MODALIDADES.map((m) => m.title);
     <div class="mx-auto max-w-6xl px-5 lg:px-8">
       <div class="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
         <div>
-          <p class="text-[11px] font-bold uppercase tracking-[0.3em] text-brand-600">Servicios</p>
+          <p class="text-[11px] font-bold uppercase tracking-[0.3em] text-brand-600">Proyectos</p>
           <h2 class="mt-3 font-heading text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-            Espectáculos y eventos
+            Nuestros proyectos
           </h2>
         </div>
         <a
-          href="/servicios"
+          href="/proyectos"
           class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.15em] text-brand-600 transition-colors hover:text-brand-700"
         >
-          Ver todos los servicios
+          Ver todos los proyectos
           <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
           </svg>
         </a>
       </div>
 
-      <div class="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
-        {[
-          {
-            title: "Festivales y concursos",
-            text: "Organización de eventos competitivos de danza como el Festival Golpe Tierra.",
-          },
-          {
-            title: "Shows y espectáculos",
-            text: "Presentaciones de danzas tradicionales para empresas, instituciones y fechas especiales.",
-          },
-          {
-            title: "Talleres y difusión",
-            text: "Iniciativas para enseñar nuestras danzas y acercar la cultura a la comunidad.",
-          },
-        ].map((service) => (
-          <article class="group rounded-sm border border-gray-100 bg-cream-50 p-7 transition-all duration-300 hover:-translate-y-1 hover:border-brand-200 hover:shadow-xl">
-            <div class="flex h-11 w-11 items-center justify-center rounded-sm bg-brand-600/10 text-brand-600 transition-colors group-hover:bg-brand-600 group-hover:text-white">
-              <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 0 0-2 2v3a2 2 0 1 1 0 4v3a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-3a2 2 0 1 1 0-4V7a2 2 0 0 0-2-2H5Z" />
+      <div class="mt-12 overflow-hidden rounded-sm bg-gradient-to-br from-gray-900 via-gray-900 to-brand-800 text-white">
+        <div class="grid grid-cols-1 items-center gap-8 p-8 md:grid-cols-[1fr_auto] md:p-12">
+          <div>
+            <span class="inline-block rounded-sm bg-white/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-white/90">
+              {featuredProject.tag}
+            </span>
+            <h3 class="mt-4 font-heading text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
+              {featuredProject.title}
+            </h3>
+            <p class="mt-3 max-w-xl text-base leading-relaxed text-white/80">{featuredProject.text}</p>
+            <a
+              href={featuredProject.href}
+              class="mt-6 inline-flex items-center justify-center rounded-sm bg-white px-8 py-3.5 text-xs font-black uppercase tracking-[0.15em] text-brand-700 transition-all hover:bg-gray-100"
+            >
+              Ir al festival
+            </a>
+          </div>
+          <div class="flex items-center justify-center">
+            <img
+              src={logoFestivalLight.src}
+              alt={`Logo ${featuredProject.title}`}
+              class="h-24 w-auto object-contain md:h-32"
+              width="180"
+              height="80"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-6 grid grid-cols-1 gap-6 md:grid-cols-3">
+        {otherProjects.map((proyecto) => (
+          <a
+            href={proyecto.href}
+            class="group rounded-sm border border-gray-100 bg-cream-50 p-7 transition-all duration-300 hover:-translate-y-1 hover:border-brand-200 hover:shadow-xl"
+          >
+            <div class="flex h-11 w-11 items-center justify-center rounded-sm bg-brand-600 text-white transition-colors group-hover:bg-brand-700">
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+                <path d={proyecto.icon} />
               </svg>
             </div>
-            <h3 class="mt-5 font-heading text-lg font-bold text-gray-900">{service.title}</h3>
-            <p class="mt-2 text-sm leading-relaxed text-gray-500">{service.text}</p>
-          </article>
+            <h3 class="mt-5 font-heading text-lg font-bold text-gray-900">{proyecto.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-gray-500">{proyecto.text}</p>
+          </a>
         ))}
       </div>
-    </div>
-  </section>
-
-  <section class="relative overflow-hidden bg-gradient-to-br from-brand-600 to-brand-700">
-    <div class="mx-auto flex max-w-6xl flex-col items-center gap-8 px-5 py-20 text-center lg:flex-row lg:justify-between lg:px-8 lg:text-left">
-      <div class="max-w-xl">
-        <img src={logoFestival.src} alt="Logo Festival Golpe Tierra" class="mx-auto h-16 w-auto object-contain lg:mx-0" width="140" height="60" />
-        <h2 class="mt-5 font-heading text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
-          Festival Golpe Tierra
-        </h2>
-        <p class="mt-3 text-base leading-relaxed text-white/80">
-          Nuestro concurso de danzas tradicionales más importante. Una celebración de talento, herencia y orgullo
-          cultural que reunirá a bailarines de todo el país.
-        </p>
-      </div>
-      <a
-        href="/golpe-tierra"
-        class="inline-flex shrink-0 items-center justify-center rounded-sm bg-white px-8 py-4 text-xs font-black uppercase tracking-[0.15em] text-brand-700 transition-all hover:bg-gray-100"
-      >
-        Ir al festival
-      </a>
     </div>
   </section>
 

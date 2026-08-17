@@ -1,12 +1,10 @@
 ---
-import logoAsociacion from "../assets/images/logos/logo_icono.png";
-
 const { pathname } = Astro.url;
 
 const links = [
   { label: "Inicio", href: "/" },
   { label: "Nosotros", href: "/nosotros" },
-  { label: "Servicios", href: "/servicios" },
+  { label: "Proyectos", href: "/proyectos" },
   { label: "Novedades", href: "/novedades" },
   { label: "Contacto", href: "/contacto" },
 ];
@@ -18,11 +16,7 @@ function isActive(href) {
 ---
 
 <header class="sticky top-0 z-50 w-full border-b border-gray-100 bg-cream-50/90 backdrop-blur">
-  <nav class="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 lg:px-8" aria-label="Principal">
-    <a href="/" class="flex items-center gap-2.5" aria-label="Ir al inicio">
-      <img src={logoAsociacion.src} alt="Logo AC Monsefú" class="h-10 w-auto object-contain" width="120" height="40" />
-    </a>
-
+  <nav class="mx-auto flex h-16 max-w-6xl items-center justify-center px-5 lg:px-8" aria-label="Principal">
     <ul class="hidden items-center gap-7 lg:flex">
       {links.map((link) => (
         <li>
@@ -38,16 +32,6 @@ function isActive(href) {
         </li>
       ))}
     </ul>
-
-    <a
-      href="/golpe-tierra"
-      class:list={[
-        "hidden rounded-sm bg-brand-600 px-4 py-2 text-[11px] font-black uppercase tracking-[0.15em] text-white transition-colors hover:bg-brand-700 lg:inline-flex",
-        isActive("/golpe-tierra") && "ring-2 ring-brand-600 ring-offset-2 ring-offset-cream-50",
-      ]}
-    >
-      Festival
-    </a>
 
     <details class="group relative lg:hidden">
       <summary
@@ -76,14 +60,6 @@ function isActive(href) {
               </a>
             </li>
           ))}
-          <li class="mt-1 border-t border-gray-100 pt-1">
-            <a
-              href="/golpe-tierra"
-              class="block rounded-sm bg-brand-600 px-3 py-2.5 text-center text-xs font-black uppercase tracking-widest text-white"
-            >
-              Festival Golpe Tierra
-            </a>
-          </li>
         </ul>
       </div>
     </details>

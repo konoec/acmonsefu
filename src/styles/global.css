@@ -8,10 +8,15 @@
   --color-cream-100: #f7f1e6;
   --color-cream-200: #efe4d1;
 
+  --color-brand-100: #f6d9cd;
+  --color-brand-200: #edb9a6;
+  --color-brand-300: #e3a08a;
   --color-brand-400: #cf7a63;
   --color-brand-500: #bc5a45;
   --color-brand-600: #a04935;
   --color-brand-700: #8a3f2e;
+  --color-brand-800: #743227;
+  --color-brand-900: #5d271f;
 }
 
 html {

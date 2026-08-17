@@ -49,12 +49,6 @@ const ogImage = image ? new URL(image, SITE.url) : new URL("/og-image.png", SITE
       rel="stylesheet"
     />
 
-    <script is:inline>
-      const hash = window.location.hash;
-      if (["#inicio", "#bases", "#modalidades", "#inscripcion", "#consulta", "#galeria"].includes(hash)) {
-        window.location.replace("/golpe-tierra");
-      }
-    </script>
   </head>
   <body class="font-body bg-cream-50 text-gray-900 antialiased">
     <Navbar />
