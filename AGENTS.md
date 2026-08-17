@@ -79,6 +79,13 @@ scripts/optimize-images.mjs  # Optimiza imágenes con sharp
 - El sitio actual es 100% estático y NO necesita variables de entorno para compilar.
 - Cuando se integren funcionalidades dinámicas (inscripciones 2027 con Supabase), las credenciales
   (`VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`) se inyectarán vía GitHub Secrets y se reutilizará `src/supabaseClient.js` o equivalente.
+- La `service_role` key de Supabase nunca va al frontend ni al build estático (quedaría expuesta): solo se usa en el SQL Editor o en un backend server-side.
+
+## Supabase (MCP)
+
+- El MCP de Supabase está configurado en `opencode.json` (proyecto `bmsspejbidujakbikmto`).
+- El esquema de la base del festival está en `supabase/schema.sql` (tablas, RPC `registrar_inscripcion`, RLS).
+- El proyecto anterior fue eliminado sin respaldo: los datos 2026 se perdieron; la convocatoria 2027 arranca limpia.
 
 ## Convenciones de commits (Conventional Commits)
 

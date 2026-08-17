@@ -25,6 +25,7 @@ src/
 ├── pages/               # Rutas (/, /nosotros, /servicios, /novedades, /contacto, /golpe-tierra, 404)
 └── styles/global.css    # Tema Tailwind (paleta cultural)
 scripts/optimize-images.mjs  # Comprime y optimiza las imágenes del repo
+supabase/schema.sql          # Esquema SQL del Festival (tablas, RPC, RLS)
 ```
 
 ## 📦 Instalación
@@ -60,7 +61,12 @@ El landing informativo del festival vive en `/golpe-tierra`. Los datos (modalida
 `src/data/festival.js` y son fáciles de editar.
 
 Para la edición 2027 se reconstruirán el formulario de inscripción y el panel de administración (probablemente con
-Supabase), integrados a este mismo sitio.
+Supabase), integrados a este mismo sitio. El esquema de la base anterior fue recuperado del historial del repo y está
+en `supabase/schema.sql` (tablas, función RPC `registrar_inscripcion` y políticas RLS). Cuando crees el proyecto
+nuevo, ejecútalo en el SQL Editor.
+
+> Nota: el proyecto Supabase anterior fue eliminado y no había respaldo, por lo que los datos de inscripciones 2026 se
+> perdieron. La convocatoria 2027 arrancará con datos limpios.
 
 ## 📜 Créditos
 
