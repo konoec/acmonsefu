@@ -10,11 +10,45 @@ const FESTIVAL = festivalData.festival;
 const MODALIDADES = festivalData.modalidades;
 
 const galleryImages = imagenes.galeria;
+
+const structured = {
+  "@context": "https://schema.org",
+  "@type": "Event",
+  name: `${FESTIVAL.name} ${FESTIVAL.year} — ${FESTIVAL.edition}`,
+  description: FESTIVAL.description,
+  url: `${SITE.url}/golpe-tierra`,
+  image: `${SITE.url}${imagenes.logos.festivalLight.src}`,
+  eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+  eventStatus: "https://schema.org/EventScheduled",
+  isAccessibleForFree: false,
+  organizer: {
+    "@type": "Organization",
+    name: SITE.fullName,
+    url: SITE.url,
+  },
+  location: {
+    "@type": "Place",
+    name: FESTIVAL.place,
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Chiclayo",
+      addressRegion: "Lambayeque",
+      addressCountry: "PE",
+    },
+  },
+  offers: FESTIVAL.costs.map((cost) => ({
+    "@type": "Offer",
+    name: cost.label,
+    price: cost.price.replace(/[^\d.,]/g, ""),
+    priceCurrency: "PEN",
+  })),
+};
 ---
 
 <Layout
   title={`${FESTIVAL.name} ${FESTIVAL.year} | ${FESTIVAL.edition}`}
   description={`${FESTIVAL.name}: concurso de danzas tradicionales y uno de los proyectos culturales de ${SITE.fullName}. ${FESTIVAL.place}.`}
+  structured={structured}
 >
   <section class="relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-900 to-brand-800 text-white">
     <div class="pointer-events-none absolute -right-24 top-0 h-96 w-96 rounded-full bg-brand-500/20 blur-[100px]"></div>

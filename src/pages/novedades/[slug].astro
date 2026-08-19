@@ -2,6 +2,7 @@
 import Layout from "../../layouts/Layout.astro";
 import { render, getCollection } from "astro:content";
 import seccion from "../../data/secciones/novedades.json";
+import SITE from "../../data/site.json";
 
 export async function getStaticPaths() {
   const posts = await getCollection("noticias");
@@ -19,9 +20,52 @@ const formattedDate = post.data.date.toLocaleDateString("es-PE", {
   month: "long",
   year: "numeric",
 });
+
+const postUrl = `${SITE.url}/novedades/${post.id}`;
+const postImage = post.data.image ? `${SITE.url}${post.data.image}` : `${SITE.url}/og-image.png`;
+
+const structured = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Inicio", item: SITE.url },
+        { "@type": "ListItem", position: 2, name: "Novedades", item: `${SITE.url}/novedades` },
+        { "@type": "ListItem", position: 3, name: post.data.title, item: postUrl },
+      ],
+    },
+    {
+      "@type": "BlogPosting",
+      headline: post.data.title,
+      description: post.data.excerpt,
+      image: postImage,
+      datePublished: post.data.date.toISOString(),
+      dateModified: post.data.date.toISOString(),
+      author: {
+        "@type": "Organization",
+        name: post.data.author,
+      },
+      publisher: {
+        "@type": "Organization",
+        name: SITE.fullName,
+        url: SITE.url,
+      },
+      mainEntityOfPage: postUrl,
+      inLanguage: "es-PE",
+    },
+  ],
+};
 ---
 
-<Layout title={post.data.title} description={post.data.excerpt}>
+<Layout
+  title={post.data.title}
+  description={post.data.excerpt}
+  image={post.data.image}
+  imageAlt={post.data.title}
+  type="article"
+  structured={structured}
+>
   <article class="mx-auto max-w-3xl px-5 py-20 lg:px-0 lg:py-28">
     <p class="text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400">{formattedDate}</p>
     <h1 class="mt-4 font-heading text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">

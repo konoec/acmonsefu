@@ -18,11 +18,43 @@ const marquee = [...new Set(MODALIDADES.map((m) => m.title))];
 const PROYECTOS = proyectosData.proyectos;
 const featuredProject = PROYECTOS.find((p) => p.featured);
 const otherProjects = PROYECTOS.filter((p) => !p.featured);
+
+const structured = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${SITE.url}/#organization`,
+      name: SITE.fullName,
+      alternateName: SITE.name,
+      url: SITE.url,
+      description: SITE.description,
+      email: SITE.email,
+      telephone: SITE.phone,
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Monsefú",
+        addressRegion: "Lambayeque",
+        addressCountry: "PE",
+      },
+      sameAs: Object.values(SITE.social),
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${SITE.url}/#website`,
+      url: SITE.url,
+      name: SITE.fullName,
+      publisher: { "@id": `${SITE.url}/#organization` },
+      inLanguage: "es-PE",
+    },
+  ],
+};
 ---
 
 <Layout
   title={seccion.meta.title}
   description={seccion.meta.description}
+  structured={structured}
 >
   <section class="relative overflow-hidden bg-cream-50">
     <div class="pointer-events-none absolute -top-24 right-0 h-96 w-96 rounded-full bg-brand-500/10 blur-[90px]"></div>

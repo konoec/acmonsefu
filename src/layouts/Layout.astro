@@ -8,14 +8,18 @@ interface Props {
   title?: string;
   description?: string;
   image?: string;
+  imageAlt?: string;
+  structured?: Record<string, unknown>;
+  type?: "website" | "article";
 }
 
-const { title, description, image } = Astro.props;
+const { title, description, image, imageAlt, structured, type = "website" } = Astro.props;
 
 const pageTitle = title ? `${title} | ${SITE.name}` : `${SITE.fullName}`;
 const pageDescription = description ?? SITE.description;
 const canonical = new URL(Astro.url.pathname, SITE.url);
 const ogImage = image ? new URL(image, SITE.url) : new URL("/og-image.png", SITE.url);
+const ogImageAlt = imageAlt ?? `${SITE.fullName} — ${SITE.tagline}`;
 ---
 
 <!doctype html>
@@ -32,15 +36,29 @@ const ogImage = image ? new URL(image, SITE.url) : new URL("/og-image.png", SITE
     <title>{pageTitle}</title>
     <meta name="description" content={pageDescription} />
     <link rel="canonical" href={canonical} />
+    <meta name="robots" content="index, follow" />
 
-    <meta property="og:type" content="website" />
+    <meta name="geo.region" content="PE-LAM" />
+    <meta name="geo.placename" content="Monsefú, Lambayeque, Perú" />
+    <meta name="geo.position" content="-6.872; -79.868" />
+    <meta name="ICBM" content="-6.872, -79.868" />
+
+    <meta property="og:type" content={type} />
     <meta property="og:url" content={canonical} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={pageDescription} />
     <meta property="og:image" content={ogImage} />
-    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={ogImageAlt} />
+    <meta property="og:site_name" content={SITE.fullName} />
+    <meta property="og:locale" content="es_PE" />
+
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="robots" content="index, follow" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={pageDescription} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -49,6 +67,9 @@ const ogImage = image ? new URL(image, SITE.url) : new URL("/og-image.png", SITE
       rel="stylesheet"
     />
 
+    {structured && (
+      <script type="application/ld+json" set:html={JSON.stringify(structured)} />
+    )}
   </head>
   <body class="font-body bg-cream-50 text-gray-900 antialiased">
     <Navbar />
