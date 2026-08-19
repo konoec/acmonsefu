@@ -155,14 +155,30 @@ const ytId = (url) => {
                     })}
                   </div>
                 ) : (
-                  <img
-                    src={proyecto.image}
-                    alt={proyecto.title}
-                    class="aspect-video w-full rounded-sm object-cover shadow-lg"
-                    width="800"
-                    height="450"
-                    loading="lazy"
-                  />
+                  <div>
+                    <img
+                      src={proyecto.image}
+                      alt={proyecto.title}
+                      class="aspect-video w-full rounded-sm object-cover shadow-lg"
+                      width="800"
+                      height="450"
+                      loading="lazy"
+                    />
+                    {proyecto.gallery?.length && (
+                      <div class="mt-4 grid grid-cols-3 gap-3">
+                        {proyecto.gallery.map((imgSrc) => (
+                          <img
+                            src={imgSrc}
+                            alt={proyecto.title}
+                            class="aspect-square w-full rounded-sm object-cover"
+                            width="400"
+                            height="400"
+                            loading="lazy"
+                          />
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 )}
               </div>
             )}

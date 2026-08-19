@@ -20,6 +20,20 @@
       "paragraphs": [
         "Le ofrecemos un servicio serio, eficaz y profesional. Podrá contar con el mejor acompañamiento cultural. Le brindamos un ramillete de danzas y temas musicales criollos que los transportarán a un ambiente festivo y jaranero.",
         "Contamos con varios formatos para ofrecer; varían en los números artísticos en escena y con los cuales usted desee contar."
+      ],
+      "image": "/uploads/proyectos/shows/hero.webp",
+      "gallery": [
+        "/uploads/proyectos/shows/foto-01.webp",
+        "/uploads/proyectos/shows/foto-02.webp",
+        "/uploads/proyectos/shows/foto-03.webp",
+        "/uploads/proyectos/shows/foto-04.webp",
+        "/uploads/proyectos/shows/foto-05.webp",
+        "/uploads/proyectos/shows/foto-06.webp",
+        "/uploads/proyectos/shows/foto-07.webp",
+        "/uploads/proyectos/shows/foto-08.webp",
+        "/uploads/proyectos/shows/foto-09.webp",
+        "/uploads/proyectos/shows/foto-10.webp",
+        "/uploads/proyectos/shows/foto-11.webp"
       ]
     },
     {
@@ -32,6 +46,21 @@
       "icon": "M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3 1 9l11 6 9-4.91V17h2V9L12 3z",
       "paragraphs": [
         "Más que aprender a bailar, formamos niños, jóvenes y adultos seguros, creativos, disciplinados y orgullosos de nuestra cultura Lambayecana. La danza ayuda a los niños a fortalecer su desarrollo físico, emocional y social, mientras descubren el arte, la música y nuestras tradiciones culturales."
+      ],
+      "image": "/uploads/proyectos/talleres/hero.webp",
+      "gallery": [
+        "/uploads/proyectos/talleres/foto-01.webp",
+        "/uploads/proyectos/talleres/foto-02.webp",
+        "/uploads/proyectos/talleres/foto-03.webp",
+        "/uploads/proyectos/talleres/foto-04.webp",
+        "/uploads/proyectos/talleres/foto-05.webp",
+        "/uploads/proyectos/talleres/foto-06.webp",
+        "/uploads/proyectos/talleres/foto-07.webp",
+        "/uploads/proyectos/talleres/foto-08.webp",
+        "/uploads/proyectos/talleres/foto-09.webp",
+        "/uploads/proyectos/talleres/foto-10.webp",
+        "/uploads/proyectos/talleres/foto-11.webp",
+        "/uploads/proyectos/talleres/foto-12.webp"
       ]
     },
     {
@@ -47,6 +76,22 @@
         { "name": "Homenaje a Mamá", "month": "Mes de Mayo" },
         { "name": "Recital Criollo", "month": "Mes de Octubre" },
         { "name": "Labor Social \"Bailando con Moly\"", "month": "Mes de Diciembre" }
+      ],
+      "image": "/uploads/proyectos/eventos/hero.webp",
+      "gallery": [
+        "/uploads/proyectos/eventos/foto-01.webp",
+        "/uploads/proyectos/eventos/foto-02.webp",
+        "/uploads/proyectos/eventos/foto-03.webp",
+        "/uploads/proyectos/eventos/foto-04.webp",
+        "/uploads/proyectos/eventos/foto-05.webp",
+        "/uploads/proyectos/eventos/foto-06.webp",
+        "/uploads/proyectos/eventos/foto-07.webp",
+        "/uploads/proyectos/eventos/foto-08.webp",
+        "/uploads/proyectos/eventos/foto-09.webp",
+        "/uploads/proyectos/eventos/foto-10.webp",
+        "/uploads/proyectos/eventos/foto-11.webp",
+        "/uploads/proyectos/eventos/foto-12.webp",
+        "/uploads/proyectos/eventos/foto-13.webp"
       ]
     },
     {

@@ -23,6 +23,9 @@ const TARGETS = [
   { dir: "public/uploads/home", width: 1600, quality: 70 },
   { dir: "public/uploads/galeria", width: 1200, quality: 72 },
   { dir: "public/uploads/logos", width: 700, quality: 80 },
+  { dir: "public/uploads/proyectos/shows", width: 1200, quality: 72 },
+  { dir: "public/uploads/proyectos/talleres", width: 1200, quality: 72 },
+  { dir: "public/uploads/proyectos/eventos", width: 1200, quality: 72 },
 ];
 
 for (const t of TARGETS) {
