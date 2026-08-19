@@ -276,7 +276,7 @@ collections:
             fields:
               - { name: eyebrow, label: Etiqueta, widget: string }
               - { name: title, label: Título, widget: string }
-              - { name: description, label: Descripción, widget: text }
+              - { name: paragraphs, label: Párrafos, widget: list, field: { label: Párrafo, name: p, widget: markdown } }
           - label: Historia
             name: historia
             widget: object

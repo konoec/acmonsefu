@@ -24,9 +24,11 @@ const valores = seccion.misionValores.valores.map((valor, i) => ({ ...valor, ico
       <h1 class="mt-3 max-w-2xl font-heading text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl">
         {seccion.header.title}
       </h1>
-      <p class="mt-5 max-w-2xl text-lg leading-relaxed text-gray-600">
-        {seccion.header.description}
-      </p>
+      <div class="mt-5 max-w-2xl space-y-4 text-lg leading-relaxed text-gray-600">
+        {seccion.header.paragraphs.map((parrafo) => (
+          <p set:html={md(parrafo)} />
+        ))}
+      </div>
     </div>
   </section>
 
@@ -75,7 +77,7 @@ const valores = seccion.misionValores.valores.map((valor, i) => ({ ...valor, ico
               </svg>
             </div>
             <h3 class="mt-5 font-heading text-lg font-bold text-gray-900">{valor.title}</h3>
-            <p class="mt-2 text-sm leading-relaxed text-gray-500">{valor.text}</p>
+            <p class="mt-2 text-sm leading-relaxed text-gray-500" set:html={md(valor.text)}></p>
           </article>
         ))}
       </div>
