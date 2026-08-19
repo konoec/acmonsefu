@@ -118,6 +118,17 @@ collections:
                 fields:
                   - { name: name, label: Nombre, widget: string }
                   - { name: month, label: Mes, widget: string }
+              - label: Imagen (opcional)
+                name: image
+                widget: image
+                required: false
+              - label: Videos de YouTube (opcional)
+                name: videos
+                widget: list
+                required: false
+                fields:
+                  - { name: url, label: URL de YouTube, widget: string }
+                  - { name: title, label: Título, widget: string }
 
   - name: imagenes
     label: Imágenes del sitio

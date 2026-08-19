@@ -47,5 +47,23 @@
       { "name": "Recital Criollo", "month": "Mes de Octubre" },
       { "name": "Labor Social “Bailando con Moly”", "month": "Mes de Diciembre" }
     ]
+  },
+  {
+    "id": "herencia",
+    "title": "Herencia Lambayecana",
+    "featured": false,
+    "href": "/proyectos#presentaciones",
+    "tag": "Exposición",
+    "text": "Exposición fotográfica que explora la diversidad cultural de Lambayeque para mantener viva la memoria de nuestras tradiciones.",
+    "icon": "M2 16.1A5 5 0 0 1 5.9 20H2v-3.9zM22 16.1V20h-3.9A5 5 0 0 1 22 16.1zM5.9 4A5 5 0 0 1 2 7.9V4h3.9zM22 7.9A5 5 0 0 1 18.1 4H22v3.9zM9 7h6v10H9z",
+    "paragraphs": [
+      "Herencia Lambayecana: estampas norteñas de la diversidad cultural de la Región Lambayeque, presentadas por la Asociación Cultural Monsefú, luego de un inmenso esfuerzo recorriendo diversas localidades.",
+      "El mensaje de la exposición fotográfica es mantener viva la memoria de las tradiciones de raíces moches y su relación con las diversas etnias y culturas que confluyeron en tierras norteñas, en paisajes de gran belleza.",
+      "La muestra refleja la relación entre mujeres, hombres y la naturaleza, y expresa una tradición milenaria que se esfuerza por sobrevivir. Uno de los principales aportes de la asociación es explorar diversas manifestaciones artísticas, incluyendo la música y la danza."
+    ],
+    "videos": [
+      { "url": "https://www.youtube.com/watch?v=_H2DuZm-8dE", "title": "Herencia Lambayecana — detrás de cámaras" },
+      { "url": "https://www.youtube.com/watch?v=7Wpsnb3M_go", "title": "Herencia Lambayecana" }
+    ]
   }
 ]
