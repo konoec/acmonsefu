@@ -1,0 +1,44 @@
+{
+  "meta": {
+    "title": "Nosotros",
+    "description": "Conoce la historia, misión y valores de la Asociación Cultural Monsefú."
+  },
+  "header": {
+    "eyebrow": "Nosotros",
+    "title": "Nuestra asociación",
+    "description": "La Asociación Cultural Monsefú nace del amor por nuestras tradiciones y del compromiso de llevarlas a cada escenario y a cada generación."
+  },
+  "historia": {
+    "eyebrow": "Historia",
+    "title": "Una historia hecha de cultura",
+    "paragraphs": [
+      "**AC Monsefú** es una asociación cultural dedicada a la difusión y preservación de las danzas tradicionales de la región Lambayeque.",
+      "Nuestro proyecto más representativo es el **Festival Golpe Tierra**, un concurso que cada año reúne a bailarines de todo el país para celebrar la marinera, el tondero y el baile tierra.",
+      "Además, ofrecemos espectáculos culturales y participamos activamente en la vida cultural de nuestra comunidad."
+    ],
+    "note": "Contenido de ejemplo: reemplaza estos párrafos con la historia oficial de la asociación, su fundación y sus logros."
+  },
+  "misionValores": {
+    "eyebrow": "Misión y valores",
+    "title": "Lo que nos mueve",
+    "valores": [
+      { "title": "Identidad", "text": "Defendemos y promovemos nuestras raíces culturales en cada actividad." },
+      { "title": "Tradición", "text": "Mantenemos vivas las danzas y costumbres heredadas de nuestros pueblos." },
+      { "title": "Comunidad", "text": "Trabajamos junto a las academias y la comunidad para acercar la cultura a todos." },
+      { "title": "Talentos", "text": "Impulsamos y visibilizamos el talento de nuestros bailarines y artistas." }
+    ],
+    "mision": {
+      "title": "Misión",
+      "text": "Difundir y preservar las tradiciones culturales de nuestros pueblos a través de la danza, formando espacios de encuentro, formación y celebración para la comunidad."
+    },
+    "vision": {
+      "title": "Visión",
+      "text": "Ser la asociación cultural de referencia de la región, reconocida por la calidad de sus eventos y por su aporte a la identidad cultural del norte del Perú."
+    }
+  },
+  "cta": {
+    "title": "¿Quieres colaborar con nosotros?",
+    "text": "Suma tu academia, tu empresa o tu institución a nuestras actividades culturales.",
+    "label": "Contáctanos"
+  }
+}

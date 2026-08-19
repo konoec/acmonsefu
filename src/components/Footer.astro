@@ -1,22 +1,11 @@
 ---
-import { SITE } from "../data/site";
+import SITE from "../data/site.json";
+import global from "../data/secciones/global.json";
 
 const year = new Date().getFullYear();
 
-const links = [
-  { label: "Inicio", href: "/" },
-  { label: "Nosotros", href: "/nosotros" },
-  { label: "Proyectos", href: "/proyectos" },
-  { label: "Novedades", href: "/novedades" },
-  { label: "Contacto", href: "/contacto" },
-];
-
-const proyectos = [
-  { label: "Festival Golpe Tierra", href: "/golpe-tierra" },
-  { label: "Shows y espectáculos", href: "/proyectos" },
-  { label: "Talleres y formación", href: "/proyectos" },
-  { label: "Eventos institucionales", href: "/proyectos" },
-];
+const links = global.navbar.nav;
+const proyectos = global.footer.proyectosLinks;
 
 const socials = [
   { name: "Facebook", href: SITE.social.facebook, icon: "M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.4h-1.2c-1.2 0-1.6.8-1.6 1.6V12h2.7l-.4 2.9h-2.3v7A10 10 0 0 0 22 12Z" },
@@ -35,7 +24,7 @@ const socials = [
       </div>
 
       <div>
-        <p class="text-xs font-bold uppercase tracking-[0.2em] text-gray-400">Enlaces</p>
+        <p class="text-xs font-bold uppercase tracking-[0.2em] text-gray-400">{global.footer.linksTitle}</p>
         <ul class="mt-4 space-y-2.5">
           {links.map((link) => (
             <li>
@@ -46,7 +35,7 @@ const socials = [
           ))}
         </ul>
 
-        <p class="mt-6 text-xs font-bold uppercase tracking-[0.2em] text-gray-400">Proyectos</p>
+        <p class="mt-6 text-xs font-bold uppercase tracking-[0.2em] text-gray-400">{global.footer.proyectosTitle}</p>
         <ul class="mt-4 space-y-2.5">
           {proyectos.map((proyecto) => (
             <li>
@@ -59,7 +48,7 @@ const socials = [
       </div>
 
       <div>
-        <p class="text-xs font-bold uppercase tracking-[0.2em] text-gray-400">Contacto</p>
+        <p class="text-xs font-bold uppercase tracking-[0.2em] text-gray-400">{global.footer.contactoTitle}</p>
         <ul class="mt-4 space-y-2.5 text-sm text-gray-600">
           <li>
             <a href={SITE.whatsapp} class="transition-colors hover:text-brand-600">{SITE.phone}</a>
@@ -89,11 +78,14 @@ const socials = [
 
   <div class="border-t border-gray-100">
     <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 px-5 py-5 text-xs text-gray-400 sm:flex-row lg:px-8">
-      <p>© {year} {SITE.fullName}. Todos los derechos reservados.</p>
+      <p>© {year} {SITE.fullName}. {global.footer.copyright}</p>
       <p>
-        <a href="/proyectos" class="transition-colors hover:text-brand-600">Proyectos</a>
-        <span class="mx-2 text-gray-300">·</span>
-        <a href="/novedades" class="transition-colors hover:text-brand-600">Novedades</a>
+        {global.footer.bottomLinks.map((link, i) => (
+          <span>
+            {i > 0 && <span class="mx-2 text-gray-300">·</span>}
+            <a href={link.href} class="transition-colors hover:text-brand-600">{link.label}</a>
+          </span>
+        ))}
       </p>
     </div>
   </div>

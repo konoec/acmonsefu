@@ -1,0 +1,472 @@
+backend:
+  name: github
+  repo: konoec/acmonsefu
+  branch: main
+  # URL del worker de autenticación (sveltia-cms-auth)
+  base_url: https://sveltia-cms-auth.u21209578.workers.dev
+
+media_folder: public/uploads
+public_folder: /uploads
+
+collections:
+  - name: novedades
+    label: Novedades
+    label_singular: Novedad
+    folder: src/content/noticias
+    create: true
+    extension: md
+    slug: "{{slug}}"
+    fields:
+      - { name: title, label: Título, widget: string }
+      - { name: date, label: Fecha, widget: datetime, format: YYYY-MM-DD, date_format: YYYY-MM-DD, time_format: false }
+      - { name: excerpt, label: Extracto, widget: text, required: false }
+      - { name: author, label: Autor, widget: string }
+      - { name: image, label: Imagen de portada, widget: image, required: false, allow_multiple: false }
+      - { name: body, label: Contenido, widget: markdown }
+
+  - name: site
+    label: Datos del sitio
+    files:
+      - name: site
+        label: Información general
+        file: src/data/site.json
+        fields:
+          - { name: name, label: Nombre corto, widget: string }
+          - { name: fullName, label: Nombre completo, widget: string }
+          - { name: tagline, label: Tagline, widget: string }
+          - { name: description, label: Descripción, widget: text }
+          - { name: url, label: URL del sitio, widget: string }
+          - { name: phone, label: Teléfono, widget: string }
+          - { name: whatsapp, label: Link de WhatsApp, widget: string }
+          - { name: email, label: Correo, widget: string }
+          - { name: location, label: Ubicación, widget: string }
+          - label: Redes sociales
+            name: social
+            widget: object
+            fields:
+              - { name: facebook, label: Facebook, widget: string }
+              - { name: instagram, label: Instagram, widget: string }
+              - { name: tiktok, label: TikTok, widget: string }
+              - { name: youtube, label: YouTube, widget: string }
+
+  - name: festival
+    label: Festival Golpe Tierra
+    files:
+      - name: festival
+        label: Datos del festival
+        file: src/data/festival.json
+        fields:
+          - label: Festival
+            name: festival
+            widget: object
+            fields:
+              - { name: name, label: Nombre, widget: string }
+              - { name: edition, label: Edición, widget: string }
+              - { name: year, label: Año, widget: string }
+              - { name: place, label: Lugar, widget: string }
+              - { name: description, label: Descripción, widget: text }
+              - label: Costos
+                name: costs
+                widget: list
+                fields:
+                  - { name: label, label: Concepto, widget: string }
+                  - { name: price, label: Precio, widget: string }
+              - { name: registrationDates, label: Fechas de inscripción, widget: string }
+              - { name: contact, label: Contacto, widget: string }
+          - label: Modalidades
+            name: modalidades
+            widget: list
+            fields:
+              - { name: id, label: ID, widget: string }
+              - { name: title, label: Título, widget: string }
+              - { name: subtitle, label: Subtítulo, widget: string }
+              - { name: note, label: Nota (opcional), widget: text, required: false }
+              - label: Niveles
+                name: levels
+                widget: list
+                fields:
+                  - { name: name, label: Nombre, widget: string }
+                  - { name: age, label: Edades, widget: string }
+
+  - name: proyectos
+    label: Proyectos
+    files:
+      - name: proyectos
+        label: Lista de proyectos
+        file: src/data/proyectos.json
+        fields:
+          - label: Proyectos
+            name: proyectos
+            widget: list
+            fields:
+              - { name: id, label: ID, widget: string }
+              - { name: title, label: Título, widget: string }
+              - { name: featured, label: Destacado, widget: boolean }
+              - { name: href, label: Enlace, widget: string }
+              - { name: tag, label: Etiqueta, widget: string }
+              - { name: text, label: Texto, widget: text }
+              - { name: icon, label: Icono (SVG), widget: text }
+
+  - name: imagenes
+    label: Imágenes del sitio
+    files:
+      - name: imagenes
+        label: Registro de imágenes
+        file: src/data/imagenes.json
+        fields:
+          - label: Logos
+            name: logos
+            widget: object
+            fields:
+              - label: Logo asociación
+                name: asociacion
+                widget: object
+                fields:
+                  - { name: src, label: Imagen, widget: image }
+                  - { name: alt, label: Texto alternativo, widget: string }
+              - label: Logo festival (claro)
+                name: festivalLight
+                widget: object
+                fields:
+                  - { name: src, label: Imagen, widget: image }
+                  - { name: alt, label: Texto alternativo, widget: string }
+          - label: Imágenes de inicio
+            name: home
+            widget: object
+            fields:
+              - label: Sobre (home)
+                name: about
+                widget: object
+                fields:
+                  - { name: src, label: Imagen, widget: image }
+                  - { name: alt, label: Texto alternativo, widget: string }
+              - label: Sobre (nosotros)
+                name: nosotros
+                widget: object
+                fields:
+                  - { name: src, label: Imagen, widget: image }
+                  - { name: alt, label: Texto alternativo, widget: string }
+          - label: Galería
+            name: galeria
+            widget: list
+            fields:
+              - { name: src, label: Imagen, widget: image }
+              - { name: alt, label: Texto alternativo, widget: string }
+
+  - name: secciones
+    label: Textos de páginas
+    files:
+      - name: global
+        label: Global (menú y pie)
+        file: src/data/secciones/global.json
+        fields:
+          - label: Barra de navegación
+            name: navbar
+            widget: object
+            fields:
+              - { name: homeLinkLabel, label: Etiqueta inicio, widget: string }
+              - { name: logoAlt, label: Texto alternativo del logo, widget: string }
+              - { name: openMenuLabel, label: Abrir menú, widget: string }
+              - { name: closeMenuLabel, label: Cerrar menú, widget: string }
+              - label: Enlaces del menú
+                name: nav
+                widget: list
+                fields:
+                  - { name: label, label: Etiqueta, widget: string }
+                  - { name: href, label: Enlace, widget: string }
+              - { name: whatsappCta, label: Botón WhatsApp, widget: string }
+              - { name: followLabel, label: Síguenos, widget: string }
+          - label: Pie de página
+            name: footer
+            widget: object
+            fields:
+              - { name: linksTitle, label: Título enlaces, widget: string }
+              - { name: proyectosTitle, label: Título proyectos, widget: string }
+              - { name: contactoTitle, label: Título contacto, widget: string }
+              - label: Links de proyectos
+                name: proyectosLinks
+                widget: list
+                fields:
+                  - { name: label, label: Etiqueta, widget: string }
+                  - { name: href, label: Enlace, widget: string }
+              - { name: copyright, label: Texto de derechos, widget: string }
+              - label: Links de abajo
+                name: bottomLinks
+                widget: list
+                fields:
+                  - { name: label, label: Etiqueta, widget: string }
+                  - { name: href, label: Enlace, widget: string }
+
+      - name: home
+        label: Home
+        file: src/data/secciones/home.json
+        fields:
+          - label: Meta SEO
+            name: meta
+            widget: object
+            fields:
+              - { name: title, label: Título, widget: string }
+              - { name: description, label: Descripción, widget: text }
+          - label: Hero
+            name: hero
+            widget: object
+            fields:
+              - { name: description, label: Descripción, widget: text }
+              - label: Botón primario
+                name: ctaPrimary
+                widget: object
+                fields:
+                  - { name: label, label: Etiqueta, widget: string }
+                  - { name: href, label: Enlace, widget: string }
+              - label: Botón secundario
+                name: ctaSecondary
+                widget: object
+                fields:
+                  - { name: label, label: Etiqueta, widget: string }
+                  - { name: href, label: Enlace, widget: string }
+          - label: Quiénes somos
+            name: quienesSomos
+            widget: object
+            fields:
+              - { name: eyebrow, label: Etiqueta, widget: string }
+              - { name: title, label: Título, widget: string }
+              - { name: paragraphs, label: Párrafos, widget: list, field: { label: Párrafo, name: p, widget: text } }
+              - label: Enlace
+                name: link
+                widget: object
+                fields:
+                  - { name: label, label: Etiqueta, widget: string }
+                  - { name: href, label: Enlace, widget: string }
+          - label: Sección proyectos
+            name: proyectos
+            widget: object
+            fields:
+              - { name: eyebrow, label: Etiqueta, widget: string }
+              - { name: title, label: Título, widget: string }
+              - { name: seeAll, label: Ver todos, widget: string }
+              - { name: cta, label: Botón, widget: string }
+          - label: Sección novedades
+            name: novedades
+            widget: object
+            fields:
+              - { name: eyebrow, label: Etiqueta, widget: string }
+              - { name: title, label: Título, widget: string }
+              - { name: seeAll, label: Ver todas, widget: string }
+          - label: Contacto final
+            name: contacto
+            widget: object
+            fields:
+              - { name: title, label: Título, widget: string }
+              - { name: text, label: Texto, widget: string }
+              - { name: cta, label: Botón, widget: string }
+
+      - name: nosotros
+        label: Nosotros
+        file: src/data/secciones/nosotros.json
+        fields:
+          - label: Meta SEO
+            name: meta
+            widget: object
+            fields:
+              - { name: title, label: Título, widget: string }
+              - { name: description, label: Descripción, widget: text }
+          - label: Encabezado
+            name: header
+            widget: object
+            fields:
+              - { name: eyebrow, label: Etiqueta, widget: string }
+              - { name: title, label: Título, widget: string }
+              - { name: description, label: Descripción, widget: text }
+          - label: Historia
+            name: historia
+            widget: object
+            fields:
+              - { name: eyebrow, label: Etiqueta, widget: string }
+              - { name: title, label: Título, widget: string }
+              - { name: paragraphs, label: Párrafos, widget: list, field: { label: Párrafo, name: p, widget: markdown } }
+              - { name: note, label: Nota, widget: text }
+          - label: Misión y valores
+            name: misionValores
+            widget: object
+            fields:
+              - { name: eyebrow, label: Etiqueta, widget: string }
+              - { name: title, label: Título, widget: string }
+              - label: Valores
+                name: valores
+                widget: list
+                fields:
+                  - { name: title, label: Título, widget: string }
+                  - { name: text, label: Texto, widget: text }
+              - label: Misión
+                name: mision
+                widget: object
+                fields:
+                  - { name: title, label: Título, widget: string }
+                  - { name: text, label: Texto, widget: text }
+              - label: Visión
+                name: vision
+                widget: object
+                fields:
+                  - { name: title, label: Título, widget: string }
+                  - { name: text, label: Texto, widget: text }
+          - label: CTA final
+            name: cta
+            widget: object
+            fields:
+              - { name: title, label: Título, widget: string }
+              - { name: text, label: Texto, widget: text }
+              - { name: label, label: Botón, widget: string }
+
+      - name: proyectos
+        label: Proyectos
+        file: src/data/secciones/proyectos.json
+        fields:
+          - label: Meta SEO
+            name: meta
+            widget: object
+            fields:
+              - { name: title, label: Título, widget: string }
+              - { name: description, label: Descripción, widget: text }
+          - label: Encabezado
+            name: header
+            widget: object
+            fields:
+              - { name: eyebrow, label: Etiqueta, widget: string }
+              - { name: title, label: Título, widget: string }
+              - { name: description, label: Descripción, widget: text }
+          - label: Tarjeta destacada
+            name: featured
+            widget: object
+            fields:
+              - { name: cta, label: Botón, widget: string }
+          - label: CTA final
+            name: cta
+            widget: object
+            fields:
+              - { name: title, label: Título, widget: string }
+              - { name: text, label: Texto, widget: text }
+              - { name: label, label: Botón, widget: string }
+
+      - name: golpe-tierra
+        label: Golpe Tierra
+        file: src/data/secciones/golpe-tierra.json
+        fields:
+          - label: Encabezado
+            name: header
+            widget: object
+            fields:
+              - { name: backLink, label: Volver, widget: string }
+              - { name: lugar, label: Lugar, widget: string }
+              - { name: inscripciones, label: Inscripciones, widget: string }
+              - { name: contacto, label: Contacto, widget: string }
+              - { name: cta, label: Botón, widget: string }
+          - label: Bases
+            name: bases
+            widget: object
+            fields:
+              - { name: eyebrow, label: Etiqueta, widget: string }
+              - { name: title, label: Título, widget: string }
+              - { name: costosTitle, label: Título costos, widget: string }
+              - { name: requisitosTitle, label: Título requisitos, widget: string }
+              - { name: requisitos, label: Requisitos, widget: list, field: { label: Requisito, name: r, widget: string } }
+              - { name: calificacionTitle, label: Título calificación, widget: string }
+              - { name: calificacionText, label: Texto calificación, widget: markdown }
+              - { name: semifinal, label: Semifinal, widget: string }
+              - { name: final, label: Final, widget: string }
+              - { name: note, label: Nota, widget: text }
+          - label: Categorías
+            name: categorias
+            widget: object
+            fields:
+              - { name: eyebrow, label: Etiqueta, widget: string }
+              - { name: title, label: Título, widget: string }
+          - label: Galería
+            name: galeria
+            widget: object
+            fields:
+              - { name: eyebrow, label: Etiqueta, widget: string }
+              - { name: title, label: Título, widget: string }
+          - label: CTA final
+            name: cta
+            widget: object
+            fields:
+              - { name: title, label: Título, widget: string }
+              - { name: text, label: Texto, widget: text }
+              - { name: label, label: Botón, widget: string }
+
+      - name: contacto
+        label: Contacto
+        file: src/data/secciones/contacto.json
+        fields:
+          - label: Meta SEO
+            name: meta
+            widget: object
+            fields:
+              - { name: title, label: Título, widget: string }
+              - { name: description, label: Descripción, widget: text }
+          - label: Encabezado
+            name: header
+            widget: object
+            fields:
+              - { name: eyebrow, label: Etiqueta, widget: string }
+              - { name: title, label: Título, widget: string }
+              - { name: description, label: Descripción, widget: text }
+          - label: Canales
+            name: canales
+            widget: list
+            fields:
+              - { name: title, label: Título, widget: string }
+              - { name: icon, label: Icono, widget: string }
+              - { name: valueKey, label: Clave del valor, widget: string }
+              - { name: hrefKey, label: Clave del enlace, widget: string }
+          - label: Redes
+            name: redes
+            widget: object
+            fields:
+              - { name: title, label: Título, widget: string }
+              - { name: text, label: Texto, widget: text }
+
+      - name: novedades
+        label: Novedades (textos)
+        file: src/data/secciones/novedades.json
+        fields:
+          - label: Meta SEO
+            name: meta
+            widget: object
+            fields:
+              - { name: title, label: Título, widget: string }
+              - { name: description, label: Descripción, widget: text }
+          - label: Encabezado
+            name: header
+            widget: object
+            fields:
+              - { name: eyebrow, label: Etiqueta, widget: string }
+              - { name: title, label: Título, widget: string }
+              - { name: description, label: Descripción, widget: text }
+          - label: Tarjeta
+            name: card
+            widget: object
+            fields:
+              - { name: leerMas, label: Leer más, widget: string }
+              - { name: empty, label: Sin novedades, widget: string }
+          - label: Detalle
+            name: detail
+            widget: object
+            fields:
+              - { name: por, label: Por, widget: string }
+              - { name: volver, label: Volver, widget: string }
+
+      - name: 404
+        label: Página 404
+        file: src/data/secciones/404.json
+        fields:
+          - label: Meta SEO
+            name: meta
+            widget: object
+            fields:
+              - { name: title, label: Título, widget: string }
+              - { name: description, label: Descripción, widget: text }
+          - { name: code, label: Código, widget: string }
+          - { name: title, label: Título, widget: string }
+          - { name: text, label: Texto, widget: string }
+          - { name: cta, label: Botón, widget: string }

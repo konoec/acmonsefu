@@ -1,0 +1,48 @@
+{
+  "logos": {
+    "asociacion": {
+      "src": "/uploads/logos/logo_asociacion_brown.webp",
+      "alt": "Logo AC Monsefú"
+    },
+    "festivalLight": {
+      "src": "/uploads/logos/logo_festival_light.webp",
+      "alt": "Logo Festival Golpe Tierra"
+    }
+  },
+  "home": {
+    "about": {
+      "src": "/uploads/home/home3.webp",
+      "alt": "Danza tradicional"
+    },
+    "nosotros": {
+      "src": "/uploads/home/home2.webp",
+      "alt": "Actividad cultural de AC Monsefú"
+    }
+  },
+  "galeria": [
+    { "src": "/uploads/galeria/ganadores1.webp", "alt": "Festival Golpe Tierra — foto 1" },
+    { "src": "/uploads/galeria/ganadores2.webp", "alt": "Festival Golpe Tierra — foto 2" },
+    { "src": "/uploads/galeria/ganadores3.webp", "alt": "Festival Golpe Tierra — foto 3" },
+    { "src": "/uploads/galeria/ganadores4.webp", "alt": "Festival Golpe Tierra — foto 4" },
+    { "src": "/uploads/galeria/ganadores5.webp", "alt": "Festival Golpe Tierra — foto 5" },
+    { "src": "/uploads/galeria/ganadores6.webp", "alt": "Festival Golpe Tierra — foto 6" },
+    { "src": "/uploads/galeria/ganadores7.webp", "alt": "Festival Golpe Tierra — foto 7" },
+    { "src": "/uploads/galeria/ganadores8.webp", "alt": "Festival Golpe Tierra — foto 8" },
+    { "src": "/uploads/galeria/ganadores9.webp", "alt": "Festival Golpe Tierra — foto 9" },
+    { "src": "/uploads/galeria/ganadores10.webp", "alt": "Festival Golpe Tierra — foto 10" },
+    { "src": "/uploads/galeria/ganadores11.webp", "alt": "Festival Golpe Tierra — foto 11" },
+    { "src": "/uploads/galeria/ganadores12.webp", "alt": "Festival Golpe Tierra — foto 12" },
+    { "src": "/uploads/galeria/ganadores13.webp", "alt": "Festival Golpe Tierra — foto 13" },
+    { "src": "/uploads/galeria/ganadores14.webp", "alt": "Festival Golpe Tierra — foto 14" },
+    { "src": "/uploads/galeria/ganadores15.webp", "alt": "Festival Golpe Tierra — foto 15" },
+    { "src": "/uploads/galeria/ganadores16.webp", "alt": "Festival Golpe Tierra — foto 16" },
+    { "src": "/uploads/galeria/ganadores17.webp", "alt": "Festival Golpe Tierra — foto 17" },
+    { "src": "/uploads/galeria/ganadores18.webp", "alt": "Festival Golpe Tierra — foto 18" },
+    { "src": "/uploads/galeria/ganadores19.webp", "alt": "Festival Golpe Tierra — foto 19" },
+    { "src": "/uploads/galeria/ganadores20.webp", "alt": "Festival Golpe Tierra — foto 20" },
+    { "src": "/uploads/galeria/ganadores21.webp", "alt": "Festival Golpe Tierra — foto 21" },
+    { "src": "/uploads/galeria/ganadores22.webp", "alt": "Festival Golpe Tierra — foto 22" },
+    { "src": "/uploads/galeria/ganadores23.webp", "alt": "Festival Golpe Tierra — foto 23" },
+    { "src": "/uploads/galeria/ganadores24.webp", "alt": "Festival Golpe Tierra — foto 24" }
+  ]
+}

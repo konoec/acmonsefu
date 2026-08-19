@@ -1,6 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import { getCollection } from "astro:content";
+import seccion from "../../data/secciones/novedades.json";
 
 const noticias = (await getCollection("noticias")).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
@@ -8,24 +9,24 @@ const noticias = (await getCollection("noticias")).sort(
 ---
 
 <Layout
-  title="Novedades"
-  description="Noticias y novedades de la Asociación Cultural Monsefú."
+  title={seccion.meta.title}
+  description={seccion.meta.description}
 >
   <section class="border-b border-gray-100 bg-cream-50">
     <div class="mx-auto max-w-6xl px-5 py-20 lg:px-8 lg:py-24">
-      <p class="text-[11px] font-bold uppercase tracking-[0.3em] text-brand-600">Novedades</p>
+      <p class="text-[11px] font-bold uppercase tracking-[0.3em] text-brand-600">{seccion.header.eyebrow}</p>
       <h1 class="mt-3 font-heading text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl">
-        Noticias y anuncios
+        {seccion.header.title}
       </h1>
       <p class="mt-5 max-w-2xl text-lg leading-relaxed text-gray-600">
-        Enterate de nuestras actividades, convocatorias y novedades culturales.
+        {seccion.header.description}
       </p>
     </div>
   </section>
 
   <section class="mx-auto max-w-6xl px-5 py-20 lg:px-8">
     {noticias.length === 0 ? (
-      <p class="text-gray-500">Próximamente publicaremos nuestras novedades.</p>
+      <p class="text-gray-500">{seccion.card.empty}</p>
     ) : (
       <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {noticias.map((post) => (
@@ -33,6 +34,16 @@ const noticias = (await getCollection("noticias")).sort(
             href={`/novedades/${post.id}`}
             class="group flex flex-col rounded-sm border border-gray-100 bg-white p-7 transition-all duration-300 hover:-translate-y-1 hover:border-brand-200 hover:shadow-xl"
           >
+            {post.data.image && (
+              <img
+                src={post.data.image}
+                alt={post.data.title}
+                class="mb-4 aspect-[4/3] w-full rounded-sm object-cover"
+                width="400"
+                height="300"
+                loading="lazy"
+              />
+            )}
             <p class="text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400">
               {post.data.date.toLocaleDateString("es-PE", { day: "2-digit", month: "long", year: "numeric" })}
             </p>
@@ -41,7 +52,7 @@ const noticias = (await getCollection("noticias")).sort(
             </h2>
             {post.data.excerpt && <p class="mt-3 text-sm leading-relaxed text-gray-500">{post.data.excerpt}</p>}
             <span class="mt-5 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.15em] text-brand-600">
-              Leer más
+              {seccion.card.leerMas}
               <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>

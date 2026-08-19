@@ -1,16 +1,11 @@
 ---
-import logo from "../assets/images/logos/logo_asociacion_brown.webp";
-import { SITE } from "../data/site";
+import SITE from "../data/site.json";
+import global from "../data/secciones/global.json";
+import imagenes from "../data/imagenes.json";
 
 const { pathname } = Astro.url;
 
-const links = [
-  { label: "Inicio", href: "/" },
-  { label: "Nosotros", href: "/nosotros" },
-  { label: "Proyectos", href: "/proyectos" },
-  { label: "Novedades", href: "/novedades" },
-  { label: "Contacto", href: "/contacto" },
-];
+const links = global.navbar.nav;
 
 const socials = [
   { name: "Facebook", href: SITE.social.facebook, icon: "M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.4h-1.2c-1.2 0-1.6.8-1.6 1.6V12h2.7l-.4 2.9h-2.3v7A10 10 0 0 0 22 12Z" },
@@ -27,10 +22,10 @@ function isActive(href) {
 
 <header class="sticky top-0 z-50 w-full border-b border-gray-100 bg-cream-50/90 backdrop-blur">
   <div class="mx-auto flex min-h-16 max-w-6xl items-center justify-between px-5 pt-[env(safe-area-inset-top)] lg:px-8">
-    <a href="/" class="flex shrink-0 items-center" aria-label="AC Monsefú - Inicio">
+    <a href="/" class="flex shrink-0 items-center" aria-label={global.navbar.homeLinkLabel}>
       <img
-        src={logo.src}
-        alt="Logo AC Monsefú"
+        src={imagenes.logos.asociacion.src}
+        alt={imagenes.logos.asociacion.alt}
         class="h-10 w-auto object-contain lg:h-9"
         width="40"
         height="40"
@@ -55,7 +50,9 @@ function isActive(href) {
       id="menu-toggle"
       type="button"
       class="flex h-11 w-11 items-center justify-center rounded-sm text-gray-700 transition-colors hover:bg-gray-100 lg:hidden"
-      aria-label="Abrir menú"
+      aria-label={global.navbar.openMenuLabel}
+      data-open-label={global.navbar.openMenuLabel}
+      data-close-label={global.navbar.closeMenuLabel}
       aria-expanded="false"
       aria-controls="menu-overlay"
     >
@@ -72,14 +69,14 @@ function isActive(href) {
   aria-hidden="true"
 >
   <div class="flex min-h-16 shrink-0 items-center justify-between px-5 pt-[env(safe-area-inset-top)]">
-    <a href="/" class="flex items-center" aria-label="AC Monsefú - Inicio">
-      <img src={logo.src} alt="Logo AC Monsefú" class="h-10 w-auto object-contain" width="40" height="40" />
+    <a href="/" class="flex items-center" aria-label={global.navbar.homeLinkLabel}>
+      <img src={imagenes.logos.asociacion.src} alt={imagenes.logos.asociacion.alt} class="h-10 w-auto object-contain" width="40" height="40" />
     </a>
     <button
       id="menu-close"
       type="button"
       class="flex h-11 w-11 items-center justify-center rounded-sm text-gray-700 transition-colors hover:bg-gray-100"
-      aria-label="Cerrar menú"
+      aria-label={global.navbar.closeMenuLabel}
     >
       <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -114,7 +111,7 @@ function isActive(href) {
     ))}
 
     <a
-      href="https://wa.me/51967694616"
+      href={SITE.whatsapp}
       target="_blank"
       rel="noopener noreferrer"
       class="mt-8 inline-flex items-center justify-center gap-2 rounded-sm bg-gray-900 px-8 py-4 text-xs font-bold uppercase tracking-[0.15em] text-white transition-colors hover:bg-brand-600"
@@ -122,12 +119,12 @@ function isActive(href) {
       <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
         <path d="M12 2a10 10 0 0 0-8.5 15.3L2 22l4.9-1.4A10 10 0 1 0 12 2Zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-2.9.8.8-2.8-.2-.3A8 8 0 1 1 12 20Zm4.5-6c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.5.1l-.7.9c-.1.2-.3.2-.5.1a6.5 6.5 0 0 1-3.2-2.8c-.2-.4 0-.5.1-.6l.5-.6c.1-.2.1-.3.2-.5v-.5c0-.1-.5-1.2-.7-1.6-.2-.4-.4-.4-.5-.4h-.5c-.2 0-.4 0-.6.3-.2.3-.8.8-.8 1.9s.8 2.2.9 2.4c.1.2 1.6 2.5 3.9 3.5.5.2.9.4 1.3.5.5.2 1 .1 1.4.1.4-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.4-.2Z" />
       </svg>
-      Escríbenos por WhatsApp
+      {global.navbar.whatsappCta}
     </a>
   </nav>
 
   <div class="shrink-0 px-8 pb-10 pt-6">
-    <p class="text-xs font-bold uppercase tracking-[0.2em] text-gray-400">Síguenos</p>
+    <p class="text-xs font-bold uppercase tracking-[0.2em] text-gray-400">{global.navbar.followLabel}</p>
     <div class="mt-4 flex gap-3">
       {socials.map((social) => (
         <a
@@ -155,7 +152,7 @@ function isActive(href) {
     overlay.classList.toggle("pointer-events-none", !open);
     overlay.setAttribute("aria-hidden", String(!open));
     toggle.setAttribute("aria-expanded", String(open));
-    toggle.setAttribute("aria-label", open ? "Cerrar menú" : "Abrir menú");
+    toggle.setAttribute("aria-label", open ? toggle.dataset.closeLabel : toggle.dataset.openLabel);
     document.body.style.overflow = open ? "hidden" : "";
     if (open) closeBtn.focus();
   }

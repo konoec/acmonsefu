@@ -1,0 +1,36 @@
+{
+  "meta": {
+    "title": "Asociación Cultural Monsefú",
+    "description": "AC Monsefú: difundimos y preservamos nuestras danzas y tradiciones. Organizadores del Festival Golpe Tierra."
+  },
+  "hero": {
+    "description": "Somos una asociación dedicada a la difusión de la danza y la cultura tradicional. Organizamos eventos, concursos y espectáculos que celebran el talento y la herencia de nuestros pueblos.",
+    "ctaPrimary": { "label": "Conócenos", "href": "/nosotros" },
+    "ctaSecondary": { "label": "Nuestros proyectos", "href": "/proyectos" }
+  },
+  "quienesSomos": {
+    "eyebrow": "Quiénes somos",
+    "title": "Cultura que se baila y se siente",
+    "paragraphs": [
+      "AC Monsefú nace con la misión de preservar y difundir la identidad cultural de nuestros pueblos a través de la danza, la música y las tradiciones que nos definen.",
+      "Organizamos el Festival Golpe Tierra, ofrecemos espectáculos culturales y trabajamos por acercar la cultura a las nuevas generaciones."
+    ],
+    "link": { "label": "Conoce nuestra historia", "href": "/nosotros" }
+  },
+  "proyectos": {
+    "eyebrow": "Proyectos",
+    "title": "Nuestros proyectos",
+    "seeAll": "Ver todos los proyectos",
+    "cta": "Ir al festival"
+  },
+  "novedades": {
+    "eyebrow": "Novedades",
+    "title": "Últimas noticias",
+    "seeAll": "Ver todas"
+  },
+  "contacto": {
+    "title": "¿Quieres saber más?",
+    "text": "Escríbenos y con gusto te responderemos.",
+    "cta": "Contacto"
+  }
+}

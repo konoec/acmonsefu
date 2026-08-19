@@ -20,9 +20,9 @@ async function rmWithRetry(path, attempts = 10) {
 }
 
 const TARGETS = [
-  { dir: "src/assets/images/home", width: 1600, quality: 70 },
-  { dir: "src/assets/images/galeria", width: 1200, quality: 72 },
-  { dir: "src/assets/images/logos", width: 700, quality: 80 },
+  { dir: "public/uploads/home", width: 1600, quality: 70 },
+  { dir: "public/uploads/galeria", width: 1200, quality: 72 },
+  { dir: "public/uploads/logos", width: 700, quality: 80 },
 ];
 
 for (const t of TARGETS) {

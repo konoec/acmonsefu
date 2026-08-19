@@ -1,45 +1,31 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { Image } from "astro:assets";
-import aboutImg from "../assets/images/home/home2.webp";
+import seccion from "../data/secciones/nosotros.json";
+import imagenes from "../data/imagenes.json";
+import { md } from "../lib/text";
 
-const valores = [
-  {
-    title: "Identidad",
-    text: "Defendemos y promovemos nuestras raíces culturales en cada actividad.",
-    icon: "M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z",
-  },
-  {
-    title: "Tradición",
-    text: "Mantenemos vivas las danzas y costumbres heredadas de nuestros pueblos.",
-    icon: "M13 3a9 9 0 0 0-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42A8.954 8.954 0 0 0 13 21a9 9 0 0 0 0-18zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z",
-  },
-  {
-    title: "Comunidad",
-    text: "Trabajamos junto a las academias y la comunidad para acercar la cultura a todos.",
-    icon: "M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z",
-  },
-  {
-    title: "Talentos",
-    text: "Impulsamos y visibilizamos el talento de nuestros bailarines y artistas.",
-    icon: "M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z",
-  },
+const iconosValores = [
+  "M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z",
+  "M13 3a9 9 0 0 0-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42A8.954 8.954 0 0 0 13 21a9 9 0 0 0 0-18zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z",
+  "M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z",
+  "M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z",
 ];
+
+const valores = seccion.misionValores.valores.map((valor, i) => ({ ...valor, icon: iconosValores[i] }));
 ---
 
 <Layout
-  title="Nosotros"
-  description="Conoce la historia, misión y valores de la Asociación Cultural Monsefú."
+  title={seccion.meta.title}
+  description={seccion.meta.description}
 >
   <section class="border-b border-gray-100 bg-cream-50">
     <div class="mx-auto max-w-6xl px-5 py-20 lg:px-8 lg:py-28">
-      <p class="text-[11px] font-bold uppercase tracking-[0.3em] text-brand-600">Nosotros</p>
+      <p class="text-[11px] font-bold uppercase tracking-[0.3em] text-brand-600">{seccion.header.eyebrow}</p>
       <h1 class="mt-3 max-w-2xl font-heading text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl">
-        Nuestra asociación
+        {seccion.header.title}
       </h1>
       <p class="mt-5 max-w-2xl text-lg leading-relaxed text-gray-600">
-        La Asociación Cultural Monsefú nace del amor por nuestras tradiciones y del compromiso de llevarlas a cada
-        escenario y a cada generación.
+        {seccion.header.description}
       </p>
     </div>
   </section>
@@ -47,36 +33,26 @@ const valores = [
   <section class="mx-auto max-w-6xl px-5 py-20 lg:px-8 lg:py-28">
     <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
       <div>
-        <p class="text-[11px] font-bold uppercase tracking-[0.3em] text-brand-600">Historia</p>
+        <p class="text-[11px] font-bold uppercase tracking-[0.3em] text-brand-600">{seccion.historia.eyebrow}</p>
         <h2 class="mt-3 font-heading text-3xl font-extrabold tracking-tight text-gray-900">
-          Una historia hecha de cultura
+          {seccion.historia.title}
         </h2>
         <div class="mt-6 space-y-4 text-base leading-relaxed text-gray-600">
-          <p>
-            <strong class="text-gray-900">AC Monsefú</strong> es una asociación cultural dedicada a la difusión y
-            preservación de las danzas tradicionales de la región Lambayeque.
-          </p>
-          <p>
-            Nuestro proyecto más representativo es el <strong class="text-gray-900">Festival Golpe Tierra</strong>,
-            un concurso que cada año reúne a bailarines de todo el país para celebrar la marinera, el tondero y el
-            baile tierra.
-          </p>
-          <p>
-            Además, ofrecemos espectáculos culturales y participamos activamente en la vida cultural de nuestra
-            comunidad.
-          </p>
+          {seccion.historia.paragraphs.map((parrafo) => (
+            <p set:html={md(parrafo)} />
+          ))}
         </div>
         <p class="mt-6 border-l-2 border-brand-500/30 pl-4 text-sm italic text-gray-500">
-          Contenido de ejemplo: reemplaza estos párrafos con la historia oficial de la asociación, su fundación y sus
-          logros.
+          {seccion.historia.note}
         </p>
       </div>
       <div class="relative">
-        <Image
-          src={aboutImg}
-          alt="Actividad cultural de AC Monsefú"
+        <img
+          src={imagenes.home.nosotros.src}
+          alt={imagenes.home.nosotros.alt}
           class="aspect-[4/3] w-full rounded-sm object-cover shadow-xl"
-          width={800}
+          width="800"
+          height="600"
         />
         <div class="absolute -bottom-4 -right-4 -z-10 h-full w-full rounded-sm bg-gradient-to-br from-amber-200 to-brand-200 opacity-30"></div>
       </div>
@@ -85,9 +61,9 @@ const valores = [
 
   <section class="bg-white py-20 lg:py-28">
     <div class="mx-auto max-w-6xl px-5 lg:px-8">
-      <p class="text-[11px] font-bold uppercase tracking-[0.3em] text-brand-600">Misión y valores</p>
+      <p class="text-[11px] font-bold uppercase tracking-[0.3em] text-brand-600">{seccion.misionValores.eyebrow}</p>
       <h2 class="mt-3 font-heading text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-        Lo que nos mueve
+        {seccion.misionValores.title}
       </h2>
 
       <div class="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
@@ -106,17 +82,15 @@ const valores = [
 
       <div class="mt-14 grid grid-cols-1 gap-6 md:grid-cols-2">
         <article class="rounded-sm bg-gray-900 p-8 text-white">
-          <h3 class="font-heading text-lg font-bold">Misión</h3>
+          <h3 class="font-heading text-lg font-bold">{seccion.misionValores.mision.title}</h3>
           <p class="mt-3 text-sm leading-relaxed text-white/80">
-            Difundir y preservar las tradiciones culturales de nuestros pueblos a través de la danza, formando
-            espacios de encuentro, formación y celebración para la comunidad.
+            {seccion.misionValores.mision.text}
           </p>
         </article>
         <article class="rounded-sm bg-brand-600 p-8 text-white">
-          <h3 class="font-heading text-lg font-bold">Visión</h3>
+          <h3 class="font-heading text-lg font-bold">{seccion.misionValores.vision.title}</h3>
           <p class="mt-3 text-sm leading-relaxed text-white/80">
-            Ser la asociación cultural de referencia de la región, reconocida por la calidad de sus eventos y por su
-            aporte a la identidad cultural del norte del Perú.
+            {seccion.misionValores.vision.text}
           </p>
         </article>
       </div>
@@ -125,15 +99,15 @@ const valores = [
 
   <section class="mx-auto max-w-6xl px-5 py-20 lg:px-8 lg:py-28">
     <div class="rounded-sm border border-gray-100 bg-white p-8 text-center md:p-12">
-      <h2 class="font-heading text-2xl font-extrabold tracking-tight text-gray-900">¿Quieres colaborar con nosotros?</h2>
+      <h2 class="font-heading text-2xl font-extrabold tracking-tight text-gray-900">{seccion.cta.title}</h2>
       <p class="mx-auto mt-3 max-w-xl text-gray-500">
-        Suma tu academia, tu empresa o tu institución a nuestras actividades culturales.
+        {seccion.cta.text}
       </p>
       <a
         href="/contacto"
         class="mt-6 inline-flex items-center justify-center rounded-sm bg-gray-900 px-8 py-4 text-xs font-bold uppercase tracking-[0.15em] text-white transition-all hover:bg-brand-600"
       >
-        Contáctanos
+        {seccion.cta.label}
       </a>
     </div>
   </section>

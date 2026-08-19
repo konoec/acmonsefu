@@ -1,13 +1,13 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
-import { SITE } from "../data/site";
-import { MODALIDADES } from "../data/festival";
-import { PROYECTOS } from "../data/proyectos";
-import logoAsociacion from "../assets/images/logos/logo_asociacion_brown.webp";
-import logoFestivalLight from "../assets/images/logos/logo_festival_light.webp";
-import aboutImg from "../assets/images/home/home3.webp";
+import SITE from "../data/site.json";
+import festivalData from "../data/festival.json";
+import PROYECTOS from "../data/proyectos.json";
+import seccion from "../data/secciones/home.json";
+import imagenes from "../data/imagenes.json";
+
+const MODALIDADES = festivalData.modalidades;
 
 const noticias = (await getCollection("noticias"))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
@@ -19,8 +19,8 @@ const otherProjects = PROYECTOS.filter((p) => !p.featured);
 ---
 
 <Layout
-  title="Asociación Cultural Monsefú"
-  description="AC Monsefú: difundimos y preservamos nuestras danzas y tradiciones. Organizadores del Festival Golpe Tierra."
+  title={seccion.meta.title}
+  description={seccion.meta.description}
 >
   <section class="relative overflow-hidden bg-cream-50">
     <div class="pointer-events-none absolute -top-24 right-0 h-96 w-96 rounded-full bg-brand-500/10 blur-[90px]"></div>
@@ -29,8 +29,8 @@ const otherProjects = PROYECTOS.filter((p) => !p.featured);
     <div class="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-5 pb-20 pt-16 lg:grid-cols-2 lg:px-8 lg:pb-28 lg:pt-24">
       <div class="relative z-10 order-1 flex items-center justify-center">
         <img
-          src={logoAsociacion.src}
-          alt="Logo AC Monsefú"
+          src={imagenes.logos.asociacion.src}
+          alt={imagenes.logos.asociacion.alt}
           class="h-40 w-auto object-contain sm:h-72 lg:h-80"
           width="560"
           height="560"
@@ -43,21 +43,20 @@ const otherProjects = PROYECTOS.filter((p) => !p.featured);
         </h1>
         <p class="mt-4 max-w-lg text-lg leading-relaxed text-gray-600">{SITE.tagline}.</p>
         <p class="mt-4 max-w-lg text-base leading-relaxed text-gray-500">
-          Somos una asociación dedicada a la difusión de la danza y la cultura tradicional. Organizamos eventos,
-          concursos y espectáculos que celebran el talento y la herencia de nuestros pueblos.
+          {seccion.hero.description}
         </p>
         <div class="mt-8 flex flex-wrap gap-4">
           <a
-            href="/nosotros"
+            href={seccion.hero.ctaPrimary.href}
             class="inline-flex items-center justify-center rounded-sm bg-gray-900 px-6 py-3 text-xs font-bold uppercase tracking-[0.15em] text-white transition-all hover:bg-brand-600"
           >
-            Conócenos
+            {seccion.hero.ctaPrimary.label}
           </a>
           <a
-            href="/proyectos"
+            href={seccion.hero.ctaSecondary.href}
             class="inline-flex items-center justify-center rounded-sm border border-brand-600 px-6 py-3 text-xs font-bold uppercase tracking-[0.15em] text-brand-600 transition-all hover:bg-brand-600 hover:text-white"
           >
-            Nuestros proyectos
+            {seccion.hero.ctaSecondary.label}
           </a>
         </div>
       </div>
@@ -78,26 +77,27 @@ const otherProjects = PROYECTOS.filter((p) => !p.featured);
   <section class="mx-auto max-w-6xl px-5 py-20 lg:px-8 lg:py-28">
     <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
       <div class="relative">
-        <Image src={aboutImg} alt="Danza tradicional" class="aspect-[4/3] w-full rounded-sm object-cover shadow-xl" width={800} />
+        <img
+          src={imagenes.home.about.src}
+          alt={imagenes.home.about.alt}
+          class="aspect-[4/3] w-full rounded-sm object-cover shadow-xl"
+          width="800"
+          height="600"
+        />
       </div>
       <div>
-        <p class="text-[11px] font-bold uppercase tracking-[0.3em] text-brand-600">Quiénes somos</p>
+        <p class="text-[11px] font-bold uppercase tracking-[0.3em] text-brand-600">{seccion.quienesSomos.eyebrow}</p>
         <h2 class="mt-3 font-heading text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-          Cultura que se baila y se siente
+          {seccion.quienesSomos.title}
         </h2>
-        <p class="mt-4 text-base leading-relaxed text-gray-600">
-          AC Monsefú nace con la misión de preservar y difundir la identidad cultural de nuestros pueblos a través de la
-          danza, la música y las tradiciones que nos definen.
-        </p>
-        <p class="mt-3 text-base leading-relaxed text-gray-500">
-          Organizamos el Festival Golpe Tierra, ofrecemos espectáculos culturales y trabajamos por acercar la cultura a
-          las nuevas generaciones.
-        </p>
+        {seccion.quienesSomos.paragraphs.map((parrafo) => (
+          <p class="mt-4 text-base leading-relaxed text-gray-600">{parrafo}</p>
+        ))}
         <a
-          href="/nosotros"
+          href={seccion.quienesSomos.link.href}
           class="mt-6 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.15em] text-brand-600 transition-colors hover:text-brand-700"
         >
-          Conoce nuestra historia
+          {seccion.quienesSomos.link.label}
           <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
           </svg>
@@ -110,16 +110,16 @@ const otherProjects = PROYECTOS.filter((p) => !p.featured);
     <div class="mx-auto max-w-6xl px-5 lg:px-8">
       <div class="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
         <div>
-          <p class="text-[11px] font-bold uppercase tracking-[0.3em] text-brand-600">Proyectos</p>
+          <p class="text-[11px] font-bold uppercase tracking-[0.3em] text-brand-600">{seccion.proyectos.eyebrow}</p>
           <h2 class="mt-3 font-heading text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-            Nuestros proyectos
+            {seccion.proyectos.title}
           </h2>
         </div>
         <a
           href="/proyectos"
           class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.15em] text-brand-600 transition-colors hover:text-brand-700"
         >
-          Ver todos los proyectos
+          {seccion.proyectos.seeAll}
           <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
           </svg>
@@ -140,13 +140,13 @@ const otherProjects = PROYECTOS.filter((p) => !p.featured);
               href={featuredProject.href}
               class="mt-6 inline-flex items-center justify-center rounded-sm bg-white px-8 py-3.5 text-xs font-black uppercase tracking-[0.15em] text-brand-700 transition-all hover:bg-gray-100"
             >
-              Ir al festival
+              {seccion.proyectos.cta}
             </a>
           </div>
           <div class="flex items-center justify-center">
             <img
-              src={logoFestivalLight.src}
-              alt={`Logo ${featuredProject.title}`}
+              src={imagenes.logos.festivalLight.src}
+              alt={imagenes.logos.festivalLight.alt}
               class="h-24 w-auto object-contain md:h-32"
               width="180"
               height="80"
@@ -177,16 +177,16 @@ const otherProjects = PROYECTOS.filter((p) => !p.featured);
   <section class="mx-auto max-w-6xl px-5 py-20 lg:px-8 lg:py-28">
     <div class="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
       <div>
-        <p class="text-[11px] font-bold uppercase tracking-[0.3em] text-brand-600">Novedades</p>
+        <p class="text-[11px] font-bold uppercase tracking-[0.3em] text-brand-600">{seccion.novedades.eyebrow}</p>
         <h2 class="mt-3 font-heading text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-          Últimas noticias
+          {seccion.novedades.title}
         </h2>
       </div>
       <a
         href="/novedades"
         class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.15em] text-brand-600 transition-colors hover:text-brand-700"
       >
-        Ver todas
+        {seccion.novedades.seeAll}
         <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
         </svg>
@@ -214,14 +214,14 @@ const otherProjects = PROYECTOS.filter((p) => !p.featured);
   <section class="border-t border-gray-100 bg-white">
     <div class="mx-auto flex max-w-6xl flex-col items-center gap-6 px-5 py-16 text-center lg:flex-row lg:justify-between lg:px-8 lg:text-left">
       <div>
-        <h2 class="font-heading text-2xl font-extrabold tracking-tight text-gray-900">¿Quieres saber más?</h2>
-        <p class="mt-2 text-gray-500">Escríbenos y con gusto te responderemos.</p>
+        <h2 class="font-heading text-2xl font-extrabold tracking-tight text-gray-900">{seccion.contacto.title}</h2>
+        <p class="mt-2 text-gray-500">{seccion.contacto.text}</p>
       </div>
       <a
         href="/contacto"
         class="inline-flex shrink-0 items-center justify-center rounded-sm bg-gray-900 px-8 py-4 text-xs font-bold uppercase tracking-[0.15em] text-white transition-all hover:bg-brand-600"
       >
-        Contacto
+        {seccion.contacto.cta}
       </a>
     </div>
   </section>

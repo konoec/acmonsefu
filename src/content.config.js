@@ -8,6 +8,7 @@ const noticias = defineCollection({
     date: z.coerce.date(),
     excerpt: z.string().optional(),
     author: z.string().default("AC Monsefú"),
+    image: z.string().optional(),
   }),
 });
 

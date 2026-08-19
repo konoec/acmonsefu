@@ -1,0 +1,19 @@
+{
+  "meta": {
+    "title": "Proyectos",
+    "description": "Los proyectos culturales de la Asociación Cultural Monsefú: el Festival Golpe Tierra, shows y espectáculos, talleres y eventos institucionales."
+  },
+  "header": {
+    "eyebrow": "Proyectos",
+    "title": "Nuestros proyectos",
+    "description": "Desde Asociación Cultural Monsefú impulsamos distintas iniciativas para difundir y preservar nuestra cultura. El Festival Golpe Tierra es nuestro proyecto más representativo, pero no el único."
+  },
+  "featured": {
+    "cta": "Ir al festival"
+  },
+  "cta": {
+    "title": "Participa en nuestros proyectos",
+    "text": "Escríbenos por WhatsApp y coordinemos juntos la mejor experiencia cultural para tu evento. También puedes consultar por la próxima edición del {name}.",
+    "label": "Escríbenos por WhatsApp"
+  }
+}

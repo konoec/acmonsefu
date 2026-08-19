@@ -1,0 +1,19 @@
+{
+  "meta": {
+    "title": "Novedades",
+    "description": "Noticias y novedades de la Asociación Cultural Monsefú."
+  },
+  "header": {
+    "eyebrow": "Novedades",
+    "title": "Noticias y anuncios",
+    "description": "Enterate de nuestras actividades, convocatorias y novedades culturales."
+  },
+  "card": {
+    "leerMas": "Leer más",
+    "empty": "Próximamente publicaremos nuestras novedades."
+  },
+  "detail": {
+    "por": "Por",
+    "volver": "Volver a novedades"
+  }
+}

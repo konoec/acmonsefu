@@ -1,0 +1,20 @@
+{
+  "meta": {
+    "title": "Contacto",
+    "description": "Contacta a la Asociación Cultural Monsefú por WhatsApp, correo o redes sociales."
+  },
+  "header": {
+    "eyebrow": "Contacto",
+    "title": "Hablemos",
+    "description": "¿Tienes un proyecto, quieres contratar un espectáculo o participar en nuestros eventos? Escríbenos."
+  },
+  "canales": [
+    { "title": "WhatsApp", "icon": "whatsapp", "valueKey": "phone", "hrefKey": "whatsapp" },
+    { "title": "Correo", "icon": "correo", "valueKey": "email", "hrefKey": "email" },
+    { "title": "Ubicación", "icon": "ubicacion", "valueKey": "location", "hrefKey": "location" }
+  ],
+  "redes": {
+    "title": "Síguenos en redes",
+    "text": "Compartimos novedades, convocatorias y resultados de nuestros eventos. ¡No te lo pierdas!"
+  }
+}

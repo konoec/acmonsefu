@@ -1,0 +1,10 @@
+{
+  "meta": {
+    "title": "Página no encontrada",
+    "description": "La página que buscas no existe."
+  },
+  "code": "404",
+  "title": "Página no encontrada",
+  "text": "La página que buscas no existe o fue movida.",
+  "cta": "Volver al inicio"
+}

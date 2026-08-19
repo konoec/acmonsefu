@@ -1,17 +1,18 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import seccion from "../data/secciones/404.json";
 ---
 
-<Layout title="Página no encontrada" description="La página que buscas no existe.">
+<Layout title={seccion.meta.title} description={seccion.meta.description}>
   <section class="mx-auto max-w-3xl px-5 py-32 text-center">
-    <p class="font-heading text-7xl font-extrabold text-brand-600">404</p>
-    <h1 class="mt-4 font-heading text-3xl font-extrabold tracking-tight text-gray-900">Página no encontrada</h1>
-    <p class="mt-4 text-gray-500">La página que buscas no existe o fue movida.</p>
+    <p class="font-heading text-7xl font-extrabold text-brand-600">{seccion.code}</p>
+    <h1 class="mt-4 font-heading text-3xl font-extrabold tracking-tight text-gray-900">{seccion.title}</h1>
+    <p class="mt-4 text-gray-500">{seccion.text}</p>
     <a
       href="/"
       class="mt-8 inline-flex items-center justify-center rounded-sm bg-gray-900 px-8 py-4 text-xs font-bold uppercase tracking-[0.15em] text-white transition-all hover:bg-brand-600"
     >
-      Volver al inicio
+      {seccion.cta}
     </a>
   </section>
 </Layout>

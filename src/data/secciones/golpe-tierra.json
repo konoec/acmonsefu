@@ -1,0 +1,39 @@
+{
+  "header": {
+    "backLink": "← Un proyecto de AC Monsefú",
+    "lugar": "Lugar",
+    "inscripciones": "Inscripciones",
+    "contacto": "Contacto",
+    "cta": "Inscripciones abren próximamente"
+  },
+  "bases": {
+    "eyebrow": "Reglamento",
+    "title": "Bases de competencia",
+    "costosTitle": "Costos",
+    "requisitosTitle": "Requisitos",
+    "requisitos": [
+      "Registro vía WhatsApp",
+      "DNI original (bailarines)",
+      "Voucher de pago (Yape)",
+      "Nombre de la academia"
+    ],
+    "calificacionTitle": "Calificación",
+    "calificacionText": "Puntaje mediante paleta en mano de **3 a 5 puntos**.",
+    "semifinal": "Semifinal: máximo 6 parejas",
+    "final": "Final: 3 mejores parejas",
+    "note": "Bases de ejemplo: actualiza esta sección con el reglamento oficial de la edición {year} cuando esté disponible."
+  },
+  "categorias": {
+    "eyebrow": "Categorías",
+    "title": "Modalidades"
+  },
+  "galeria": {
+    "eyebrow": "Galería",
+    "title": "Momentos del festival"
+  },
+  "cta": {
+    "title": "Sé parte del {name}",
+    "text": "La convocatoria para la {edition} se publicará próximamente. Síguenos en redes y no te la pierdas.",
+    "label": "Consultas por WhatsApp"
+  }
+}

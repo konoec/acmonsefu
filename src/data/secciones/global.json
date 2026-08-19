@@ -1,0 +1,33 @@
+{
+  "navbar": {
+    "homeLinkLabel": "AC Monsefú - Inicio",
+    "logoAlt": "Logo AC Monsefú",
+    "openMenuLabel": "Abrir menú",
+    "closeMenuLabel": "Cerrar menú",
+    "nav": [
+      { "label": "Inicio", "href": "/" },
+      { "label": "Nosotros", "href": "/nosotros" },
+      { "label": "Proyectos", "href": "/proyectos" },
+      { "label": "Novedades", "href": "/novedades" },
+      { "label": "Contacto", "href": "/contacto" }
+    ],
+    "whatsappCta": "Escríbenos por WhatsApp",
+    "followLabel": "Síguenos"
+  },
+  "footer": {
+    "linksTitle": "Enlaces",
+    "proyectosTitle": "Proyectos",
+    "contactoTitle": "Contacto",
+    "proyectosLinks": [
+      { "label": "Festival Golpe Tierra", "href": "/golpe-tierra" },
+      { "label": "Shows y espectáculos", "href": "/proyectos" },
+      { "label": "Talleres y formación", "href": "/proyectos" },
+      { "label": "Eventos institucionales", "href": "/proyectos" }
+    ],
+    "copyright": "Todos los derechos reservados.",
+    "bottomLinks": [
+      { "label": "Proyectos", "href": "/proyectos" },
+      { "label": "Novedades", "href": "/novedades" }
+    ]
+  }
+}
