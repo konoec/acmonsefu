@@ -113,16 +113,17 @@ const otros = PROYECTOS.filter((p) => !p.featured);
                 ))}
               </div>
             )}
-            {proyecto.items && (
-              <ul class="mt-4 space-y-3">
-                {proyecto.items.map((item) => (
-                  <li class="flex items-baseline justify-between gap-3 border-b border-gray-100 pb-2 text-sm">
-                    <span class="font-semibold text-gray-900">{item.name}</span>
-                    <span class="shrink-0 text-xs uppercase tracking-[0.1em] text-brand-600">{item.month}</span>
-                  </li>
-                ))}
-              </ul>
-            )}
+{proyecto.items && (
+                  <ol class="relative mt-6 space-y-6 border-l-2 border-brand-200 pl-6">
+                    {proyecto.items.map((item) => (
+                      <li class="relative">
+                        <span class="absolute -left-[31px] top-1 h-3 w-3 rounded-full bg-brand-600 ring-4 ring-brand-100"></span>
+                        <p class="text-xs font-bold uppercase tracking-[0.1em] text-brand-600">{item.month}</p>
+                        <p class="mt-1 text-sm font-semibold leading-snug text-gray-900">{item.name}</p>
+                      </li>
+                    ))}
+                  </ol>
+                )}
           </article>
         ))}
       </div>
