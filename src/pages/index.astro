@@ -90,7 +90,7 @@ const otherProjects = PROYECTOS.filter((p) => !p.featured);
           {seccion.quienesSomos.title}
         </h2>
         {seccion.quienesSomos.paragraphs.map((parrafo) => (
-          <p class="mt-4 text-base leading-relaxed text-gray-600">{parrafo}</p>
+          <p class="mt-4 text-base leading-relaxed text-gray-600" set:html={md(parrafo)}></p>
         ))}
         <a
           href={seccion.quienesSomos.link.href}
