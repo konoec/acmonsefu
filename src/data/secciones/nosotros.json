@@ -12,20 +12,34 @@
     "eyebrow": "Historia",
     "title": "Una historia hecha de cultura",
     "paragraphs": [
-      "**AC Monsefú** es una asociación cultural dedicada a la difusión y preservación de las danzas tradicionales de la región Lambayeque.",
-      "Nuestro proyecto más representativo es el **Festival Golpe Tierra**, un concurso que cada año reúne a bailarines de todo el país para celebrar la marinera, el tondero y el baile tierra.",
-      "Además, ofrecemos espectáculos culturales y participamos activamente en la vida cultural de nuestra comunidad."
+      "**AC Monsefú** es una organización cultural comprometida con la preservación, valoración y difusión de la identidad cultural lambayecana, utilizando el teatro, la música, la danza y otras expresiones artísticas como herramientas para contar nuestras historias, reconocer nuestras raíces y fortalecer el sentido de pertenencia.",
+      "Nuestra labor parte de una convicción: la cultura no es solo aquello que heredamos del pasado, sino aquello que cuidamos, vivimos y transmitimos para construir nuestro futuro.",
+      "A lo largo de nuestra trayectoria hemos creado y desarrollado diversas iniciativas que buscan acercar nuestra cultura a la comunidad y, especialmente, a las nuevas generaciones. Entre ellas destacan el **Festival Golpe Tierra, las Exposiciones Fotográficas “Herencia Lambayecana”**, la labor social **“Bailando con Moly”**, nuestra **Academia de Danzas y Bailes**, además de espectáculos y encuentros culturales.",
+      "Cada una de estas propuestas representa una manera de preservar nuestra memoria colectiva, visibilizar nuestras costumbres y celebrar la riqueza cultural de Lambayeque.",
+      "Desde **Monsefú**, tierra de tradición, arte y saberes ancestrales, trabajamos para que nuestras danzas sigan contando historias, que nuestra música siga evocando recuerdos y que nuestras costumbres continúen encontrando nuevos caminos para llegar a las generaciones que vienen."
     ],
-    "note": "Contenido de ejemplo: reemplaza estos párrafos con la historia oficial de la asociación, su fundación y sus logros."
+    "note": "Porque creemos que un pueblo que conoce, valora y vive su cultura fortalece su identidad. **AC Monsefú: cultura que se baila, se vive y se siente.**"
   },
   "misionValores": {
     "eyebrow": "Misión y valores",
     "title": "Lo que nos mueve",
     "valores": [
-      { "title": "Identidad", "text": "Defendemos y promovemos nuestras raíces culturales en cada actividad." },
-      { "title": "Tradición", "text": "Mantenemos vivas las danzas y costumbres heredadas de nuestros pueblos." },
-      { "title": "Comunidad", "text": "Trabajamos junto a las academias y la comunidad para acercar la cultura a todos." },
-      { "title": "Talentos", "text": "Impulsamos y visibilizamos el talento de nuestros bailarines y artistas." }
+      {
+        "title": "Identidad",
+        "text": "Defendemos y promovemos nuestras raíces culturales en cada actividad."
+      },
+      {
+        "title": "Tradición",
+        "text": "Mantenemos vivas las danzas y costumbres heredadas de nuestros pueblos."
+      },
+      {
+        "title": "Comunidad",
+        "text": "Trabajamos junto a las academias y la comunidad para acercar la cultura a todos."
+      },
+      {
+        "title": "Talentos",
+        "text": "Impulsamos y visibilizamos el talento de nuestros bailarines y artistas."
+      }
     ],
     "mision": {
       "title": "Misión",
