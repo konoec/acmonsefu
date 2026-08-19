@@ -4,7 +4,7 @@
     "description": "Somos una Asociación Cultural dedicada a la investigación y difusión de nuestra Cultura Lambayecana, promoviendo y organizando diversos proyectos culturales que celebran el talento y la herencia de nuestros pueblos."
   },
   "hero": {
-    "description": "Somos una Asociación Cultural dedicada a la investigación y difusión de nuestra Cultura Lambayecana, promoviendo y organizando diversos proyectos culturales **que celebran el talento y la herencia de nuestros pueblos**.",
+    "description": "Somos una Asociación Cultural dedicada a la investigación y difusión de nuestra Cultura Lambayecana, promoviendo y organizando diversos proyectos culturales que celebran el talento y la herencia de nuestros pueblos.",
     "ctaPrimary": {
       "label": "Conócenos",
       "href": "/nosotros"
