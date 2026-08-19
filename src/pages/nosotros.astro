@@ -12,6 +12,11 @@ const iconosValores = [
 ];
 
 const valores = seccion.misionValores.valores.map((valor, i) => ({ ...valor, icon: iconosValores[i] }));
+
+const headerParagraphs =
+  Array.isArray(seccion.header.paragraphs) && seccion.header.paragraphs.length
+    ? seccion.header.paragraphs
+    : [seccion.header.description];
 ---
 
 <Layout
@@ -25,7 +30,7 @@ const valores = seccion.misionValores.valores.map((valor, i) => ({ ...valor, ico
         {seccion.header.title}
       </h1>
       <div class="mt-5 max-w-2xl space-y-4 text-lg leading-relaxed text-gray-600">
-        {seccion.header.paragraphs.map((parrafo) => (
+        {headerParagraphs.map((parrafo) => (
           <p set:html={md(parrafo)} />
         ))}
       </div>
