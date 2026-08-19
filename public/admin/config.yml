@@ -21,7 +21,7 @@ collections:
       - { name: date, label: Fecha, widget: datetime, format: YYYY-MM-DD, date_format: YYYY-MM-DD, time_format: false }
       - { name: excerpt, label: Extracto, widget: text, required: false }
       - { name: author, label: Autor, widget: string }
-      - { name: image, label: Imagen de portada, widget: image, required: false, allow_multiple: false }
+      - { name: image, label: Imagen de portada, widget: image, required: false }
       - { name: body, label: Contenido, widget: markdown }
 
   - name: site
@@ -456,7 +456,7 @@ collections:
               - { name: por, label: Por, widget: string }
               - { name: volver, label: Volver, widget: string }
 
-      - name: 404
+      - name: "404"
         label: Página 404
         file: src/data/secciones/404.json
         fields:
