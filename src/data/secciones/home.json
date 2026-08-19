@@ -1,12 +1,18 @@
 {
   "meta": {
     "title": "Asociación Cultural Monsefú",
-    "description": "AC Monsefú: difundimos y preservamos nuestras danzas y tradiciones. Organizadores del Festival Golpe Tierra."
+    "description": "Somos una Asociación Cultural dedicada a la investigación y difusión de nuestra Cultura Lambayecana, promoviendo y organizando diversos proyectos culturales que celebran el talento y la herencia de nuestros pueblos."
   },
   "hero": {
-    "description": "Somos una asociación dedicada a la difusión de la danza y la cultura tradicional. Organizamos eventos, concursos y espectáculos que celebran el talento y la herencia de nuestros pueblos.",
-    "ctaPrimary": { "label": "Conócenos", "href": "/nosotros" },
-    "ctaSecondary": { "label": "Nuestros proyectos", "href": "/proyectos" }
+    "description": "Somos una Asociación Cultural dedicada a la investigación y difusión de nuestra Cultura Lambayecana, promoviendo y organizando diversos proyectos culturales que celebran el talento y la herencia de nuestros pueblos.",
+    "ctaPrimary": {
+      "label": "Conócenos",
+      "href": "/nosotros"
+    },
+    "ctaSecondary": {
+      "label": "Nuestros proyectos",
+      "href": "/proyectos"
+    }
   },
   "quienesSomos": {
     "eyebrow": "Quiénes somos",
@@ -15,7 +21,10 @@
       "AC Monsefú nace con la misión de preservar y difundir la identidad cultural de nuestros pueblos a través de la danza, la música y las tradiciones que nos definen.",
       "Organizamos el Festival Golpe Tierra, ofrecemos espectáculos culturales y trabajamos por acercar la cultura a las nuevas generaciones."
     ],
-    "link": { "label": "Conoce nuestra historia", "href": "/nosotros" }
+    "link": {
+      "label": "Conoce nuestra historia",
+      "href": "/nosotros"
+    }
   },
   "proyectos": {
     "eyebrow": "Proyectos",
