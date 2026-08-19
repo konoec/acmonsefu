@@ -20,9 +20,10 @@
     "contactoTitle": "Contacto",
     "proyectosLinks": [
       { "label": "Festival Golpe Tierra", "href": "/golpe-tierra" },
-      { "label": "Shows y espectáculos", "href": "/proyectos" },
-      { "label": "Talleres y formación", "href": "/proyectos" },
-      { "label": "Eventos institucionales", "href": "/proyectos" }
+      { "label": "Shows y espectáculos", "href": "/proyectos#shows" },
+      { "label": "Talleres y formación", "href": "/proyectos#talleres" },
+      { "label": "Eventos institucionales", "href": "/proyectos#eventos" },
+      { "label": "Herencia Lambayecana", "href": "/proyectos#herencia" }
     ],
     "copyright": "Todos los derechos reservados.",
     "bottomLinks": [

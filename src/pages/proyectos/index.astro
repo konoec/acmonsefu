@@ -2,12 +2,14 @@
 import Layout from "../../layouts/Layout.astro";
 import SITE from "../../data/site.json";
 import festivalData from "../../data/festival.json";
-import PROYECTOS from "../../data/proyectos.json";
+import proyectosData from "../../data/proyectos.json";
 import seccion from "../../data/secciones/proyectos.json";
 import imagenes from "../../data/imagenes.json";
 import { t } from "../../lib/text";
 
 const FESTIVAL = festivalData.festival;
+
+const PROYECTOS = proyectosData.proyectos;
 
 const featured = PROYECTOS.find((p) => p.featured);
 const otros = PROYECTOS.filter((p) => !p.featured);
@@ -72,7 +74,7 @@ const ytId = (url) => {
     <div class="mt-14 grid grid-cols-1 gap-6 md:grid-cols-3">
       {otros.map((proyecto) => (
         <a
-          href="#presentaciones"
+          href={proyecto.href}
           class="group flex flex-col rounded-sm border border-gray-100 bg-white p-8 transition-all duration-300 hover:-translate-y-1 hover:border-brand-200 hover:shadow-xl"
         >
           <div class="flex items-center justify-between">
@@ -108,7 +110,7 @@ const ytId = (url) => {
         {otros.map((proyecto, i) => {
           const flip = i % 2 === 1;
           return (
-            <article class="grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-14">
+            <article id={proyecto.id} class="scroll-mt-28 grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-14">
               <div class={flip ? "lg:order-2" : ""}>
                 <span class="inline-block rounded-sm bg-brand-600 px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.15em] text-white">
                   {proyecto.tag}
@@ -135,7 +137,7 @@ const ytId = (url) => {
               </div>
               <div class={flip ? "lg:order-1" : ""}>
                 {proyecto.videos?.length ? (
-                  <div class="space-y-4">
+                  <div class={proyecto.videos.length > 1 ? "grid grid-cols-1 gap-4 md:grid-cols-2" : "space-y-4"}>
                     {proyecto.videos.map((video) => {
                       const id = ytId(video.url);
                       return (
@@ -162,10 +164,13 @@ const ytId = (url) => {
                     loading="lazy"
                   />
                 ) : (
-                  <div class="flex aspect-video w-full items-center justify-center rounded-sm border border-dashed border-brand-200 bg-white">
-                    <svg class="h-14 w-14 text-brand-200" viewBox="0 0 24 24" fill="currentColor">
-                      <path d={proyecto.icon} />
-                    </svg>
+                  <div class="flex aspect-video w-full flex-col items-center justify-center gap-4 rounded-sm bg-gradient-to-br from-cream-100 to-brand-100">
+                    <div class="flex h-20 w-20 items-center justify-center rounded-sm bg-white shadow-sm">
+                      <svg class="h-10 w-10 text-brand-500" viewBox="0 0 24 24" fill="currentColor">
+                        <path d={proyecto.icon} />
+                      </svg>
+                    </div>
+                    <p class="text-[10px] font-bold uppercase tracking-[0.25em] text-brand-400">{proyecto.title}</p>
                   </div>
                 )}
               </div>

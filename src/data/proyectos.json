@@ -1,69 +1,71 @@
-[
-  {
-    "id": "festival",
-    "title": "Festival Golpe Tierra",
-    "featured": true,
-    "href": "/golpe-tierra",
-    "tag": "Nuestro proyecto insignia",
-    "text": "Concurso de danzas tradicionales que reúne cada año a bailarines de todo el país para celebrar la marinera, el tondero y el baile tierra.",
-    "icon": "M15 15l-2 5l-3-2l-1 3l-3-3l-3 2V9a6 6 0 0 1 6-6h2a6 6 0 0 1 6 6v6Z"
-  },
-  {
-    "id": "shows",
-    "title": "Shows y espectáculos",
-    "featured": false,
-    "href": "/proyectos",
-    "tag": "Presentaciones",
-    "text": "Presentaciones de marinera, tondero y baile tierra para empresas, instituciones, eventos privados y fechas especiales.",
-    "icon": "M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z",
-    "paragraphs": [
-      "Le ofrecemos un servicio serio, eficaz y profesional. Podrá contar con el mejor acompañamiento cultural. Le brindamos un ramillete de danzas y temas musicales criollos que los transportarán a un ambiente festivo y jaranero.",
-      "Contamos con varios formatos para ofrecer; varían en los números artísticos en escena y con los cuales usted desee contar."
-    ]
-  },
-  {
-    "id": "talleres",
-    "title": "Talleres y formación",
-    "featured": false,
-    "href": "/proyectos",
-    "tag": "Formación",
-    "text": "Clases y talleres de danzas tradicionales para niños, jóvenes y adultos que quieren aprender y perfeccionar su técnica.",
-    "icon": "M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3 1 9l11 6 9-4.91V17h2V9L12 3z",
-    "paragraphs": [
-      "Más que aprender a bailar, formamos niños, jóvenes y adultos seguros, creativos, disciplinados y orgullosos de nuestra cultura Lambayecana. La danza ayuda a los niños a fortalecer su desarrollo físico, emocional y social, mientras descubren el arte, la música y nuestras tradiciones culturales."
-    ]
-  },
-  {
-    "id": "eventos",
-    "title": "Eventos institucionales",
-    "featured": false,
-    "href": "/proyectos",
-    "tag": "Difusión",
-    "text": "Apoyo y participación en actividades culturales de instituciones educativas, gobiernos locales y organizaciones.",
-    "icon": "M15 11V5l-3-3-3 3v2H3v14h18V11h-6zm-8 8H5v-2h2v2zm0-4H5v-2h2v2zm0-4H5V9h2v2zm6 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V9h2v2zm6 8h-2v-2h2v2zm0-4h-2v-2h2v2z",
-    "items": [
-      { "name": "Festival Golpe Tierra", "month": "Mes de Febrero" },
-      { "name": "Homenaje a Mamá", "month": "Mes de Mayo" },
-      { "name": "Recital Criollo", "month": "Mes de Octubre" },
-      { "name": "Labor Social “Bailando con Moly”", "month": "Mes de Diciembre" }
-    ]
-  },
-  {
-    "id": "herencia",
-    "title": "Herencia Lambayecana",
-    "featured": false,
-    "href": "/proyectos#presentaciones",
-    "tag": "Exposición",
-    "text": "Exposición fotográfica que explora la diversidad cultural de Lambayeque para mantener viva la memoria de nuestras tradiciones.",
-    "icon": "M2 16.1A5 5 0 0 1 5.9 20H2v-3.9zM22 16.1V20h-3.9A5 5 0 0 1 22 16.1zM5.9 4A5 5 0 0 1 2 7.9V4h3.9zM22 7.9A5 5 0 0 1 18.1 4H22v3.9zM9 7h6v10H9z",
-    "paragraphs": [
-      "Herencia Lambayecana: estampas norteñas de la diversidad cultural de la Región Lambayeque, presentadas por la Asociación Cultural Monsefú, luego de un inmenso esfuerzo recorriendo diversas localidades.",
-      "El mensaje de la exposición fotográfica es mantener viva la memoria de las tradiciones de raíces moches y su relación con las diversas etnias y culturas que confluyeron en tierras norteñas, en paisajes de gran belleza.",
-      "La muestra refleja la relación entre mujeres, hombres y la naturaleza, y expresa una tradición milenaria que se esfuerza por sobrevivir. Uno de los principales aportes de la asociación es explorar diversas manifestaciones artísticas, incluyendo la música y la danza."
-    ],
-    "videos": [
-      { "url": "https://www.youtube.com/watch?v=_H2DuZm-8dE", "title": "Herencia Lambayecana — detrás de cámaras" },
-      { "url": "https://www.youtube.com/watch?v=7Wpsnb3M_go", "title": "Herencia Lambayecana" }
-    ]
-  }
-]
+{
+  "proyectos": [
+    {
+      "id": "festival",
+      "title": "Festival Golpe Tierra",
+      "featured": true,
+      "href": "/golpe-tierra",
+      "tag": "Nuestro proyecto insignia",
+      "text": "Concurso de danzas tradicionales que reúne cada año a bailarines de todo el país para celebrar la marinera, el tondero y el baile tierra.",
+      "icon": "M15 15l-2 5l-3-2l-1 3l-3-3l-3 2V9a6 6 0 0 1 6-6h2a6 6 0 0 1 6 6v6Z"
+    },
+    {
+      "id": "shows",
+      "title": "Shows y espectáculos",
+      "featured": false,
+      "href": "/proyectos#shows",
+      "tag": "Presentaciones",
+      "text": "Presentaciones de marinera, tondero y baile tierra para empresas, instituciones, eventos privados y fechas especiales.",
+      "icon": "M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z",
+      "paragraphs": [
+        "Le ofrecemos un servicio serio, eficaz y profesional. Podrá contar con el mejor acompañamiento cultural. Le brindamos un ramillete de danzas y temas musicales criollos que los transportarán a un ambiente festivo y jaranero.",
+        "Contamos con varios formatos para ofrecer; varían en los números artísticos en escena y con los cuales usted desee contar."
+      ]
+    },
+    {
+      "id": "talleres",
+      "title": "Talleres y formación",
+      "featured": false,
+      "href": "/proyectos#talleres",
+      "tag": "Formación",
+      "text": "Clases y talleres de danzas tradicionales para niños, jóvenes y adultos que quieren aprender y perfeccionar su técnica.",
+      "icon": "M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3 1 9l11 6 9-4.91V17h2V9L12 3z",
+      "paragraphs": [
+        "Más que aprender a bailar, formamos niños, jóvenes y adultos seguros, creativos, disciplinados y orgullosos de nuestra cultura Lambayecana. La danza ayuda a los niños a fortalecer su desarrollo físico, emocional y social, mientras descubren el arte, la música y nuestras tradiciones culturales."
+      ]
+    },
+    {
+      "id": "eventos",
+      "title": "Eventos institucionales",
+      "featured": false,
+      "href": "/proyectos#eventos",
+      "tag": "Difusión",
+      "text": "Apoyo y participación en actividades culturales de instituciones educativas, gobiernos locales y organizaciones.",
+      "icon": "M15 11V5l-3-3-3 3v2H3v14h18V11h-6zm-8 8H5v-2h2v2zm0-4H5v-2h2v2zm0-4H5V9h2v2zm6 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V9h2v2zm6 8h-2v-2h2v2zm0-4h-2v-2h2v2z",
+      "items": [
+        { "name": "Festival Golpe Tierra", "month": "Mes de Febrero" },
+        { "name": "Homenaje a Mamá", "month": "Mes de Mayo" },
+        { "name": "Recital Criollo", "month": "Mes de Octubre" },
+        { "name": "Labor Social \"Bailando con Moly\"", "month": "Mes de Diciembre" }
+      ]
+    },
+    {
+      "id": "herencia",
+      "title": "Herencia Lambayecana",
+      "featured": false,
+      "href": "/proyectos#herencia",
+      "tag": "Exposición",
+      "text": "Exposición fotográfica que explora la diversidad cultural de Lambayeque para mantener viva la memoria de nuestras tradiciones.",
+      "icon": "M2 16.1A5 5 0 0 1 5.9 20H2v-3.9zM22 16.1V20h-3.9A5 5 0 0 1 22 16.1zM5.9 4A5 5 0 0 1 2 7.9V4h3.9zM22 7.9A5 5 0 0 1 18.1 4H22v3.9zM9 7h6v10H9z",
+      "paragraphs": [
+        "Herencia Lambayecana: estampas norteñas de la diversidad cultural de la Región Lambayeque, presentadas por la Asociación Cultural Monsefú, luego de un inmenso esfuerzo recorriendo diversas localidades.",
+        "El mensaje de la exposición fotográfica es mantener viva la memoria de las tradiciones de raíces moches y su relación con las diversas etnias y culturas que confluyeron en tierras norteñas, en paisajes de gran belleza.",
+        "La muestra refleja la relación entre mujeres, hombres y la naturaleza, y expresa una tradición milenaria que se esfuerza por sobrevivir. Uno de los principales aportes de la asociación es explorar diversas manifestaciones artísticas, incluyendo la música y la danza."
+      ],
+      "videos": [
+        { "url": "https://www.youtube.com/watch?v=_H2DuZm-8dE", "title": "Herencia Lambayecana — detrás de cámaras" },
+        { "url": "https://www.youtube.com/watch?v=7Wpsnb3M_go", "title": "Herencia Lambayecana" }
+      ]
+    }
+  ]
+}

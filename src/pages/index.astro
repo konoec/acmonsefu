@@ -3,7 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import { getCollection } from "astro:content";
 import SITE from "../data/site.json";
 import festivalData from "../data/festival.json";
-import PROYECTOS from "../data/proyectos.json";
+import proyectosData from "../data/proyectos.json";
 import seccion from "../data/secciones/home.json";
 import imagenes from "../data/imagenes.json";
 import { md } from "../lib/text.js";
@@ -15,6 +15,7 @@ const noticias = (await getCollection("noticias"))
   .slice(0, 3);
 
 const marquee = [...new Set(MODALIDADES.map((m) => m.title))];
+const PROYECTOS = proyectosData.proyectos;
 const featuredProject = PROYECTOS.find((p) => p.featured);
 const otherProjects = PROYECTOS.filter((p) => !p.featured);
 ---
