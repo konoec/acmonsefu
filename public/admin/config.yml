@@ -106,6 +106,18 @@ collections:
               - { name: tag, label: Etiqueta, widget: string }
               - { name: text, label: Texto, widget: text }
               - { name: icon, label: Icono (SVG), widget: text }
+              - label: Párrafos (opcional)
+                name: paragraphs
+                widget: list
+                required: false
+                field: { label: Párrafo, name: p, widget: text }
+              - label: Lista de eventos (opcional)
+                name: items
+                widget: list
+                required: false
+                fields:
+                  - { name: name, label: Nombre, widget: string }
+                  - { name: month, label: Mes, widget: string }
 
   - name: imagenes
     label: Imágenes del sitio

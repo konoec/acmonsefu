@@ -67,7 +67,7 @@ const otros = PROYECTOS.filter((p) => !p.featured);
     <div class="mt-14 grid grid-cols-1 gap-6 md:grid-cols-3">
       {otros.map((proyecto) => (
         <a
-          href={proyecto.href}
+          href="#presentaciones"
           class="group flex flex-col rounded-sm border border-gray-100 bg-white p-8 transition-all duration-300 hover:-translate-y-1 hover:border-brand-200 hover:shadow-xl"
         >
           <div class="flex items-center justify-between">
@@ -90,6 +90,42 @@ const otros = PROYECTOS.filter((p) => !p.featured);
           </span>
         </a>
       ))}
+    </div>
+  </section>
+
+  <section id="presentaciones" class="border-t border-gray-100 bg-cream-50">
+    <div class="mx-auto max-w-6xl px-5 py-20 lg:px-8 lg:py-28">
+      <p class="text-[11px] font-bold uppercase tracking-[0.3em] text-brand-600">Presentaciones</p>
+      <h2 class="mt-3 max-w-2xl font-heading text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+        Shows, talleres y eventos institucionales
+      </h2>
+      <div class="mt-12 grid grid-cols-1 gap-8 lg:grid-cols-3">
+        {otros.map((proyecto) => (
+          <article class="flex flex-col rounded-sm border border-gray-100 bg-white p-8">
+            <span class="rounded-sm bg-brand-600 px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.15em] text-white self-start">
+              {proyecto.tag}
+            </span>
+            <h3 class="mt-4 font-heading text-xl font-bold text-gray-900">{proyecto.title}</h3>
+            {proyecto.paragraphs && (
+              <div class="mt-4 space-y-3 text-sm leading-relaxed text-gray-600">
+                {proyecto.paragraphs.map((p) => (
+                  <p>{p}</p>
+                ))}
+              </div>
+            )}
+            {proyecto.items && (
+              <ul class="mt-4 space-y-3">
+                {proyecto.items.map((item) => (
+                  <li class="flex items-baseline justify-between gap-3 border-b border-gray-100 pb-2 text-sm">
+                    <span class="font-semibold text-gray-900">{item.name}</span>
+                    <span class="shrink-0 text-xs uppercase tracking-[0.1em] text-brand-600">{item.month}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </article>
+        ))}
+      </div>
     </div>
   </section>
 

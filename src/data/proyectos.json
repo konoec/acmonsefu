@@ -15,7 +15,11 @@
     "href": "/proyectos",
     "tag": "Presentaciones",
     "text": "Presentaciones de marinera, tondero y baile tierra para empresas, instituciones, eventos privados y fechas especiales.",
-    "icon": "M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"
+    "icon": "M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z",
+    "paragraphs": [
+      "Le ofrecemos un servicio serio, eficaz y profesional. Podrá contar con el mejor acompañamiento cultural. Le brindamos un ramillete de danzas y temas musicales criollos que los transportarán a un ambiente festivo y jaranero.",
+      "Contamos con varios formatos para ofrecer; varían en los números artísticos en escena y con los cuales usted desee contar."
+    ]
   },
   {
     "id": "talleres",
@@ -24,7 +28,10 @@
     "href": "/proyectos",
     "tag": "Formación",
     "text": "Clases y talleres de danzas tradicionales para niños, jóvenes y adultos que quieren aprender y perfeccionar su técnica.",
-    "icon": "M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3 1 9l11 6 9-4.91V17h2V9L12 3z"
+    "icon": "M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3 1 9l11 6 9-4.91V17h2V9L12 3z",
+    "paragraphs": [
+      "Más que aprender a bailar, formamos niños, jóvenes y adultos seguros, creativos, disciplinados y orgullosos de nuestra cultura Lambayecana. La danza ayuda a los niños a fortalecer su desarrollo físico, emocional y social, mientras descubren el arte, la música y nuestras tradiciones culturales."
+    ]
   },
   {
     "id": "eventos",
@@ -33,6 +40,12 @@
     "href": "/proyectos",
     "tag": "Difusión",
     "text": "Apoyo y participación en actividades culturales de instituciones educativas, gobiernos locales y organizaciones.",
-    "icon": "M15 11V5l-3-3-3 3v2H3v14h18V11h-6zm-8 8H5v-2h2v2zm0-4H5v-2h2v2zm0-4H5V9h2v2zm6 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V9h2v2zm6 8h-2v-2h2v2zm0-4h-2v-2h2v2z"
+    "icon": "M15 11V5l-3-3-3 3v2H3v14h18V11h-6zm-8 8H5v-2h2v2zm0-4H5v-2h2v2zm0-4H5V9h2v2zm6 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V9h2v2zm6 8h-2v-2h2v2zm0-4h-2v-2h2v2z",
+    "items": [
+      { "name": "Festival Golpe Tierra", "month": "Mes de Febrero" },
+      { "name": "Homenaje a Mamá", "month": "Mes de Mayo" },
+      { "name": "Recital Criollo", "month": "Mes de Octubre" },
+      { "name": "Labor Social “Bailando con Moly”", "month": "Mes de Diciembre" }
+    ]
   }
 ]
