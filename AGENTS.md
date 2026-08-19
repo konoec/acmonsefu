@@ -8,8 +8,9 @@ Guía para agentes de IA y desarrolladores que trabajen en este repositorio.
 
 - **Repo**: `konoec/acmonsefu` (privado)
 - **Sitio**: https://acmonsefu.com
-- **Stack**: Astro 7 (estático) + Tailwind CSS 4 + Content Collections (markdown) + Sharp (imágenes) + @astrojs/sitemap
+- **Stack**: Astro 7 (estático) + Tailwind CSS 4 + Content Collections (markdown) + Sveltia CMS (git-based, en `/admin`) + Sharp (imágenes) + marked (texto inline) + @astrojs/sitemap
 - **Lenguaje**: JavaScript (ESM, `"type": "module"`), componentes `.astro`
+- **CMS**: contenido 100% editable desde `/admin` (Sveltia CMS) — textos, datos, novedades e imágenes. Cada guardado commitea a `main` y despliega solo.
 
 ## Comandos
 
@@ -24,15 +25,19 @@ Guía para agentes de IA y desarrolladores que trabajen en este repositorio.
 ## Estructura del código
 
 ```
+public/
+├── admin/                # Sveltia CMS (index.html + config.yml)
+└── uploads/              # Imágenes editables (home, galería, logos)
 src/
-├── assets/images/       # Imágenes optimizadas (home, galería, logos)
 ├── components/          # Componentes reutilizables (Navbar, Footer)
 ├── content/noticias/    # Novedades en markdown (Content Collections)
-├── data/                # Datos estáticos (site.js, festival.js, proyectos.js)
+├── data/                # Datos estáticos en JSON (site, festival, proyectos, imagenes)
+├── data/secciones/      # Textos de cada página (home, nosotros, proyectos, contacto…)
 ├── layouts/             # Layout.astro (SEO, fonts, estructura global)
+├── lib/                 # Helpers (text.js: md() y t())
 ├── pages/               # Rutas del sitio
 └── styles/global.css    # Tema Tailwind (paleta cultural)
-scripts/optimize-images.mjs  # Optimiza imágenes con sharp
+scripts/optimize-images.mjs  # Optimiza imágenes en public/uploads/ con sharp
 ```
 
 ## Rutas
@@ -67,9 +72,11 @@ scripts/optimize-images.mjs  # Optimiza imágenes con sharp
   - `--font-heading` (Plus Jakarta Sans) y `--font-body` (Inter).
   - Colores: `brand-*` (terracota #BC5A45), `cream-*` (fondo crema).
 - Fuentes e iconos: Google Fonts vía `<link>` en `Layout.astro` (nunca `@import` en CSS).
-- Imágenes: siempre dentro de `src/assets/images/`, optimizadas con `node scripts/optimize-images.mjs`.
-  Usar el componente `<Image>` de `astro:assets` para fotos de contenido.
-- Novedades: un archivo markdown por noticia en `src/content/noticias/`. Frontmatter: `title`, `date`, `excerpt`, `author`.
+- Imágenes: siempre dentro de `public/uploads/`, optimizadas con `node scripts/optimize-images.mjs`.
+  Se sirven tal cual con `<img>` (las rutas se referencian desde `src/data/imagenes.json` o el campo `image` de las novedades). No usar `astro:assets`.
+- Novedades: un archivo markdown por noticia en `src/content/noticias/`. Frontmatter: `title`, `date`, `excerpt`, `author`, y `image` (opcional, ruta `/uploads/...`).
+- Textos de páginas: en `src/data/secciones/*.json`, editables desde el CMS. Los párrafos admiten formato inline con `**negrita**` (helper `md()` en `src/lib/text.js`).
+- Al cambiar `public/admin/config.yml`, validar con `npx --yes js-yaml public/admin/config.yml`. Recordar: nombres de archivo como `404` deben ir entre comillas (YAML los parsea como número).
 - No añadir comentarios innecesarios.
 - `npm run lint` antes de commitear.
 

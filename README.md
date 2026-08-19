@@ -10,21 +10,27 @@ Incluye la página de la asociación (nosotros, servicios, novedades, contacto) 
 - **Astro 7** — generación de sitios estáticos (0 JS en páginas de contenido)
 - **Tailwind CSS 4** — estilos con `@tailwindcss/vite` y tema en `src/styles/global.css`
 - **Content Collections** — novedades en markdown (`src/content/noticias/`)
-- **Sharp** — optimización de imágenes (Astro `astro:assets`)
+- **Sveltia CMS** — CMS git-based en `/admin` para editar textos, datos e imágenes (auth vía Cloudflare Worker)
+- **Sharp** — optimización de imágenes (`scripts/optimize-images.mjs`)
+- **marked** — render de texto con formato inline desde los JSON de contenido
 - **@astrojs/sitemap** — sitemap.xml automático
 
 ## 🗂️ Estructura
 
 ```
+public/
+├── admin/                # Sveltia CMS (index.html + config.yml)
+└── uploads/              # Imágenes editables desde el CMS (home, galería, logos)
 src/
-├── assets/images/       # Imágenes optimizadas (home, galería, logos)
 ├── components/          # Navbar, Footer
 ├── content/noticias/    # Noticias en markdown (una por archivo)
-├── data/                # Datos estáticos (site.js, festival.js)
+├── data/                # Datos estáticos en JSON (site, festival, proyectos, imagenes)
+├── data/secciones/      # Textos de cada página (home, nosotros, proyectos, contacto…)
 ├── layouts/             # Layout.astro (SEO, fonts, estructura global)
-├── pages/               # Rutas (/, /nosotros, /servicios, /novedades, /contacto, /golpe-tierra, 404)
+├── lib/                 # Helpers (text.js: md() y t())
+├── pages/               # Rutas (/, /nosotros, /proyectos, /novedades, /contacto, /golpe-tierra, 404)
 └── styles/global.css    # Tema Tailwind (paleta cultural)
-scripts/optimize-images.mjs  # Comprime y optimiza las imágenes del repo
+scripts/optimize-images.mjs  # Comprime y optimiza las imágenes en public/uploads/
 supabase/schema.sql          # Esquema SQL del Festival (tablas, RPC, RLS)
 ```
 
@@ -40,10 +46,20 @@ npm run lint      # ESLint
 
 ## ✍️ Publicar una novedad
 
-1. Crea un archivo `.md` en `src/content/noticias/`.
-2. Escribe el frontmatter: `title`, `date`, `excerpt`, `author`.
-3. Escribe el contenido en markdown.
-4. Haz commit y push a `main` — se despliega solo a https://acmonsefu.com.
+**Con el CMS (recomendado):** entra a `https://acmonsefu.com/admin/` → colección **Novedades** → *Nueva novedad*.
+Al guardar, el CMS commitea a `main` y el sitio se despliega solo.
+
+**Manual:** crea un archivo `.md` en `src/content/noticias/` con frontmatter
+`title`, `date`, `excerpt`, `author` (opcional `image` con la ruta `/uploads/...`) y haz push a `main`.
+
+## 🎛️ CMS de contenido (Sveltia CMS)
+
+- El panel vive en `public/admin/` (`index.html` + `config.yml`) y se sirve en `/admin`.
+- Todo el contenido es editable: textos de páginas (`src/data/secciones/`), datos
+  (`src/data/*.json`), novedades (markdown) e imágenes (`public/uploads/`).
+- Cada guardado crea un commit en `main` → GitHub Actions hace el build y deploy automático.
+- La autenticación usa GitHub OAuth a través del worker `sveltia-cms-auth` en Cloudflare
+  (variables `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET`, `ALLOWED_DOMAINS`), configurado en `backend.base_url`.
 
 ## 🖼️ Optimizar imágenes
 
@@ -53,12 +69,12 @@ Al agregar fotos (por ejemplo la galería del festival), ejecuta:
 node scripts/optimize-images.mjs
 ```
 
-Esto comprime y redimensiona automáticamente las imágenes dentro de `src/assets/images/`.
+Esto comprime y redimensiona automáticamente las imágenes dentro de `public/uploads/`.
 
 ## 🎪 Festival Golpe Tierra
 
 El landing informativo del festival vive en `/golpe-tierra`. Los datos (modalidades, bases, costos) están en
-`src/data/festival.js` y son fáciles de editar.
+`src/data/festival.json` y son fáciles de editar desde el CMS.
 
 Para la edición 2027 se reconstruirán el formulario de inscripción y el panel de administración (probablemente con
 Supabase), integrados a este mismo sitio. El esquema de la base anterior fue recuperado del historial del repo y está
