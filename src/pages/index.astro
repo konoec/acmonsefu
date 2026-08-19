@@ -6,6 +6,7 @@ import festivalData from "../data/festival.json";
 import PROYECTOS from "../data/proyectos.json";
 import seccion from "../data/secciones/home.json";
 import imagenes from "../data/imagenes.json";
+import { md } from "../lib/text.js";
 
 const MODALIDADES = festivalData.modalidades;
 
@@ -42,9 +43,7 @@ const otherProjects = PROYECTOS.filter((p) => !p.featured);
           {SITE.fullName}
         </h1>
         <p class="mt-4 max-w-lg text-lg leading-relaxed text-gray-600">{SITE.tagline}.</p>
-        <p class="mt-4 max-w-lg text-base leading-relaxed text-gray-500">
-          {seccion.hero.description}
-        </p>
+        <p class="mt-4 max-w-lg text-base leading-relaxed text-gray-500" set:html={md(seccion.hero.description)}></p>
         <div class="mt-8 flex flex-wrap gap-4">
           <a
             href={seccion.hero.ctaPrimary.href}
